@@ -1,0 +1,14 @@
+<button md-icon-button [mdMenuTriggerFor]="menu">
+    <md-icon>account_circle</md-icon>
+</button>
+<md-menu #menu="mdMenu">
+    <button md-menu-item (click)="onHome()">
+        <md-icon>home</md-icon>
+        <span>home</span>
+    </button>
+    <button md-menu-item (click)="onLogout()">
+        <md-icon>exit_to_app</md-icon>
+        <span>logout</span>
+    </button>
+
+</md-menu>

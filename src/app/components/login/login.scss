@@ -1,0 +1,32 @@
+page-login {
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 300px;
+    }
+    .companyImage {
+        margin-bottom: 40px;
+        height: 150px;
+        width: 150px;
+        transform: translateX(25%);
+    }
+    .inputElements {
+        width: 100%;
+    }
+    .buttonContainer{
+        padding-top: 10px;
+    }
+    .reminderSection {
+        margin-top: 5px;
+        margin-bottom: 15px;
+        text-align: right;
+    }
+    .orDivider {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+}

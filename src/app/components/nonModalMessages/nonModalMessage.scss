@@ -1,0 +1,40 @@
+Message {
+  .error {
+    border: 1px solid #d1202f;
+    outline: 0 !important;
+    box-shadow: 0 0 3px 1px #f09aa2;
+    background: #ffedef;
+    z-index: 30;
+    line-height: 30px;
+    padding: 4px;
+    top: 0px;
+  }
+
+  .warning {
+    border: 1px solid #d1ce63;
+    outline: 0 !important;
+    box-shadow: 0 0 3px 1px #f09aa2;
+    background: #ffedef;
+    z-index: 30;
+    line-height: 30px;
+    padding: 4px;
+    top: 0px;
+  }
+
+  ion-icon {
+    font-size: 30px;
+    padding:4px;
+  }
+
+  .info {
+    border: 1px solid #1341d1;
+    outline: 0 !important;
+    box-shadow: 0 0 3px 1px #f09aa2;
+    background: #ffedef;
+    z-index: 30;
+    line-height: 30px;
+    padding: 4px;
+    top: 0px;
+  }
+
+}

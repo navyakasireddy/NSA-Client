@@ -1,0 +1,6 @@
+{
+    "features": {
+        "approvalAppUseDummyData":false,
+        "useGoogleSignIn":true
+    }
+}

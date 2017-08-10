@@ -1,0 +1,22 @@
+page-home {
+    .container {
+        max-width: 600px;
+        position: relative;
+        //top: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .appCard {
+        //margin: 20px;
+        min-width: 150px;
+        //height: 150px;
+        //margin: 33px;
+    }
+    md-grid-list {
+        max-width: 600px;
+        height: 400px;//calc(500px-64px);
+    }
+    md-grid-tile {
+        //height: 222px;
+    }
+}

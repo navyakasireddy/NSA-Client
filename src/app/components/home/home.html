@@ -1,0 +1,17 @@
+<div class="container">
+
+    <md-grid-list cols="2" rowHeight="fit">
+        <div *ngFor="let app of availableApps">
+            <md-grid-tile>
+                <md-card class="appCard" (click)="onLink(app.config.landingPage)">
+                    <div align="center">
+                        <img src="assets/img/icon.png" style="width: 128px; height: 128px;">
+                    </div>
+                    <div align="middle">
+                        {{app.config.nameOnCard}}
+                    </div>
+                </md-card>
+            </md-grid-tile>
+        </div>
+    </md-grid-list>
+</div>
