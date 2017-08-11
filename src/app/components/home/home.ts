@@ -4,7 +4,7 @@ import {AboutPage} from "../about/about";
 
 import {AppService} from "../../services/app.service";
 import {LoginService} from "../../services/login.service";
-
+import {AdminDataService} from "../../services/adminData.service";
 import {AppModule} from "../../app.module";
 
 
@@ -13,26 +13,66 @@ import {AppModule} from "../../app.module";
   templateUrl: 'home.html',
 
 })
-export class HomePage implements OnInit{
-  //aboutPage = AboutPage;
-  availableApps = AppModule.availableApps;
+export class HomePage {
+ public nodes: any;
+constructor(private _adminDataService: AdminDataService) {          
+    }  
 
-  constructor(private router: Router, appService: AppService, private loginService: LoginService) {
-    appService.messageService.log("Appcontext home constructor");
-  }
-
-ngOnInit() {
-    console.log('Home ngOnInit');
-    if (this.loginService.isLoggedIn()) {
-        // logged in: present apps
-    } else {
-        // navigate to loginView
-        //this.router.navigate(['login']);
+  ngOnInit() {          
+        // this._adminDataService.getAdminListDetails().then((res:any) => {  
+         this.nodes =  [
+    {
+      "id": "1",
+      "name": 'root1',
+      "children": [
+        { "id": "2", "name": 'child1' },
+        { "id": "3", "name": 'child2' }
+      ]
+    },
+    {
+      "id": "4",
+      "name": 'root2',
+      "children": [
+        { "id": "5", "name": 'child2.1' },
+        {
+          "id": "6",
+          "name": 'child2.2',
+          "children": [
+            { "id": "7", "name": 'subsub' }
+          ]
+        }
+      ]
     }
-  }
-
-
-  onLink(target) {
-  this.router.navigate(target);
-  }
+  ];  
+        // }, (error) => {  
+             
+       // });  
+     } 
+	 
+	 
+	/*   nodes = [
+    {
+      "id": "1",
+      "name": 'root1',
+      "children": [
+        { "id": "2", "name": 'child1' },
+        { "id": "3", "name": 'child2' }
+      ]
+    },
+    {
+      "id": "4",
+      "name": 'root2',
+      "children": [
+        { "id": "5", "name": 'child2.1' },
+        {
+          "id": "6",
+          "name": 'child2.2',
+          "children": [
+            { "id": "7", "name": 'subsub' }
+          ]
+        }
+      ]
+    }
+  ];*/
+  
 }

@@ -19,6 +19,8 @@ import {AppService} from "./services/app.service";
 import {LoginService} from "./services/login.service";
 import {StorageService} from "./services/storage.service";
 import {FeatureService} from "./services/feature.service";
+import {AdminDataService} from "./services/adminData.service";
+
 
 import DynamicComponent from "./components/dynamicComponent/dynamic-component";
 import {RouterModule, Routes} from "@angular/router";
@@ -26,7 +28,7 @@ import {UserInfoPage} from "./components/userInfo/userInfo";
 
 import { AuthGuard } from './auth.guard';
 
-
+import { TreeModule } from 'angular-tree-component';
 const routes: Routes = [
   {
     path: 'home',
@@ -60,7 +62,7 @@ const routes: Routes = [
   imports: [
     HttpModule,
     
-   
+   TreeModule,
     FormsModule,
     
     BrowserModule,
@@ -85,6 +87,7 @@ const routes: Routes = [
     LoginService, 
     StorageService, 
     FeatureService, 
+	AdminDataService,
     AuthGuard]
 })
 export class AppModule {
