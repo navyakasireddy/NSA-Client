@@ -1,1 +1,14 @@
-<tree-root [nodes]="nodes" (event)="onEvent($event)"></tree-root>
+
+
+<md-sidenav-container class="docs-component-viewer-sidenav-container">
+
+  <md-sidenav #sidenav class="docs-component-viewer-sidenav"
+              [opened]="true"
+>
+    <nav *ngFor="let node of nodes" style="margin-left:20px;">
+     <tree-root [nodes]="nodes" (event)="onEvent($event)"></tree-root>
+    </nav>
+  </md-sidenav>
+
+
+</md-sidenav-container>
