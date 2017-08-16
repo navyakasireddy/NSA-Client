@@ -1,7 +1,15 @@
 <md-toolbar color="primary">
     
     <span style="flex: 1 1 auto;"></span>
-    <page-userInfo></page-userInfo>
+    <page-userInfo *ngIf="isloggedin"></page-userInfo>
     <!--page-settings></page-settings-->
 </md-toolbar>
+<md-sidenav-container class="docs-component-viewer-sidenav-container">
+    <page-home *ngIf="isloggedin"></page-home>
+     <div class="docs-component-sidenav-content">
+    
 <router-outlet></router-outlet>
+    
+  </div>
+</md-sidenav-container>
+

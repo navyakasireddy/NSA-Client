@@ -11,8 +11,8 @@ import {HomePage} from './components/home/home';
 import {Message} from './components/nonModalMessages/nonModalMessage';
 import {AboutPage} from './components/about/about';
 import {SettingsPage} from './components/settings/settings';
-
-
+import {Documents} from './components/documents/documents';
+import {Plugins} from './components/plugins/plugins';
 
 import {AppService} from "./services/app.service";
 //import {EventService} from "./services/event.service"
@@ -20,7 +20,7 @@ import {LoginService} from "./services/login.service";
 import {StorageService} from "./services/storage.service";
 import {FeatureService} from "./services/feature.service";
 import {AdminDataService} from "./services/adminData.service";
-
+import {GetDataService} from "./services/getData.service";
 
 import DynamicComponent from "./components/dynamicComponent/dynamic-component";
 import {RouterModule, Routes} from "@angular/router";
@@ -29,27 +29,41 @@ import {UserInfoPage} from "./components/userInfo/userInfo";
 import { AuthGuard } from './auth.guard';
 
 import { TreeModule } from 'angular-tree-component';
+
+
+
+
 const routes: Routes = [
   {
     path: 'home',
     component: HomePage,
     canActivate: [AuthGuard] 
   },
+   {
+    path: 'documents',
+    component: Documents
+  },
   { path: '',
-    redirectTo: '/home',
+    redirectTo: '/documents',
     pathMatch: 'full'
   },
   {
     path: 'login',
     component: LoginPage
-  },
+  },  
+   
+  {
+    path: 'Plug-ins',
+    component: Plugins
+  },   
   { path: '**',
-    redirectTo: '/home'
+    redirectTo: '/documents'
   }
 ];
 
 @NgModule({
   declarations: [
+  
     MyApp,
     HomePage,
     AboutPage,
@@ -57,11 +71,14 @@ const routes: Routes = [
     LoginPage,
     Message,
     DynamicComponent,
-    UserInfoPage
+    UserInfoPage,
+	Documents,
+	Plugins
+
   ],
   imports: [
     HttpModule,
-    
+ 
    TreeModule,
     FormsModule,
     
@@ -70,6 +87,7 @@ const routes: Routes = [
     MdButtonModule,
     RouterModule.forRoot(routes),
     MaterialModule
+	
   ],
   exports: [
     MaterialModule,
@@ -88,6 +106,7 @@ const routes: Routes = [
     StorageService, 
     FeatureService, 
 	AdminDataService,
+	GetDataService,
     AuthGuard]
 })
 export class AppModule {

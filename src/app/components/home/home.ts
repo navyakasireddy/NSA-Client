@@ -18,7 +18,8 @@ const SMALL_WIDTH_BREAKPOINT = 840;
 
 })
 export class HomePage {
- public nodes: any= [
+
+ public nodes: any;/*= [
     {
       "id": "1",
       "name": 'root1',
@@ -41,41 +42,43 @@ export class HomePage {
         }
       ]
     }
-  ];
+  ];*/
 
 
 
    
 
 
-constructor(private _adminDataService: AdminDataService , private _router: Router) {}  
+constructor(private _adminDataService: AdminDataService , private _router: Router,private loginService:LoginService) {}  
 	  @ViewChild(MdSidenav) sidenav: MdSidenav;
-
-	    ngOnInit() {
-    this._router.events.subscribe(() => {
-      if (this.isScreenSmall()) {
-        this.sidenav.close();
-      }
-    });
-  }
+	
+	
 
   isScreenSmall(): boolean {
     return window.matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`).matches;
   }
 
 
- // ngOnInit() { 
-  
+  ngOnInit() { 
+  this._router.events.subscribe(() => {
+      if (this.isScreenSmall()) {
+        this.sidenav.close();
+      }
+    });
   
            
-       // this._adminDataService.getAdminListDetails().then((res:any) => {  
-       //  this.nodes =res;  }, (error) => {  
-       // });  
-   //  } 
-	/* onEvent($event){
-	 	 if($event.node != undefined && $event.node.children.length==0)
-		 {
-		 
-		 }
-	 }*/
+      this._adminDataService.getAdminListDetails().then((res:any) => {  
+         this.nodes =res;  }, (error) => {  
+       });  
+  } 
+ onEvent($event){
+
+	 	// if($event.node != undefined &&  $event.node.visibleChildren != undefined && $event.node.visibleChildren.length==0)
+		// {
+		var n = $event.treeModel.activeNodes[0].data.name;
+		//debugger;
+
+		 this._router.navigate([n]);
+		// }
+	 }
 }
