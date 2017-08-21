@@ -1,0 +1,30 @@
+<div class="container">
+    <md-card>
+     
+        <md-card-title>{{action}} plug-in</md-card-title>
+        <md-card-content>
+  <form #myForm="ngForm"> 
+            <md-input-container  class="inputElements">
+                <input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="pluginItem.name" required/>
+            </md-input-container><br />
+            <md-input-container  class="inputElements">
+                <input mdInput type="text" placeholder="Type" name="type" [(ngModel)]="pluginItem.type" required/>
+            </md-input-container><br />
+             <md-input-container  class="inputElements">
+                <input mdInput type="text" placeholder="Module" name="module" [(ngModel)]="pluginItem.module" required/>
+            </md-input-container>
+            <div md-card-actions class="buttonContainer">
+                <button md-raised-button color="accent" (click)="ApplyAction(pluginItem)" [disabled]="!myForm.form.valid" class="inputElements" >
+{{action}}             </button>
+                 <button md-raised-button color="warn"  class="inputElements"  md-dialog-close>
+Cancel                </button>
+    
+             
+            </div>
+
+      </form>
+
+        </md-card-content>
+
+    </md-card>
+</div>

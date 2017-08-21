@@ -7,7 +7,7 @@ import 'rxjs/Rx';
 export class AdminDataService {  
 _serverURL : any;
     constructor(private _http: Http) {  
-        this._serverURL = "http://pc0d6vxb:8080/nsac-packaging-1.0-SNAPSHOT/api/resources/list/test";  
+        this._serverURL = "http://pc07vpnw:8080/nsac-packaging-1.0-SNAPSHOT/api/resources/list/test";  
     }      
 getAdminListDetails() {  
             let _url = this._serverURL; //+ "/Menu/GetMenuDetails?roleName=" + roleName;  

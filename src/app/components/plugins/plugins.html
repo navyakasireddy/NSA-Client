@@ -1,34 +1,45 @@
 <div class="content">
   <table>
             <tr>
-                
-                <td width-30>
+                 <td>
+                    <button id="create"  (click)="onApplyAction('create','')" md-raised-button color="primary">
+                        Create
+                    </button>
+                </td>
+                <td>
                     Name
                 </td>
-                <td width-30>
+                <td>
                     Type
                 </td>
-                <td width-30>
+                <td>
                     Module
                 </td>
-                
+              
             </tr>
             <tr text-center text-wrap *ngFor="let item of pluginData.pluginList">
-               
-                <td width-30>
+                <td style="width:190px">
+                    <button id="update"  (click)="onApplyAction('update',item)" md-raised-button color="primary">
+                        Update
+                    </button>
+                    <button id="delete" (click)="onApplyAction('delete',item)" md-raised-button color="primary">
+                        Delete
+                    </button>
+                </td>
+                <td>
                     {{item.name}}
                 </td>
-                <td width-30>
+                <td>
                      {{item.type}}
                 </td>
-                <td width-30>
+                <td>
                      {{item.module}}
                 </td>
-              
-               
             </tr>
         </table>
 </div>
+
+
 
 
 
