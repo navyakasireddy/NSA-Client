@@ -4,8 +4,7 @@
     width: 100%;
 }
 
-$sidenav-spacing-unit: 8px;
-$sidenav-width: 240px;
+
 
 app-component-sidenav {
   display: flex;
@@ -16,7 +15,9 @@ app-component-sidenav {
 height:100%; 
   
   .mat-sidenav-content {
+  background-color:red;
     position: absolute;
+	width:100%;
     right: 0;
     left: 0;
   }
@@ -25,7 +26,8 @@ height:100%;
 .docs-component-viewer-sidenav {
   box-shadow: 3px 0 6px rgba(0, 0, 0, .24);
   padding-bottom: 72px;
-  width: $sidenav-width;
+  min-width: 18% !important;
+  max-width:25%;
   bottom: 0;
   overflow: auto;
   height: 100%;
@@ -39,11 +41,11 @@ height:100%;
     border: none;
     font-size: 10px;
     letter-spacing: 1px;
-    line-height: $sidenav-spacing-unit * 3;
+    
     text-transform: uppercase;
     font-weight: 400;
     margin: 0;
-    padding: 0 ($sidenav-spacing-unit * 2);
+   
   }
 
   ul {
@@ -70,10 +72,10 @@ height:100%;
       display: block;
       font-size: 14px;
       font-weight: 400;
-      line-height: ($sidenav-spacing-unit * 6) - 1;
+      
       text-decoration: none;
       transition: all .3s;
-      padding: 0 ($sidenav-spacing-unit * 2);
+      
       position: relative;
 
       &.docs-component-viewer-sidenav-item-selected {
