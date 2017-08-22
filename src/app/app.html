@@ -1,21 +1,17 @@
 <md-toolbar color="primary">
-    
     <span style="flex: 1 1 auto;"></span>
     <page-userInfo *ngIf="isloggedin"></page-userInfo>
     <!--page-settings></page-settings-->
 </md-toolbar>
 <div class="container">
-<md-sidenav-container class="docs-component-viewer-sidenav-container">
+    <md-sidenav-container class="docs-component-viewer-sidenav-container">
     <page-home *ngIf="isloggedin"></page-home>
-     
-    
 <router-outlet></router-outlet>
-     
-
 </md-sidenav-container>
-    </div>
+</div>
 <footer>
-
-    footerfooterfooterfooterfooterfooter
-    
-    </footer>
+    <md-toolbar color="primary" style=""> <!--min-height:35px;max-height:35px;-->
+    <span style="flex: 1 1 auto;"></span>
+   Powered by saperion ©2017.
+ </md-toolbar>
+</footer>

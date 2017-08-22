@@ -1,45 +1,41 @@
 <div class="content">
-  <table>
-            <tr>
-                 <td>
-                    <button id="create"  (click)="onApplyAction('create','')" md-raised-button color="primary">
-                        Create
-                    </button>
-                </td>
-                <td>
-                    Name
-                </td>
-                <td>
-                    Type
-                </td>
-                <td>
-                    Module
-                </td>
-              
-            </tr>
-            <tr text-center text-wrap *ngFor="let item of pluginData.pluginList">
-                <td style="width:190px">
-                    <button id="update"  (click)="onApplyAction('update',item)" md-raised-button color="primary">
-                        Update
-                    </button>
-                    <button id="delete" (click)="onApplyAction('delete',item)" md-raised-button color="primary">
-                        Delete
-                    </button>
-                </td>
-                <td>
-                    {{item.name}}
-                </td>
-                <td>
-                     {{item.type}}
-                </td>
-                <td>
-                     {{item.module}}
-                </td>
-            </tr>
-        </table>
-</div>
+     <div >
+        <div style="overflow:auto;">
 
 
+            <md-table #table [dataSource]="dataSource" mdSort>
+
+                <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+                <ng-container cdkColumnDef="id">
+                    <md-header-cell *cdkHeaderCellDef md-sort-header>  ID </md-header-cell>
+                    <md-cell *cdkCellDef="let row">
+                        {{row.id}}
+                    </md-cell>
+                </ng-container>
+
+
+                <ng-container cdkColumnDef="name">
+                    <md-header-cell *cdkHeaderCellDef md-sort-header> Name </md-header-cell>
+                    <md-cell *cdkCellDef="let row"> {{row.name}} </md-cell>
+                </ng-container>
+
+                <ng-container cdkColumnDef="type">
+                    <md-header-cell *cdkHeaderCellDef md-sort-header> Type </md-header-cell>
+                    <md-cell *cdkCellDef="let row"> {{row.type}} </md-cell>
+                </ng-container>
+                <ng-container cdkColumnDef="module">
+                    <md-header-cell *cdkHeaderCellDef md-sort-header> Module </md-header-cell>
+                    <md-cell *cdkCellDef="let row"> {{row.module}} </md-cell>
+                </ng-container>
+                <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+                <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
+
+            </md-table>
+        </div>
+    </div>  
+    </div>
 
 
 

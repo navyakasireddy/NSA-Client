@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 
-import { Footer } from "./components/footer/footer";
 import { MyApp } from './components/app.component';
 import { LoginPage } from "./components/login/login";
 import { HomePage } from './components/home/home';
@@ -31,7 +30,7 @@ import { UserInfoPage } from "./components/userInfo/userInfo";
 import { AuthGuard } from './auth.guard';
 
 import { TreeModule } from 'angular-tree-component';
-
+import { CdkTableModule } from '@angular/cdk';
 
 
 
@@ -77,8 +76,8 @@ const routes: Routes = [
         UserInfoPage,
         Documents,
         Plugins,
-        ModalDialog,
-        Footer
+        ModalDialog
+        
     ],
     imports: [
         HttpModule,
@@ -88,7 +87,8 @@ const routes: Routes = [
         BrowserAnimationsModule,
         MdButtonModule, 
         RouterModule.forRoot(routes),
-        MaterialModule
+        MaterialModule,
+        CdkTableModule
     ],
     exports: [
         MaterialModule,
