@@ -1,15 +1,26 @@
 <div class="content">
      <div >
-        <div style="overflow:auto;">
-
-
+          <button id="create"  (click)="onApplyAction('create','')" md-raised-button color="primary">
+                        <md-icon  class="material-icons" >add</md-icon>
+                    </button>
+        <div style="overflow:auto;margin:10px" >
             <md-table #table [dataSource]="dataSource" mdSort>
-
+                 <ng-container cdkColumnDef="actions">
+    <md-header-cell *cdkHeaderCellDef md-sort-header> Actions </md-header-cell>
+    <md-cell *cdkCellDef="let row" >
+        <button id="update"  (click)="onApplyAction('update',row)" color="primary">
+                       <md-icon  class="material-icons">create</md-icon>
+                    </button>
+                    <button id="delete" (click)="onApplyAction('delete',row)" class="warn">
+                       <md-icon  class="material-icons">remove_circle</md-icon>
+                    </button>
+    </md-cell>
+</ng-container> 
                 <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
 
                 <ng-container cdkColumnDef="id">
-                    <md-header-cell *cdkHeaderCellDef md-sort-header>  ID </md-header-cell>
+                    <md-header-cell *cdkHeaderCellDef md-sort-header>  Id </md-header-cell>
                     <md-cell *cdkCellDef="let row">
                         {{row.id}}
                     </md-cell>
@@ -29,6 +40,7 @@
                     <md-header-cell *cdkHeaderCellDef md-sort-header> Module </md-header-cell>
                     <md-cell *cdkCellDef="let row"> {{row.module}} </md-cell>
                 </ng-container>
+               
                 <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
                 <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
 

@@ -5,7 +5,8 @@
   <md-sidenav #sidenav class="docs-component-viewer-sidenav" 
               [opened]="!isScreenSmall()"
               [mode]="isScreenSmall() ? 'over' : 'side'">
-    <nav *ngFor="let node of nodes" style="margin-left:20px;">
+    <nav *ngFor="let node of nodes" style="margin: 15px 0 0 35px;
+    font-size: x-large;">
      <tree-root #tree [nodes]="nodes" (event)="onEvent($event)"></tree-root>
     </nav>
    

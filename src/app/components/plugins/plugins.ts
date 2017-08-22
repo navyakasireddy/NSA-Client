@@ -17,11 +17,11 @@ export class Plugins {
     @ViewChild('filter') filter: ElementRef;
     dialogRef: MdDialogRef<ModalDialog>;
     // table start
-    exampleDatabase;//= new ExampleDatabase();
-    dataSource: ExampleDataSource | null;
+    pluginDatabase;//= new PluginDatabase();
+    dataSource: pluginDataSource | null;
     @ViewChild(MdSort) sort: MdSort;
     temppluginData: any = {};
-    displayedColumns = ["id", "name", "type", "module"];
+    displayedColumns = ["actions","id", "name", "type", "module"];
     constructor(private _dataService: GetDataService, public dialog: MdDialog) { }
 
 
@@ -36,15 +36,16 @@ export class Plugins {
                 pluginData = this.temppluginData;
                 
                 console.log(pluginData);
-                this.exampleDatabase = new ExampleDatabase()
-                this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
-                Observable.fromEvent(this.filter.nativeElement, 'keyup')
-                    .debounceTime(150)
-                    .distinctUntilChanged()
-                    .subscribe(() => {
-                        if (!this.dataSource) { return; }
-                        this.dataSource.filter = this.filter.nativeElement.value;
-                    });
+                this.pluginDatabase = new PluginDatabase()
+                this.dataSource = new pluginDataSource(this.pluginDatabase, this.sort);
+               
+                //Observable.fromEvent(this.filter.nativeElement, 'keyup')
+                //    .debounceTime(150)
+                //    .distinctUntilChanged()
+                //    .subscribe(() => {
+                //        if (!this.dataSource) { return; }
+                //        this.dataSource.filter = this.filter.nativeElement.value;
+                //    });
             }
         }, (error) => {
         });
@@ -92,8 +93,8 @@ export interface pluginData {
     module: string,
 }
 
-/** An example database that the data source uses to retrieve data for the table. */
-export class ExampleDatabase {
+/** An plugin database that the data source uses to retrieve data for the table. */
+export class PluginDatabase {
     /** Stream that emits whenever the data has been modified. */
     dataChange: BehaviorSubject<pluginData[]> = new BehaviorSubject<pluginData[]>([]);
     get data(): pluginData[] { return this.dataChange.value; }
@@ -120,31 +121,31 @@ export class ExampleDatabase {
     }
 }
 
-export class ExampleDataSource extends DataSource<any> {
+export class pluginDataSource extends DataSource<any> {
     _filterChange = new BehaviorSubject('');
     get filter(): string { return this._filterChange.value; }
     set filter(filter: string) { this._filterChange.next(filter); }
 
-    constructor(private _exampleDatabase: ExampleDatabase, private _sort: MdSort) {
+    constructor(private _pluginDatabase: PluginDatabase, private _sort: MdSort) {
         super();
     }
 
     /** Connect function called by the table to retrieve one stream containing the data to render. */
     connect(): Observable<pluginData[]> {
         const displayDataChanges = [
-            this._exampleDatabase.dataChange,
+            this._pluginDatabase.dataChange,
             this._filterChange,
             this._sort.mdSortChange,
         ];
         //const displayDataSortChanges = [
-        //    this._exampleDatabase.dataChange,
+        //    this._pluginDatabase.dataChange,
 
         //];
         return Observable.merge(...displayDataChanges).map(() => {
 
 
             if (this._filterChange.value.length > 0) {
-                return this._exampleDatabase.data.slice().filter((item: pluginData) => {
+                return this._pluginDatabase.data.slice().filter((item: pluginData) => {
                     let searchStr = (item.id + item.name + item.type + item.module).toLowerCase();
                     return searchStr.indexOf(this.filter.toLowerCase()) != -1;
                 });
@@ -159,7 +160,7 @@ export class ExampleDataSource extends DataSource<any> {
 
     /** Returns a sorted copy of the database data. */
     getSortedData(): pluginData[] {
-        const data = this._exampleDatabase.data.slice();
+        const data = this._pluginDatabase.data.slice();
         if (!this._sort.active || this._sort.direction == '') { return data; }
 
         return data.sort((a, b) => {
