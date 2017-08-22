@@ -4,12 +4,18 @@
     <page-userInfo *ngIf="isloggedin"></page-userInfo>
     <!--page-settings></page-settings-->
 </md-toolbar>
+<div class="container">
 <md-sidenav-container class="docs-component-viewer-sidenav-container">
     <page-home *ngIf="isloggedin"></page-home>
-     <div class="docs-component-sidenav-content">
+     
     
 <router-outlet></router-outlet>
-     <page-footer></page-footer>
-  </div>
-</md-sidenav-container>
+     
 
+</md-sidenav-container>
+    </div>
+<footer>
+
+    footerfooterfooterfooterfooterfooter
+    
+    </footer>

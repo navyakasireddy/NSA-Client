@@ -36,11 +36,11 @@ import { TreeModule } from 'angular-tree-component';
 
 
 const routes: Routes = [
-    {
-        path: 'home',
-        component: HomePage,
-        canActivate: [AuthGuard]
-    },
+    //{
+    //    path: 'home',
+    //    component: HomePage,
+    //    canActivate: [AuthGuard]
+    //},
     {
         path: 'default',
         component: Documents
