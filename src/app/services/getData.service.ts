@@ -26,6 +26,7 @@ export class GetDataService {
         });
     }
     Delete(id: string) {
+       
         let headers = new Headers();
         headers.append('Accept', 'application/json');
       //  headers.append('Content-Type', 'application/json');
@@ -76,7 +77,7 @@ export class GetDataService {
     }
 
     create(actionItem: any) {
-
+        debugger;
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');

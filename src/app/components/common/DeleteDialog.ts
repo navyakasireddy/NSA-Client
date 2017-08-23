@@ -2,22 +2,14 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { GetDataService } from "../../services/getData.service";
 @Component({
-    selector: 'page-dialog',
-    templateUrl: 'modalDialog.html'
+    selector: 'delete-dialog',
+    templateUrl: 'DeleteDialog.html'
 
 })
 export class ModalDialog {
     private errorMessage: string;
     public action: string;
     public pluginItem: any;
-
-    types = [
-        { value: 'DLL', viewValue: 'DLL' },
-        { value: 'EVENTSCRIPT', viewValue: 'EVENTSCRIPT' },
-        { value: 'JSTORE', viewValue: 'JSTORE' },
-        { value: 'COM_OBJECT', viewValue: 'COM_OBJECT' }
-    ];
-
 
     constructor( @Inject(MD_DIALOG_DATA) public data: any, private _dataService: GetDataService,
         private dialogRef: MdDialogRef<ModalDialog>) { }

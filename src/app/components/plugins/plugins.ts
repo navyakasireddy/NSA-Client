@@ -21,7 +21,7 @@ export class Plugins {
     dataSource: pluginDataSource | null;
     @ViewChild(MdSort) sort: MdSort;
     temppluginData: any = {};
-    displayedColumns = ["actions","id", "name", "type", "module"];
+    displayedColumns = ["actions","pluginId", "name", "type", "module"];
     constructor(private _dataService: GetDataService, public dialog: MdDialog) { }
 
 
@@ -87,7 +87,7 @@ export class Plugins {
 
 
 export interface pluginData {
-    id: any;
+    pluginId: any;
     name: any;
     type: string;
     module: string,
@@ -108,7 +108,7 @@ export class PluginDatabase {
 
 
                 item = {
-                    id: childitem.pluginId,
+                    pluginId: childitem.pluginId,
                     name: childitem.name,
                     type: childitem.type,
                     module: childitem.module
@@ -146,7 +146,7 @@ export class pluginDataSource extends DataSource<any> {
 
             if (this._filterChange.value.length > 0) {
                 return this._pluginDatabase.data.slice().filter((item: pluginData) => {
-                    let searchStr = (item.id + item.name + item.type + item.module).toLowerCase();
+                    let searchStr = (item.pluginId + item.name + item.type + item.module).toLowerCase();
                     return searchStr.indexOf(this.filter.toLowerCase()) != -1;
                 });
             }
@@ -168,7 +168,7 @@ export class pluginDataSource extends DataSource<any> {
             let propertyB: number | string = '';
 
             switch (this._sort.active) {
-                case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
+                case 'pluginId': [propertyA, propertyB] = [a.pluginId, b.pluginId]; break;
                 case 'name': [propertyA, propertyB] = [a.name, b.name]; break;
                 case 'type': [propertyA, propertyB] = [a.type, b.type]; break;
                 case 'module': [propertyA, propertyB] = [a.module, b.module]; break;

@@ -12,17 +12,17 @@
                        <md-icon  class="material-icons">create</md-icon>
                     </button>
                     <button id="delete" (click)="onApplyAction('delete',row)" class="warn">
-                       <md-icon  class="material-icons">remove_circle</md-icon>
+                       <md-icon  class="material-icons">delete</md-icon>
                     </button>
     </md-cell>
 </ng-container> 
                 <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
 
-                <ng-container cdkColumnDef="id">
+                <ng-container cdkColumnDef="pluginId">
                     <md-header-cell *cdkHeaderCellDef md-sort-header>  Id </md-header-cell>
                     <md-cell *cdkCellDef="let row">
-                        {{row.id}}
+                        {{row.pluginId}}
                     </md-cell>
                 </ng-container>
 
