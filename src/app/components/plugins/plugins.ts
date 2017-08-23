@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef} from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ModalDialog } from './modalDialog';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { GetDataService } from "../../services/getData.service";
@@ -6,6 +6,8 @@ import { DataSource } from '@angular/cdk';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MdSort } from '@angular/material';
+
+import { DeleteDialog } from '../common/deleteDialog';
 
 var pluginData: any = {};
 
@@ -16,12 +18,13 @@ var pluginData: any = {};
 export class Plugins {
     @ViewChild('filter') filter: ElementRef;
     dialogRef: MdDialogRef<ModalDialog>;
+    dialogRefDel: MdDialogRef<DeleteDialog>;
     // table start
     pluginDatabase;//= new PluginDatabase();
     dataSource: pluginDataSource | null;
     @ViewChild(MdSort) sort: MdSort;
     temppluginData: any = {};
-    displayedColumns = ["actions","pluginId", "name", "type", "module"];
+    displayedColumns = ["actions", "pluginId", "name", "type", "module"];
     constructor(private _dataService: GetDataService, public dialog: MdDialog) { }
 
 
@@ -34,11 +37,11 @@ export class Plugins {
             this.temppluginData = res.pluginList;
             if (this.temppluginData.length > 0) {
                 pluginData = this.temppluginData;
-                
+
                 console.log(pluginData);
                 this.pluginDatabase = new PluginDatabase()
                 this.dataSource = new pluginDataSource(this.pluginDatabase, this.sort);
-               
+
                 //Observable.fromEvent(this.filter.nativeElement, 'keyup')
                 //    .debounceTime(150)
                 //    .distinctUntilChanged()
@@ -65,11 +68,23 @@ export class Plugins {
             });
         }
         else if (action == 'delete') {
-            this._dataService.Delete(item.pluginId).then((res: any) => {
-                console.log(res)
-                this.GetData();
-            }, (error) => {
+            this.dialogRefDel = this.dialog.open(DeleteDialog, {
+                disableClose: true
             });
+
+
+            this.dialogRefDel.afterClosed().subscribe(result => {
+                if (result) {
+                    this._dataService.Delete(item.pluginId).then((res: any) => {
+                        console.log(res)
+                        this.GetData();
+                    }, (error) => {
+                    });
+                }
+                this.dialogRef = null;
+                this.GetData();
+            });
+
         }
         else {
             this.dialogRef = this.dialog.open(ModalDialog, {

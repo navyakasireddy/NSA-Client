@@ -1,45 +1,26 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
-import { GetDataService } from "../../services/getData.service";
+
 @Component({
     selector: 'delete-dialog',
-    templateUrl: 'DeleteDialog.html'
+    template: `
+        <p>{{ title }}</p>
+        <p>{{ message }}</p>
+        <button type="button" md-raised-button 
+            (click)="dialogRef.close(true)">OK</button>
+        <button type="button" md-button 
+            (click)="dialogRef.close(false)">Cancel</button>
+    `,
 
 })
-export class ModalDialog {
-    private errorMessage: string;
-    public action: string;
-    public pluginItem: any;
+export class DeleteDialog {
 
-    constructor( @Inject(MD_DIALOG_DATA) public data: any, private _dataService: GetDataService,
-        private dialogRef: MdDialogRef<ModalDialog>) { }
+    public title: string;
+    public message: string;
 
-
-    ngOnInit() {       
-        this.action = this.data == null ? "Create" : "Update";
-        this.pluginItem = this.data != null ? this.data : {
-            name: "",
-            type: "",
-            module: ""
-        };
-    }
-
-    ApplyAction(actionItem) {
-        debugger;
-        if (this.action == "Create") {
-            this._dataService.create(actionItem).then((res: any) => {
-                console.log(res)
-                this.dialogRef.close();
-            }, (error) => {
-            });
-        }
-        else if (this.action == "Update") {
-            this._dataService.update(actionItem).then((res: any) => {
-                console.log(res)
-                this.dialogRef.close();
-            }, (error) => {
-            });
-        }
+    constructor(public dialogRef: MdDialogRef<DeleteDialog>) {
+        this.title = "Delete";
+        this.message = "Are you sure you want to delete?";
     }
 }
 
