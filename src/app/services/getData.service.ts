@@ -60,7 +60,7 @@ export class GetDataService {
             }
         };
 
-        let _url = this._serverURL + "/" + actionItem.id;
+        let _url = this._serverURL ;
         // let _options= new RequestOptions({headers:headers});
         return new Promise((resolve, reject) => {
             this._http.put(_url, body, { headers: headers })
