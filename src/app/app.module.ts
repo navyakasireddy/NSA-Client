@@ -42,6 +42,18 @@ const routes: Routes = [
     //    canActivate: [AuthGuard]
     //},
     {
+        path: '',
+        component: LoginPage,
+         pathMatch: 'full'
+    
+    },
+    {
+        path: 'home',
+        component: HomePage,
+        canActivate: [AuthGuard]
+
+    },
+    {
         path: 'default',
         component: Documents
     },
@@ -54,10 +66,24 @@ const routes: Routes = [
         path: 'login',
         component: LoginPage
     },
-
     {
-        path: 'documents/Plug-ins',
-        component: Plugins
+        path: 'documents',
+        component: HomePage,
+        children: [           
+            { path: 'Plug-ins', component: Plugins, pathMatch: 'full' },
+            { path: '**', component: Documents, pathMatch: 'full' },
+            //{
+            //    path: ':id',
+            //    component: ComponentViewer,
+            //    children: [
+            //        { path: '', redirectTo: 'overview', pathMatch: 'full' },
+            //        { path: 'overview', component: ComponentOverview, pathMatch: 'full' },
+            //        { path: 'api', component: ComponentApi, pathMatch: 'full' },
+            //        { path: 'examples', component: ComponentExamples, pathMatch: 'full' },
+            //        { path: '**', redirectTo: 'overview' },
+            //    ],
+            //},
+        ],
     },
     {
         path: '**',

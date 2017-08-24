@@ -73,11 +73,10 @@ export class HomePage {
         });
     }
     onEvent($event) {
-
-        if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined )
+        if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined && $event.treeModel.activeNodes[0].children.length==0)
          {
         var n = $event.treeModel.activeNodes[0].data.name;
-        //debugger;
+        debugger;
 
         this._router.navigate(['documents/'+n]);
         }
