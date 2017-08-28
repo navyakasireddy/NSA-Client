@@ -73,12 +73,13 @@ export class HomePage {
         });
     }
     onEvent($event) {
-        if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined && $event.treeModel.activeNodes[0].children.length==0)
+        if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined) //&& $event.treeModel.activeNodes[0].children.length==0
          {
-        var n = $event.treeModel.activeNodes[0].data.name;
+            var n = $event.treeModel.activeNodes[0].data.name;
+           var p=$event.treeModel.activeNodes[0].parent.data.name;
         debugger;
 
-        this._router.navigate(['documents/'+n]);
+        this._router.navigate([p+'/'+n]);
         }
     }
 }

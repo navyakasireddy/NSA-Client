@@ -22,7 +22,7 @@ import { LoginService } from "./services/login.service";
 import { StorageService } from "./services/storage.service";
 import { FeatureService } from "./services/feature.service";
 import { AdminDataService } from "./services/adminData.service";
-import { GetDataService } from "./services/getData.service";
+import { PluginDataService } from "./services/pluginData.service";
 
 import DynamicComponent from "./components/dynamicComponent/dynamic-component";
 import { RouterModule, Routes } from "@angular/router";
@@ -47,28 +47,24 @@ const routes: Routes = [
          pathMatch: 'full'
     
     },
-    {
-        path: 'home',
-        component: HomePage,
-        canActivate: [AuthGuard]
+    //{
+    //    path: 'home',
+    //    component: HomePage,
+    //    canActivate: [AuthGuard]
 
-    },
+    //},
     {
         path: 'default',
         component: Documents
-    },
-    {
-        path: '',
-        redirectTo: '/default',
-        pathMatch: 'full'
-    },
+    },    
     {
         path: 'login',
         component: LoginPage
     },
     {
-        path: 'documents',
+        path: 'Documents',
         component: HomePage,
+        canActivate: [AuthGuard],
         children: [           
             { path: 'Plug-ins', component: Plugins, pathMatch: 'full' },
             { path: '**', component: Documents, pathMatch: 'full' },
@@ -84,10 +80,14 @@ const routes: Routes = [
             //    ],
             //},
         ],
-    },
-    {
+    }
+    ,{
         path: '**',
-        redirectTo: '/default'
+        redirectTo:'Documents',
+        //children: [
+        //    { path: '', component: Documents, pathMatch: 'full' },
+        //    { path: '**', component: Documents, pathMatch: 'full' },
+        //]
     }
 ];
 
@@ -137,7 +137,7 @@ const routes: Routes = [
         StorageService,
         FeatureService,
         AdminDataService,
-        GetDataService,
+        PluginDataService,
         AuthGuard]
 })
 export class AppModule {

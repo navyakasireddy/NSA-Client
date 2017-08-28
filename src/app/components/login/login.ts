@@ -76,7 +76,7 @@ export class LoginPage implements OnInit {
     console.log('ngOnInit');
     
     // get ReturnUrl or set to home
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'Documents';
     
     // load local stored data
     this.remindMe = this.loginService.getLocalRemindMe();

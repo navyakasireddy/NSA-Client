@@ -2,12 +2,16 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
-
+import * as json from '../../config/urls.json';
 @Injectable()
-export class GetDataService {
+
+export class PluginDataService {
+   
     _serverURL: any;
     constructor(private _http: Http, private _requestOptions: RequestOptions) {
-        this._serverURL = "http://pc07vpnw:8080/nsac-packaging-1.0-SNAPSHOT/api/documents/plugin";
+       
+        this._serverURL = json.Documents.plugin;
+            //"http://pc07vpnw:8080/nsac-packaging-1.0-SNAPSHOT/api/documents/plugin";
     }
     getList(dataType: string) {
         let _url = this._serverURL; //+ "/Menu/GetMenuDetails?roleName=" + roleName;  
@@ -29,12 +33,12 @@ export class GetDataService {
        
         let headers = new Headers();
         headers.append('Accept', 'application/json');
-      //  headers.append('Content-Type', 'application/json');
+        headers.append('Content-Type', 'application/json');
         let _url = this._serverURL + "/" + id; 
         // let _options= new RequestOptions({headers:headers});
         return new Promise((resolve, reject) => {
             this._http.delete(_url, { headers: headers })
-                .map(res => res)
+                .map(res => res.json())
                 .catch((error: any) => {
                     console.error(error);
                     reject(error);
@@ -47,13 +51,13 @@ export class GetDataService {
     }
 
     update(actionItem: any) {
-        debugger;
+        
         let headers = new Headers();
         headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-
+        headers.append('Content-Type', 'application/json');        
         let body = {
             "plugin": {
+                "pluginId": actionItem.pluginId,
                 "name": actionItem.name,
                 "type": actionItem.type,
                 "module": actionItem.module
@@ -64,7 +68,7 @@ export class GetDataService {
         // let _options= new RequestOptions({headers:headers});
         return new Promise((resolve, reject) => {
             this._http.put(_url, body, { headers: headers })
-                .map(res => res)
+                .map(res => res.json())
                 .catch((error: any) => {
                     console.error(error);
                     reject(error);
