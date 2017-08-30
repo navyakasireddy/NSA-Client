@@ -6,7 +6,7 @@
             <img src="../../../assets/img/Saperion-logo.png" class="companyImage" />
         </md-card-header>
 
-        <md-card-content>
+        <md-card-content *ngIf="showIPHolder">
     <form #myloginForm="ngForm"> 
             <md-input-container  class="inputElements">
                 <input mdInput type="text" placeholder="IP" name="ip" [(ngModel)]="IPvalue" required />                
@@ -24,6 +24,29 @@
 
              
         </md-card-content>
-
+         <md-card-content *ngIf="!showIPHolder">
+            <md-input-container  class="inputElements">
+                <input mdInput type="text" placeholder="Username" [(ngModel)]="userName" />
+            </md-input-container><br />
+            <md-input-container  class="inputElements">
+                <input mdInput type="password" placeholder="Password" [(ngModel)]="password" />
+            </md-input-container><br />
+            <md-input-container class="inputElements">
+                <input mdInput type="text" placeholder="Tenant" [(ngModel)]="tenant" />
+            </md-input-container><br />
+         <!--   <section class="reminderSection">
+                <md-checkbox [(ngModel)]="remindMe" [align]="end">Remind me</md-checkbox>
+            </section>-->
+            <div md-card-actions class="buttonContainer">
+                <button md-raised-button color="primary" (click)="ecmLoginButtonPressed()" class="inputElements">
+                   Validate
+                </button>
+            </div>
+        </md-card-content>
     </md-card>
+
+  
+        
+       
+
 </div>

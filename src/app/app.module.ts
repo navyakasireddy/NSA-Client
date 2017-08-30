@@ -15,7 +15,6 @@ import { SettingsPage } from './components/settings/settings';
 import { Documents } from './components/documents/documents';
 import { Plugins } from './components/plugins/plugins';
 import { ModalDialog } from './components/plugins/modalDialog';
-import { LoginDialog } from "./components/login/loginDialog";
 import { DeleteDialog } from './components/common/deleteDialog';
 import { AppService } from "./services/app.service";
 //import {EventService} from "./services/event.service"
@@ -105,8 +104,8 @@ const routes: Routes = [
         Documents,
         Plugins,
         ModalDialog,
-        DeleteDialog,
-        LoginDialog
+        DeleteDialog
+       
         
     ],
     imports: [
@@ -131,8 +130,8 @@ const routes: Routes = [
         AboutPage,
         LoginPage,
         ModalDialog,
-        DeleteDialog,
-        LoginDialog        
+        DeleteDialog
+            
     ],
     providers: [
         AppService,

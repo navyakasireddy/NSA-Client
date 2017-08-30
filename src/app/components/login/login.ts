@@ -4,6 +4,7 @@ import { HomePage } from '../home/home';
 import { Message } from '../nonModalMessages/nonModalMessage'
 import { LoginService } from "../../services/login.service";
 import { FeatureService } from "../../services/feature.service";
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
 declare const gapi: any;
 
@@ -16,8 +17,8 @@ export class LoginPage implements OnInit {
     returnUrl: string;
     componentData = null;
     public IPvalue: string;
-
-    constructor(
+    showIPHolder: boolean = true;
+    constructor(public dialog: MdDialog,
         private router: Router,
         private route: ActivatedRoute,
         private loginService: LoginService,
@@ -44,20 +45,22 @@ export class LoginPage implements OnInit {
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'Documents';
         let self = this;
         if (this.loginService.isLoggedIn()) {
-            this.loginService.login()
-                .then(function () {
-                    console.log('logged in');
-                    // navigate to returnUrl
-                    self.router.navigate([self.returnUrl]);
-                }, function (error) {
-                    console.log(error);
-                });
+            //this.loginService.login()
+            //    .then(function () {
+            //        console.log('logged in');
+            //        // navigate to returnUrl
+            //        self.router.navigate([self.returnUrl]);
+            //    }, function (error) {
+            //        console.log(error);
+            //    });
         }
     }
 
     IPConnectButtonPressed() {
+       this.showIPHolder = false;        
         this.loginService.connectToIP(this.IPvalue).then(function () {
-            console.log('IP connect'+this.IPvalue);
+            console.log('IP connect' + this.IPvalue);
+           
             // navigate to returnUrl
           //  self.router.navigate([self.returnUrl]);
         }, function (error) {
