@@ -3,8 +3,8 @@
           <button id="create"  (click)="onApplyAction('create','')" md-raised-button color="primary" mdTooltip="Create new plug-in">
                         <md-icon  class="material-icons" >add</md-icon>
                     </button>
-         {{showList}}
-        <div style="overflow:auto;margin:10px" >
+         
+        <div style="overflow:auto;margin:10px" *ngIf="showList" >
             <md-table #table [dataSource]="dataSource" mdSort>
                  <ng-container cdkColumnDef="actions">
     <md-header-cell *cdkHeaderCellDef md-sort-header> Actions </md-header-cell>

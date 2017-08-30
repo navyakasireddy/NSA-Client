@@ -22,7 +22,7 @@ export class Plugins {
     // table start
     pluginDatabase;//= new PluginDatabase();
     dataSource: pluginDataSource | null;
-    showList: boolean = false;
+    showList: boolean = true;
     @ViewChild(MdSort) sort: MdSort;
     temppluginData: any = {};
     displayedColumns = ["actions", "pluginId", "name", "type", "module"];
@@ -34,14 +34,15 @@ export class Plugins {
     }
 
     GetData() {
+        this.showList = true;
         this._dataService.getList("plugins").then((res: any) => {
             this.temppluginData = res.pluginList;
             if (this.temppluginData.length > 0) {
                 pluginData = this.temppluginData;
-               
+                
                 this.pluginDatabase = new PluginDatabase()
                 this.dataSource = new pluginDataSource(this.pluginDatabase, this.sort);
-                this.showList = true;
+
                 //Observable.fromEvent(this.filter.nativeElement, 'keyup')
                 //    .debounceTime(150)
                 //    .distinctUntilChanged()
@@ -49,6 +50,9 @@ export class Plugins {
                 //        if (!this.dataSource) { return; }
                 //        this.dataSource.filter = this.filter.nativeElement.value;
                 //    });
+            }
+            else {
+                this.showList = false;
             }
         }, (error) => {
             });
