@@ -18,6 +18,20 @@ export class LoginPage implements OnInit {
     componentData = null;
     public IPvalue: string;
     showIPHolder: boolean = true;
+
+
+    private errorMessage: string;
+    public action: string;
+    public pluginItem: any;
+
+    // Form values
+    public userName: string;
+    public password: string;
+    public tenant: string;
+    public remindMe: boolean;
+    
+
+
     constructor(public dialog: MdDialog,
         private router: Router,
         private route: ActivatedRoute,
@@ -40,7 +54,9 @@ export class LoginPage implements OnInit {
      */
     ngOnInit() {
         console.log('ngOnInit');
-
+        this.userName = "";
+        this.password = "";
+        this.tenant = "";
         // get ReturnUrl or set to home
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'Documents';
         let self = this;
@@ -66,5 +82,31 @@ export class LoginPage implements OnInit {
         }, function (error) {
             console.log(error);
         });
+    }
+
+
+    ecmLoginButtonPressed() {
+        let self = this;
+        self.router.navigate([self.returnUrl]);
+        let successHandler = function () {
+            console.log('logged in');
+            // navigate to redirectUrl
+            self.router.navigate([self.returnUrl]);
+        };
+
+        let errorHandler = function (error) {
+            self.componentData = {
+                component: Message,
+                inputs: {
+                    msg: error,
+                    type: 'error',
+                }
+            };
+            console.log(error);
+
+        };
+
+        this.loginService.login(this.userName, this.password, this.tenant)
+        //.then(successHandler, errorHandler);
     }
 }

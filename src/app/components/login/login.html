@@ -7,14 +7,14 @@
         </md-card-header>
 
         <md-card-content *ngIf="showIPHolder">
-    <form #myloginForm="ngForm"> 
+    <form #IPForm="ngForm"> 
             <md-input-container  class="inputElements">
                 <input mdInput type="text" placeholder="IP" name="ip" [(ngModel)]="IPvalue" required />                
             </md-input-container>
             
 
             <div md-card-actions class="buttonContainer">
-                <button md-raised-button color="primary" (click)="IPConnectButtonPressed()" class="inputElements" [disabled]="!myloginForm.form.valid" >
+                <button md-raised-button color="primary" (click)="IPConnectButtonPressed()" class="inputElements" [disabled]="!IPForm.form.valid" >
                    Connect
                 </button>
 
@@ -25,23 +25,25 @@
              
         </md-card-content>
          <md-card-content *ngIf="!showIPHolder">
+              <form #myloginForm="ngForm"> 
             <md-input-container  class="inputElements">
-                <input mdInput type="text" placeholder="Username" [(ngModel)]="userName" />
+                <input mdInput type="text" placeholder="Username" name="username" [(ngModel)]="userName" required/>
             </md-input-container><br />
             <md-input-container  class="inputElements">
-                <input mdInput type="password" placeholder="Password" [(ngModel)]="password" />
+                <input mdInput type="password" placeholder="Password" name="password" [(ngModel)]="password" required/>
             </md-input-container><br />
             <md-input-container class="inputElements">
-                <input mdInput type="text" placeholder="Tenant" [(ngModel)]="tenant" />
+                <input mdInput type="text" placeholder="Tenant" [(ngModel)]="tenant" name="tenent" required/>
             </md-input-container><br />
          <!--   <section class="reminderSection">
                 <md-checkbox [(ngModel)]="remindMe" [align]="end">Remind me</md-checkbox>
             </section>-->
             <div md-card-actions class="buttonContainer">
-                <button md-raised-button color="primary" (click)="ecmLoginButtonPressed()" class="inputElements">
+                <button md-raised-button color="primary" (click)="ecmLoginButtonPressed()" class="inputElements" [disabled]="!myloginForm.form.valid">
                    Validate
                 </button>
             </div>
+             </form>
         </md-card-content>
     </md-card>
 
