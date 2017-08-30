@@ -1,18 +1,18 @@
 /**
  * login service for handling authentication issues
  */
-
+import { Http, RequestOptions, Headers } from '@angular/http';
 import {Injectable} from "@angular/core";
 //import {Events} from "ionic-angular";
 import {Location} from '@angular/common';
-import {AppService} from "./app.service";
 import {StorageService} from "./storage.service";
+import { Observable } from 'rxjs/Observable';
 
 const LOGIN_TOKEN = 'token';
 const keyLocalRemindMe = 'local_storeLogonValues';
 const keyLocalUsername = 'local_username';
 const keyLocalTenant = 'local_tenant';
-
+import * as json from '../../config/restconfig.json';
 @Injectable()
 export class LoginService {
 
@@ -22,18 +22,18 @@ export class LoginService {
   private serviceConnection: any;
   private token: any;
 
-  private static baseUrl = 'http://ecm-service.saperion.com/';
+  private static baseUrl = json.ecmBaseURL;
   private static ecmsUrl = LoginService.baseUrl + 'ecms/';
   private static authUrl = LoginService.baseUrl + 'ecms-auth/';
 
   private _currentUser: any = null;
 
-  constructor(/*public events: Events,*/ private location: Location, private appService: AppService, private storageService: StorageService) {
+  constructor(/*public events: Events,*/ private location: Location, private storageService: StorageService, private _http: Http, private _requestOptions: RequestOptions) {
 
-    this.credentialAuthentication = this.appService.sdkService.CredentialAuthentication;
-    this.tokenAuthentication = this.appService.sdkService.TokenAuthentication;
-    this.googleAuthentication = this.appService.sdkService.GoogleAuthentication;
-    this.serviceConnection = this.appService.sdkService.ServiceConnection;
+    //this.credentialAuthentication = this.appService.sdkService.CredentialAuthentication;
+    //this.tokenAuthentication = this.appService.sdkService.TokenAuthentication;
+    //this.googleAuthentication = this.appService.sdkService.GoogleAuthentication;
+    //this.serviceConnection = this.appService.sdkService.ServiceConnection;
 
     // events.subscribe('login:failed', (error) => {
     //   console.log('login failed event received error: ', error);
@@ -52,118 +52,95 @@ export class LoginService {
   public isLoggedIn(): boolean {
     this.token = this.storageService.getItem(LOGIN_TOKEN);
     
-    let currentServiceConn = this.appService.sdkService.currentServiceConnection;
+   // let currentServiceConn = this.appService.sdkService.currentServiceConnection;
     
     //check for empty object with ES5+, but can be slow for big 
-    return (this.token !== null && Object.getOwnPropertyNames(this.token).length !== 0 && currentServiceConn !== null);
+    return (this.token !== null && Object.getOwnPropertyNames(this.token).length !== 0 )//&& currentServiceConn !== null);
   }
   
-  public isReallyLoggedIn(): Promise<any> {
+//  public isReallyLoggedIn(): Promise<any> {
     
-    let self = this;
-    return new Promise((resolve, reject) => {
-    if (!self.isLoggedIn()) {
-        resolve(false)
-    }
+//    let self = this;
+//    return new Promise((resolve, reject) => {
+//    if (!self.isLoggedIn()) {
+//        resolve(false)
+//    }
     
     
-      // create the authentication provider
-      let token = self.storageService.getItem(LOGIN_TOKEN);
-    let authProvider = new this.tokenAuthentication(LoginService.authUrl, token);
+//      // create the authentication provider
+//      let token = self.storageService.getItem(LOGIN_TOKEN);
+//    let authProvider = new this.tokenAuthentication(LoginService.authUrl, token);
     
    
-      this.appService.sdkService.currentServiceConnection = this.appService.sdkService.getNewServiceConnection(LoginService.ecmsUrl, authProvider);
-      this.appService.sdkService.currentServiceConnection.login()
-        .then((token)=> {
-          console.log('logged in to saperion,\nreceived token\n', JSON.stringify(token.token));
-          self.token = token.toJson();
-          self.storageService.setItem(LOGIN_TOKEN, self.token);
-          resolve(true);
-        }, (error) => {
-          console.error('login failed because of', error);
-          // on loginError, reset local token
-          // TODO: delete token only on 403
-          self.token = null;
-          self.storageService.setItem(LOGIN_TOKEN, null);
-          resolve(false);
-        })
-    });
-}
+//      this.appService.sdkService.currentServiceConnection = this.appService.sdkService.getNewServiceConnection(LoginService.ecmsUrl, authProvider);
+//      this.appService.sdkService.currentServiceConnection.login()
+//        .then((token)=> {
+//          console.log('logged in to saperion,\nreceived token\n', JSON.stringify(token.token));
+//          self.token = token.toJson();
+//          self.storageService.setItem(LOGIN_TOKEN, self.token);
+//          resolve(true);
+//        }, (error) => {
+//          console.error('login failed because of', error);
+//          // on loginError, reset local token
+//          // TODO: delete token only on 403
+//          self.token = null;
+//          self.storageService.setItem(LOGIN_TOKEN, null);
+//          resolve(false);
+//        })
+//    });
+//}
   
 
   // we need it as a promise
-  public login(userName?: string, password?: string, tenant?: string): Promise<any> {
+  public login(userName?: string, password?: string, tenant?: string){ //: Promise<any> {
 
-    let license = this.credentialAuthentication.licenses.index;
-    let authProvider;
+    //let license = this.credentialAuthentication.licenses.index;
+    //let authProvider;
 
-    let self = this;
+    //let self = this;
 
-    return new Promise((resolve, reject) => {
-      // create the authentication provider
-      if (this.isLoggedIn()) {
-        //the token is stored somewhere, so we can reuse it
-        authProvider = new this.tokenAuthentication(LoginService.authUrl, this.token);
-      } else {
+    //return new Promise((resolve, reject) => {
+    //  // create the authentication provider
+    //  if (this.isLoggedIn()) {
+    //    //the token is stored somewhere, so we can reuse it
+    //    authProvider = new this.tokenAuthentication(LoginService.authUrl, this.token);
+    //  } else {
 
-        authProvider = new this.credentialAuthentication(LoginService.authUrl, userName, password, license, tenant);
-      }
+    //    authProvider = new this.credentialAuthentication(LoginService.authUrl, userName, password, license, tenant);
+    //  }
 
-      this.appService.sdkService.currentServiceConnection = this.appService.sdkService.getNewServiceConnection(LoginService.ecmsUrl, authProvider);
-      this.appService.sdkService.currentServiceConnection.login()
-        .then((token)=> {
-          console.log('logged in to saperion,\nreceived token\n', JSON.stringify(token.token));
-          self.token = token.toJson();
-          self.storageService.setItem(LOGIN_TOKEN, self.token);
-          self.appService.sdkService.currentServiceConnection.getCurrentUser().then((user)=> {
-            self.currentUser = user;
-          },
-            (error) => {
+    //  this.appService.sdkService.currentServiceConnection = this.appService.sdkService.getNewServiceConnection(LoginService.ecmsUrl, authProvider);
+    //  this.appService.sdkService.currentServiceConnection.login()
+    //    .then((token)=> {
+    //      console.log('logged in to saperion,\nreceived token\n', JSON.stringify(token.token));
+    //      self.token = token.toJson();
+    //      self.storageService.setItem(LOGIN_TOKEN, self.token);
+    //      self.appService.sdkService.currentServiceConnection.getCurrentUser().then((user)=> {
+    //        self.currentUser = user;
+    //      },
+    //        (error) => {
 
-            });
-          resolve();
-        }, (error) => {
-          console.error('login failed because of', error);
-          // on loginError, reset local token
-          // TODO: delete token only on 403
-          self.token = null;
-          self.storageService.setItem(LOGIN_TOKEN, null);
-          reject(error);
-        })
-    });
+    //        });
+    //      resolve();
+    //    }, (error) => {
+    //      console.error('login failed because of', error);
+    //      // on loginError, reset local token
+    //      // TODO: delete token only on 403
+    //      self.token = null;
+    //      self.storageService.setItem(LOGIN_TOKEN, null);
+    //      reject(error);
+    //    })
+    //});
   };
 
   public logout(): void {
   console.log('logout');
     this.storageService.removeItem(LOGIN_TOKEN);
     this.token = null;
-    this.appService.sdkService.currentServiceConnection = null;
+    //this.appService.sdkService.currentServiceConnection = null;
   }
 
-  public googleLogin(tokenId: string ,tenant: string) {
-    let license = this.googleAuthentication.licenses.index;
-    let authProvider = new this.googleAuthentication(LoginService.authUrl, tokenId, license, tenant);
 
-    let self = this;
-
-    return new Promise((resolve, reject) => {
-      this.appService.sdkService.currentServiceConnection = this.appService.sdkService.getNewServiceConnection(LoginService.ecmsUrl, authProvider);
-      this.appService.sdkService.currentServiceConnection.login()
-        .then((token)=> {
-          console.log('logged in to saperion,\nreceived token\n', JSON.stringify(token.token));
-          self.token = token.toJson();
-          self.storageService.setItem(LOGIN_TOKEN, self.token);
-          resolve();
-        }, (error) => {
-          console.error('login failed because of', error);
-          // on loginError, reset local token
-          // TODO: delete token only on 403
-          self.token = null;
-          self.storageService.setItem(LOGIN_TOKEN, null);
-          reject(error);
-        })
-    });
-  }
   
   public getLocalUsername():string {
         let user = this.storageService.getItem(keyLocalUsername);
@@ -202,5 +179,34 @@ export class LoginService {
   
   public setLocalRemindMe(remindMe:boolean):void {
         this.storageService.setItem(keyLocalRemindMe,remindMe);
+  }
+
+  public connectToIP(url: string) {
+      let headers = new Headers();
+      headers.append('Accept', 'application/json');
+      headers.append('Content-Type', 'application/json');
+
+      let body = {
+          //"plugin": {
+          //    "pluginId": "",
+          //    "name": actionItem.name,
+          //    "type": actionItem.type,
+          //    "module": actionItem.module
+          //}
+      };
+
+      let _url = "";//this._serverURL;
+      return new Promise((resolve, reject) => {
+          this._http.post(_url, body, { headers: headers })
+              .map(res => res.json())
+              .catch((error: any) => {
+                  console.error(error);
+                  reject(error);
+                  return Observable.throw(error.json().error || 'Server error');
+              })
+              .subscribe((data) => {
+                  resolve(data);
+              });
+      });
   }
 }

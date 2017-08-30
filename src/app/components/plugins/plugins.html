@@ -3,7 +3,8 @@
           <button id="create"  (click)="onApplyAction('create','')" md-raised-button color="primary" mdTooltip="Create new plug-in">
                         <md-icon  class="material-icons" >add</md-icon>
                     </button>
-        <div style="overflow:auto;margin:10px">
+         {{showList}}
+        <div style="overflow:auto;margin:10px" >
             <md-table #table [dataSource]="dataSource" mdSort>
                  <ng-container cdkColumnDef="actions">
     <md-header-cell *cdkHeaderCellDef md-sort-header> Actions </md-header-cell>
@@ -41,7 +42,7 @@
                     <md-cell *cdkCellDef="let row"> {{row.module}} </md-cell>
                 </ng-container>
                
-                <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+                <md-header-row *cdkHeaderRowDef="displayedColumns" ></md-header-row>
                 <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
 
             </md-table>

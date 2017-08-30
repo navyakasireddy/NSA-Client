@@ -2,16 +2,15 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
-import * as json from '../../config/urls.json';
+import * as json from '../../config/restconfig.json';
 @Injectable()
 
 export class PluginDataService {
-   
+
     _serverURL: any;
     constructor(private _http: Http, private _requestOptions: RequestOptions) {
-       
-        this._serverURL = json.Documents.plugin;
-            //"http://pc07vpnw:8080/nsac-packaging-1.0-SNAPSHOT/api/documents/plugin";
+
+        this._serverURL = json.restBaseURL + "documents/plugin";
     }
     getList(dataType: string) {
         let _url = this._serverURL; //+ "/Menu/GetMenuDetails?roleName=" + roleName;  
@@ -30,11 +29,11 @@ export class PluginDataService {
         });
     }
     Delete(id: string) {
-       
+
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
-        let _url = this._serverURL + "/" + id; 
+        let _url = this._serverURL + "/" + id;
         // let _options= new RequestOptions({headers:headers});
         return new Promise((resolve, reject) => {
             this._http.delete(_url, { headers: headers })
@@ -51,10 +50,10 @@ export class PluginDataService {
     }
 
     update(actionItem: any) {
-        
+
         let headers = new Headers();
         headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');        
+        headers.append('Content-Type', 'application/json');
         let body = {
             "plugin": {
                 "pluginId": actionItem.pluginId,
@@ -64,7 +63,7 @@ export class PluginDataService {
             }
         };
 
-        let _url = this._serverURL ;
+        let _url = this._serverURL;
         // let _options= new RequestOptions({headers:headers});
         return new Promise((resolve, reject) => {
             this._http.put(_url, body, { headers: headers })
@@ -80,8 +79,7 @@ export class PluginDataService {
         });
     }
 
-    create(actionItem: any) {
-        debugger;
+    create(actionItem: any) {        
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');

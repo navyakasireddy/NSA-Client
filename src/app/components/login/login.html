@@ -9,12 +9,12 @@
         <md-card-content>
     <form #myloginForm="ngForm"> 
             <md-input-container  class="inputElements">
-                <input mdInput type="text" placeholder="IP" name="ip" [(ngModel)]="tenant" required />                
+                <input mdInput type="text" placeholder="IP" name="ip" [(ngModel)]="IPvalue" required />                
             </md-input-container>
             
 
             <div md-card-actions class="buttonContainer">
-                <button md-raised-button color="primary" (click)="ecmLoginButtonPressed()" class="inputElements" [disabled]="!myloginForm.form.valid" >
+                <button md-raised-button color="primary" (click)="IPConnectButtonPressed()" class="inputElements" [disabled]="!myloginForm.form.valid" >
                    Connect
                 </button>
 

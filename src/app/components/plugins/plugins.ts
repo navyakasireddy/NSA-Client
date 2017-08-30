@@ -22,6 +22,7 @@ export class Plugins {
     // table start
     pluginDatabase;//= new PluginDatabase();
     dataSource: pluginDataSource | null;
+    showList: boolean = false;
     @ViewChild(MdSort) sort: MdSort;
     temppluginData: any = {};
     displayedColumns = ["actions", "pluginId", "name", "type", "module"];
@@ -37,11 +38,10 @@ export class Plugins {
             this.temppluginData = res.pluginList;
             if (this.temppluginData.length > 0) {
                 pluginData = this.temppluginData;
-
-                console.log(pluginData);
+               
                 this.pluginDatabase = new PluginDatabase()
                 this.dataSource = new pluginDataSource(this.pluginDatabase, this.sort);
-
+                this.showList = true;
                 //Observable.fromEvent(this.filter.nativeElement, 'keyup')
                 //    .debounceTime(150)
                 //    .distinctUntilChanged()
@@ -51,7 +51,8 @@ export class Plugins {
                 //    });
             }
         }, (error) => {
-        });
+            });
+        
     }
 
     onApplyAction(action: string, item) {
@@ -73,8 +74,7 @@ export class Plugins {
             });
 
 
-            this.dialogRefDel.afterClosed().subscribe(result => {
-                debugger;
+            this.dialogRefDel.afterClosed().subscribe(result => {                
                 if (result) {
                     this._dataService.Delete(item.pluginId).then((res: any) => {
                         console.log(res)
@@ -121,6 +121,8 @@ export class PluginDatabase {
         if (pluginData != undefined) {
             const copiedData = self.data.slice();
             var item;
+            
+           
             pluginData.forEach(function (childitem) {
 
 
@@ -173,7 +175,10 @@ export class pluginDataSource extends DataSource<any> {
         });
     }
 
-    disconnect() { }
+    disconnect() {
+       
+       
+    }
 
     /** Returns a sorted copy of the database data. */
     getSortedData(): pluginData[] {
