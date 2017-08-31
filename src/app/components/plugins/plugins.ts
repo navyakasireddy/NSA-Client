@@ -1,11 +1,11 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
 import { ModalDialog } from './modalDialog';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MdDialog, MdDialogRef, MdCard } from '@angular/material';
 import { PluginDataService } from "../../services/pluginData.service";
 import { DataSource } from '@angular/cdk';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { MdSort } from '@angular/material';
+import { MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 import { DeleteDialog } from '../common/deleteDialog';
 
@@ -16,6 +16,7 @@ var pluginData: any = {};
     templateUrl: 'plugins.html'
 })
 export class Plugins {
+    @ViewChild(MdCard, { read: ViewContainerRef }) card;    
     @ViewChild('filter') filter: ElementRef;
     dialogRef: MdDialogRef<ModalDialog>;
     dialogRefDel: MdDialogRef<DeleteDialog>;
@@ -26,7 +27,7 @@ export class Plugins {
     @ViewChild(MdSort) sort: MdSort;
     temppluginData: any = {};
     displayedColumns = ["actions", "pluginId", "name", "type", "module"];
-    constructor(private _dataService: PluginDataService, public dialog: MdDialog) { }
+    constructor(private _dataService: PluginDataService, public dialog: MdDialog, public snackBar: MdSnackBar) { }
 
 
     ngOnInit() {
@@ -82,6 +83,7 @@ export class Plugins {
                 if (result) {
                     this._dataService.Delete(item.pluginId).then((res: any) => {
                         console.log(res)
+                        this.openSnackBar("Deleted Successfully","delete");
                         this.GetData();
                         this.dialogRef = null;
                     }, (error) => {
@@ -100,9 +102,18 @@ export class Plugins {
             this.dialogRef.afterClosed().subscribe(result => {
                 console.log('result: ' + result);
                 this.dialogRef = null;
+                this.openSnackBar("created Successfully", "");
                 this.GetData();
             });
         }
+    }
+
+
+    openSnackBar(message: string, action: string) {
+        let config = new MdSnackBarConfig();
+        config.duration = 1400;
+        config.extraClasses = ["styleclass"];
+        this.snackBar.open(message, action, config);
     }
 }
 
