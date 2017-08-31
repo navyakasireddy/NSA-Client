@@ -37,7 +37,7 @@ export class ModalDialog {
         if (this.action == "Create") {
             this._dataService.create(actionItem).then((res: any) => {
                 console.log(res)
-                this.dialogRef.close();
+                this.dialogRef.close(res.responseMsg);
             }, (error) => {
             });
         }

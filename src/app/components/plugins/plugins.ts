@@ -100,9 +100,10 @@ export class Plugins {
             });
 
             this.dialogRef.afterClosed().subscribe(result => {
+                debugger;
                 console.log('result: ' + result);
                 this.dialogRef = null;
-                this.openSnackBar("created Successfully", "");
+                this.openSnackBar(result, "");
                 this.GetData();
             });
         }
