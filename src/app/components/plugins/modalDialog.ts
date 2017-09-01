@@ -44,7 +44,7 @@ export class ModalDialog {
         else if (this.action == "Update") {
             this._dataService.update(actionItem).then((res: any) => {
                 console.log(res)
-                this.dialogRef.close();
+                this.dialogRef.close(res.responseMsg);
             }, (error) => {
             });
         }

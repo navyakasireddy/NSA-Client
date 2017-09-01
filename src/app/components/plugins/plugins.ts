@@ -71,6 +71,7 @@ export class Plugins {
                 console.log('result: ' + result);
                 this.dialogRef = null;
                 this.GetData();
+                this.openSnackBar(result, "");
             });
         }
         else if (action == 'delete') {
@@ -83,7 +84,7 @@ export class Plugins {
                 if (result) {
                     this._dataService.Delete(item.pluginId).then((res: any) => {
                         console.log(res)
-                        this.openSnackBar("Deleted Successfully","delete");
+                        this.openSnackBar(res.responseMsg, "");
                         this.GetData();
                         this.dialogRef = null;
                     }, (error) => {
@@ -112,8 +113,9 @@ export class Plugins {
 
     openSnackBar(message: string, action: string) {
         let config = new MdSnackBarConfig();
-        config.duration = 1400;
-        config.extraClasses = ["styleclass"];
+        config.duration = 1600;
+        config.extraClasses = ["position"];
+      
         this.snackBar.open(message, action, config);
     }
 }
