@@ -12,7 +12,6 @@ import { HomePage } from './components/home/home';
 import { Message } from './components/nonModalMessages/nonModalMessage';
 import { AboutPage } from './components/about/about';
 import { SettingsPage } from './components/settings/settings';
-import { Documents } from './components/documents/documents';
 import { Plugins } from './components/plugins/plugins';
 import { ModalDialog } from './components/plugins/modalDialog';
 import { DeleteDialog } from './components/common/deleteDialog';
@@ -55,7 +54,7 @@ const routes: Routes = [
     //},
     {
         path: 'default',
-        component: Documents
+        component: AboutPage
     },    
     {
         path: 'login',
@@ -67,7 +66,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [           
             { path: 'Plug-ins', component: Plugins, pathMatch: 'full' },
-            { path: '**', component: Documents, pathMatch: 'full' },
+            { path: '**', component: AboutPage, pathMatch: 'full' },
             //{
             //    path: ':id',
             //    component: ComponentViewer,
@@ -101,7 +100,7 @@ const routes: Routes = [
         Message,
         DynamicComponent,
         UserInfoPage,
-        Documents,
+      
         Plugins,
         ModalDialog,
         DeleteDialog
