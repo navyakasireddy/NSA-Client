@@ -1067,11 +1067,13 @@
 }
 
 .mat-header-cell {
-    color: rgba(0, 0, 0, .54)
+    color: rgba(0, 0, 0, .54);
+	font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .mat-cell {
-    color: rgba(0, 0, 0, .87)
+    color: rgba(0, 0, 0, .87);
+	font-family:  Roboto, "Helvetica Neue", sans-serif;
 }
 
 .mat-datepicker-content {

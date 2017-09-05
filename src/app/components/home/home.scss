@@ -94,4 +94,11 @@ height:100%;
   router-outlet + * {
     flex-grow: 1;
   }
+
+ 
+
 }
+
+tree-node-content span{
+      font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif !important;
+  }
