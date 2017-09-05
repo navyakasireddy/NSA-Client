@@ -84,17 +84,14 @@ export class HomePage {
     }
 
     ngAfterViewInit() {
-        debugger;
-        var tree = this.elRef.nativeElement.querySelector('#tree');
-        //tree.treeModel.getNodeByName("Plug-ins")
-        //       .setActiveAndVisible();
+        
     }
 
     onEvent($event) {
-        //if ($event.eventName == "initialized") {
-        //    $event.treeModel.getNodeBy((node) => node.data.name === 'Plug-ins')
-        //        .setActiveAndVisible();
-        //}
+        if ($event.eventName == "initialized") {
+            $event.treeModel.getNodeBy((node) => node.data.name === 'Plug-ins')
+                .setActiveAndVisible();
+        }
         if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined ){ //&& $event.treeModel.activeNodes[0].children.length == 0) {
             var n = $event.treeModel.activeNodes[0].data.name;
             var p = $event.treeModel.activeNodes[0].parent.data.name;
