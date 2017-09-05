@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ViewChild, OnInit, NgModule } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, OnInit, NgModule, ElementRef } from '@angular/core';
 
 import { AboutPage } from "../about/about";
 
@@ -18,7 +18,8 @@ const SMALL_WIDTH_BREAKPOINT = 840;
 
 })
 export class HomePage {
-
+    
+    //@ViewChild('aaa') tree: ElementRef;
     public nodes: any;/*= [
     {
       "id": "1",
@@ -49,7 +50,7 @@ export class HomePage {
 
 
 
-    constructor(private _adminDataService: AdminDataService, private _router: Router, private loginService: LoginService) { }
+    constructor(private _adminDataService: AdminDataService, private _router: Router, private loginService: LoginService, private elRef: ElementRef) { }
     @ViewChild(MdSidenav) sidenav: MdSidenav;
 
 
@@ -59,20 +60,41 @@ export class HomePage {
     }
 
 
+    check() {
+        var tree = this.elRef.nativeElement.querySelector('#tree');
+             tree.treeModel.getNodeByName("Plug-ins")
+             .setActiveAndVisible();
+    }
+
     ngOnInit() {
         this._router.events.subscribe(() => {
             if (this.isScreenSmall()) {
                 this.sidenav.close();
             }
         });
-
+     
+       
 
         this._adminDataService.getAdminListDetails().then((res: any) => {
             this.nodes = res;
+            debugger;
+            var tree = this.elRef.nativeElement.querySelector('#tree');
         }, (error) => {
         });
     }
+
+    ngAfterViewInit() {
+        debugger;
+        var tree = this.elRef.nativeElement.querySelector('#tree');
+        //tree.treeModel.getNodeByName("Plug-ins")
+        //       .setActiveAndVisible();
+    }
+
     onEvent($event) {
+        if ($event.eventName == "initialized") {
+            $event.treeModel.getNodeBy((node) => node.data.name === 'Plug-ins')
+                .setActiveAndVisible();
+        }
         if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined) //&& $event.treeModel.activeNodes[0].children.length==0
          {
             var n = $event.treeModel.activeNodes[0].data.name;

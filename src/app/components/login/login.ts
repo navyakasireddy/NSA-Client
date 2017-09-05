@@ -4,7 +4,7 @@ import { HomePage } from '../home/home';
 import { Message } from '../nonModalMessages/nonModalMessage'
 import { LoginService } from "../../services/login.service";
 import { FeatureService } from "../../services/feature.service";
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
 declare const gapi: any;
 
@@ -18,9 +18,9 @@ export class LoginPage implements OnInit {
     componentData = null;
     public IPvalue: string;
     showIPHolder: boolean = true;
+    showProgress: boolean = false;
 
-
-    private errorMessage: string;
+    public errorMessage: string="";
     public action: string;
     public pluginItem: any;
 
@@ -28,11 +28,16 @@ export class LoginPage implements OnInit {
     public userName: string;
     public password: string;
     public tenant: string;
+    public licenseType: string;
     public remindMe: boolean;
     
+    licenseTypes = [
+        { value: '1', viewValue: 'index' },
+        { value: '2', viewValue: 'query' },
+        { value: '3', viewValue: 'admin' }
+    ];
 
-
-    constructor(public dialog: MdDialog,
+    constructor(public dialog: MdDialog, public snackBar: MdSnackBar,
         private router: Router,
         private route: ActivatedRoute,
         private loginService: LoginService,
@@ -73,25 +78,32 @@ export class LoginPage implements OnInit {
     }
 
     IPConnectButtonPressed() {
-       this.showIPHolder = false;        
-        this.loginService.connectToIP(this.IPvalue).then(function () {
-            console.log('IP connect' + this.IPvalue);
-           
-            // navigate to returnUrl
-          //  self.router.navigate([self.returnUrl]);
-        }, function (error) {
-            console.log(error);
-        });
+        let self = this;
+        self.showProgress = true;
+        self.showIPHolder = false;
+        //this.loginService.connectToIP(this.IPvalue).then((res: any) => {
+        //    console.log('IP connect' + this.IPvalue);
+        //    self.showIPHolder = res.connectionActive ? false : true;
+        //    self.errorMessage = "";
+        //    self.openSnackBar("Server active", "");
+        //}, function (error) {
+        //    self.showIPHolder = true;
+        //    console.log(error);
+        //    self.showProgress = false;
+        //   // self.errorMessage = "IP is inactive.";
+        //    self.openSnackBar("Server not started", "");
+        //});
     }
 
 
     ecmLoginButtonPressed() {
         let self = this;
-        self.router.navigate([self.returnUrl]);
+        
         let successHandler = function () {
             console.log('logged in');
             // navigate to redirectUrl
             self.router.navigate([self.returnUrl]);
+            self.errorMessage = "";
         };
 
         let errorHandler = function (error) {
@@ -103,10 +115,19 @@ export class LoginPage implements OnInit {
                 }
             };
             console.log(error);
-
+            self.openSnackBar("Invalid Credentials,please try again.", "");
+            //self.errorMessage=""
         };
 
-        this.loginService.login(this.userName, this.password, this.tenant)
-        //.then(successHandler, errorHandler);
+        this.loginService.login(this.userName, this.password, this.tenant, this.licenseType)
+        .then(successHandler, errorHandler);
+    }
+
+    openSnackBar(message: string, action: string) {
+        debugger;
+        let config = new MdSnackBarConfig();
+        config.duration = 1600;
+        config.extraClasses = ["position"];
+        this.snackBar.open(message, action, config);
     }
 }

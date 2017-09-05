@@ -88,6 +88,7 @@ export class Plugins {
                         this.GetData();
                         this.dialogRef = null;
                     }, (error) => {
+                       
                     });
                 }
               
@@ -115,7 +116,6 @@ export class Plugins {
         let config = new MdSnackBarConfig();
         config.duration = 1600;
         config.extraClasses = ["position"];
-      
         this.snackBar.open(message, action, config);
     }
 }
