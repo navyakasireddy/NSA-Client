@@ -32,26 +32,17 @@ import { AuthGuard } from './auth.guard';
 import { TreeModule } from 'angular-tree-component';
 import { CdkTableModule } from '@angular/cdk';
 
-
+import { Media } from "./components/media/media";
+import { MediaDialog } from "./components/media/MediaDialog";
 
 const routes: Routes = [
-    //{
-    //    path: 'home',
-    //    component: HomePage,
-    //    canActivate: [AuthGuard]
-    //},
     {
         path: '',
         component: LoginPage,
          pathMatch: 'full'
     
     },
-    //{
-    //    path: 'home',
-    //    component: HomePage,
-    //    canActivate: [AuthGuard]
-
-    //},
+  
     {
         path: 'default',
         component: AboutPage
@@ -66,27 +57,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [           
             { path: 'Plug-ins', component: Plugins, pathMatch: 'full' },
-            { path: '**', component: AboutPage, pathMatch: 'full' },
-            //{
-            //    path: ':id',
-            //    component: ComponentViewer,
-            //    children: [
-            //        { path: '', redirectTo: 'overview', pathMatch: 'full' },
-            //        { path: 'overview', component: ComponentOverview, pathMatch: 'full' },
-            //        { path: 'api', component: ComponentApi, pathMatch: 'full' },
-            //        { path: 'examples', component: ComponentExamples, pathMatch: 'full' },
-            //        { path: '**', redirectTo: 'overview' },
-            //    ],
-            //},
+            { path: '**', component: AboutPage, pathMatch: 'full' }
+            
         ],
     }
     ,{
         path: '**',
-        redirectTo:'Documents',
-        //children: [
-        //    { path: '', component: Documents, pathMatch: 'full' },
-        //    { path: '**', component: Documents, pathMatch: 'full' },
-        //]
+        redirectTo:'Documents'       
     }
 ];
 
@@ -100,11 +77,11 @@ const routes: Routes = [
         Message,
         DynamicComponent,
         UserInfoPage,
-      
+        Media,
         Plugins,
         ModalDialog,
-        DeleteDialog
-       
+        DeleteDialog,
+       MediaDialog
         
     ],
     imports: [
@@ -129,8 +106,8 @@ const routes: Routes = [
         AboutPage,
         LoginPage,
         ModalDialog,
-        DeleteDialog
-            
+        DeleteDialog,
+        MediaDialog
     ],
     providers: [
         AppService,
