@@ -7,7 +7,7 @@ import * as json from '../../config/restconfig.json';
 export class AdminDataService {
     _serverURL: any;
     constructor(private _http: Http) {
-        this._serverURL = json.restBaseURL + "resources/list/test";
+        this._serverURL = json.restBaseURL + json.treeView;
     }
     getAdminListDetails() {
         let _url = this._serverURL;

@@ -1,5 +1,12 @@
 {
-"restBaseURL":"http://pc07vpnw:8080/nsac-packaging-1.0-SNAPSHOT/api/"  ,
-"IPBaseURL":"http://pc0d6vxb:8080/nsac-packaging-1.0-SNAPSHOT/api/"  ,
-"ecmBaseURL":"http://ecm-service.saperion.com/" 
+"restBaseURL":"http://pc07vpnw:8080/nsac-packaging-1.0-SNAPSHOT/api"  ,
+"ecmBaseURL":"http://ecm-service.saperion.com" ,
+"ecmsUrl":"/ecms",
+"authUrl":"/ecms-auth",
+"IPBaseURL":"/connect"  ,
+"treeView":"/resources/list",
+"plugin":"/documents/plugin",
+"media":"/documents/media"
+
+
 }

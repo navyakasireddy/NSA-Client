@@ -80,19 +80,18 @@ export class LoginPage implements OnInit {
     IPConnectButtonPressed() {
         let self = this;
         self.showProgress = true;
-        self.showIPHolder = false;
-        //this.loginService.connectToIP(this.IPvalue).then((res: any) => {
-        //    console.log('IP connect' + this.IPvalue);
-        //    self.showIPHolder = res.connectionActive ? false : true;
-        //    self.errorMessage = "";
-        //    self.openSnackBar("Server active", "");
-        //}, function (error) {
-        //    self.showIPHolder = true;
-        //    console.log(error);
-        //    self.showProgress = false;
-        //   // self.errorMessage = "IP is inactive.";
-        //    self.openSnackBar("Server not started", "");
-        //});
+        this.loginService.connectToIP(this.IPvalue).then((res: any) => {
+            console.log('IP connect' + this.IPvalue);
+            self.showIPHolder = res.connectionActive ? false : true;
+            self.errorMessage = "";
+            self.openSnackBar("Server active", "");
+        }, function (error) {
+            self.showIPHolder = true;
+            console.log(error);
+            self.showProgress = false;
+           // self.errorMessage = "IP is inactive.";
+            self.openSnackBar("Server not started", "");
+        });
     }
 
 

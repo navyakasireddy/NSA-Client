@@ -10,7 +10,7 @@ export class PluginDataService {
     _serverURL: any;
     constructor(private _http: Http, private _requestOptions: RequestOptions) {
 
-        this._serverURL = json.restBaseURL + "documents/plugin";
+        this._serverURL = json.restBaseURL + json.plugin;
     }
     getList(dataType: string) {
         let _url = this._serverURL; //+ "/Menu/GetMenuDetails?roleName=" + roleName;  

@@ -21,11 +21,10 @@ export class LoginService {
   private googleAuthentication: any;
   private serviceConnection: any;
   private token: any;
-  private static NSAUrl = json.IPBaseURL;
-  private static baseUrl = json.ecmBaseURL;
-  private static ecmsUrl = LoginService.baseUrl + 'ecms/';
-  private static authUrl = LoginService.baseUrl + 'ecms-auth/';
-  private static IPUrl = LoginService.NSAUrl + 'connect/';
+  private static NSAUrl = json.restBaseURL + json.IPBaseURL;
+  private static ecmsUrl = json.ecmBaseURL + json.ecmsUrl + '/';
+  private static authUrl = json.ecmBaseURL + json.authUrl+ '/';
+
 
 
   private _currentUser: any = null;
@@ -181,7 +180,7 @@ export class LoginService {
      
     
 
-      let _url = LoginService.IPUrl + IPvalue;
+      let _url = LoginService.NSAUrl +'/'+ IPvalue;
       return new Promise((resolve, reject) => {
           this._http.get(_url, { headers: headers })
               .map(res => res.json())

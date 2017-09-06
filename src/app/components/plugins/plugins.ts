@@ -71,6 +71,7 @@ export class Plugins {
                 console.log('result: ' + result);
                 this.dialogRef = null;
                 this.GetData();
+                if (result!="")
                 this.openSnackBar(result, "");
             });
         }
@@ -83,7 +84,8 @@ export class Plugins {
             this.dialogRefDel.afterClosed().subscribe(result => {                
                 if (result) {
                     this._dataService.Delete(item.pluginId).then((res: any) => {
-                        console.log(res)
+                        console.log(res);
+                        if (result != "")
                         this.openSnackBar(res.responseMsg, "");
                         this.GetData();
                         this.dialogRef = null;
@@ -105,7 +107,8 @@ export class Plugins {
                 debugger;
                 console.log('result: ' + result);
                 this.dialogRef = null;
-                this.openSnackBar(result, "");
+                if (result != "")
+                this.openSnackBar(result, "");                
                 this.GetData();
             });
         }

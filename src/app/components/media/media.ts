@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewContainerRef, OnInit } from '@angular/core';
 import { MediaDialog } from './MediaDialog';
 import { MdDialog, MdDialogRef, MdCard } from '@angular/material';
 import { PluginDataService } from "../../services/pluginData.service";
@@ -6,7 +6,7 @@ import { DataSource } from '@angular/cdk';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
-
+import { Router, ActivatedRoute } from '@angular/router';
 import { DeleteDialog } from '../common/deleteDialog';
 
 var pluginData: any = {};
@@ -15,48 +15,54 @@ var pluginData: any = {};
     selector: 'page-media',
     templateUrl: 'media.html'
 })
-export class Media {
+export class Media implements OnInit  {
+    routeSubscription: any;
     @ViewChild(MdCard, { read: ViewContainerRef }) card;    
     @ViewChild('filter') filter: ElementRef;
     dialogRef: MdDialogRef<MediaDialog>;
     dialogRefDel: MdDialogRef<DeleteDialog>;
     // table start
+    mediaType: string="";
     pluginDatabase;//= new PluginDatabase();
     dataSource: pluginDataSource | null;
     showList: boolean = true;
     @ViewChild(MdSort) sort: MdSort;
     temppluginData: any = {};
-    displayedColumns = ["actions", "pluginId", "name", "type", "module"];
-    constructor(private _dataService: PluginDataService, public dialog: MdDialog, public snackBar: MdSnackBar) { }
-
+    displayedColumns = [];
+    constructor(private _dataService: PluginDataService, public dialog: MdDialog, public snackBar: MdSnackBar,
+        private route: ActivatedRoute) {
+    }
+    ngDoCheck() {
+    this.mediaType = this.route.snapshot.queryParams['mediaType'];
+    this.GetData();
+    }
 
     ngOnInit() {
-        this.GetData();
     }
 
     GetData() {
         this.showList = true;
-        this._dataService.getList("plugins").then((res: any) => {
-            this.temppluginData = res.pluginList;
-            if (this.temppluginData.length > 0) {
-                pluginData = this.temppluginData;
+        //this._dataService.getList("plugins").then((res: any) => {
+        //    this.temppluginData = res.pluginList;
+        //    if (this.temppluginData.length > 0) {
+        //        pluginData = this.temppluginData;
                 
-                this.pluginDatabase = new PluginDatabase()
-                this.dataSource = new pluginDataSource(this.pluginDatabase, this.sort);
+        //        this.pluginDatabase = new PluginDatabase()
+        //        this.dataSource = new pluginDataSource(this.pluginDatabase, this.sort);
 
-                //Observable.fromEvent(this.filter.nativeElement, 'keyup')
-                //    .debounceTime(150)
-                //    .distinctUntilChanged()
-                //    .subscribe(() => {
-                //        if (!this.dataSource) { return; }
-                //        this.dataSource.filter = this.filter.nativeElement.value;
-                //    });
-            }
-            else {
-                this.showList = false;
-            }
-        }, (error) => {
-            });
+        //        //Observable.fromEvent(this.filter.nativeElement, 'keyup')
+        //        //    .debounceTime(150)
+        //        //    .distinctUntilChanged()
+        //        //    .subscribe(() => {
+        //        //        if (!this.dataSource) { return; }
+        //        //        this.dataSource.filter = this.filter.nativeElement.value;
+        //        //    });
+        //    }
+        //    else {
+        //        this.showList = false;
+        //    }
+        //}, (error) => {
+        //    });
         
     }
 
@@ -82,14 +88,14 @@ export class Media {
 
             this.dialogRefDel.afterClosed().subscribe(result => {                
                 if (result) {
-                    this._dataService.Delete(item.pluginId).then((res: any) => {
-                        console.log(res)
-                        this.openSnackBar(res.responseMsg, "");
-                        this.GetData();
-                        this.dialogRef = null;
-                    }, (error) => {
+                    //this._dataService.Delete(item.pluginId).then((res: any) => {
+                    //    console.log(res)
+                    //    this.openSnackBar(res.responseMsg, "");
+                    //    this.GetData();
+                    //    this.dialogRef = null;
+                    //}, (error) => {
                        
-                    });
+                    //});
                 }
               
                

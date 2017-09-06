@@ -76,8 +76,7 @@ export class HomePage {
        
 
         this._adminDataService.getAdminListDetails().then((res: any) => {
-            this.nodes = res;
-            debugger;
+            this.nodes = res;           
             var tree = this.elRef.nativeElement.querySelector('#tree');
         }, (error) => {
         });
@@ -88,15 +87,23 @@ export class HomePage {
     }
 
     onEvent($event) {
-        if ($event.eventName == "initialized") {
-            $event.treeModel.getNodeBy((node) => node.data.name === 'Plug-ins')
+        var n, p;
+        if ($event.eventName == "initialized") {           
+            $event.treeModel.getNodeBy((node) => node.data.id === '4.9')
                 .setActiveAndVisible();
         }
         if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined ){ //&& $event.treeModel.activeNodes[0].children.length == 0) {
-            var n = $event.treeModel.activeNodes[0].data.name;
-            var p = $event.treeModel.activeNodes[0].parent.data.name;
-            debugger;
-            this._router.navigate([p + '/' + n]);
+            if ($event.treeModel.activeNodes[0].parent.data.name === "Media") {
+                n = "Media";
+                p = "Documents";
+                this._router.navigate([p + '/' + n], { queryParams: { mediaType: $event.treeModel.activeNodes[0].data.name } });
+            }
+            else if ($event.treeModel.activeNodes[0].data.name != "Media") {
+                n = $event.treeModel.activeNodes[0].data.name;
+                p = $event.treeModel.activeNodes[0].parent.data.name;
+                this._router.navigate([p + '/' + n]);
+            }
+           
         }
         //else if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined && $event.treeModel.activeNodes[0].children.length > 0) {
         //    debugger;
