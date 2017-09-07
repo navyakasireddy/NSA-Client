@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, ViewContainerRef, OnInit } from '@ang
 import { MediaDialog } from './MediaDialog';
 import { MdDialog, MdDialogRef, MdCard } from '@angular/material';
 import { PluginDataService } from "../../services/pluginData.service";
-import { DataSource } from '@angular/cdk';
+import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
