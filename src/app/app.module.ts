@@ -30,7 +30,7 @@ import { UserInfoPage } from "./components/userInfo/userInfo";
 import { AuthGuard } from './auth.guard';
 
 import { TreeModule } from 'angular-tree-component';
-import { CdkTableModule } from '@angular/cdk/table';
+import { CdkTableModule } from '@angular/cdk';
 
 import { Media } from "./components/media/media";
 import { MediaDialog } from "./components/media/MediaDialog";
@@ -120,7 +120,7 @@ const routes: Routes = [
         AuthGuard]
 })
 export class AppModule {
-    //public static availableApps: any = [];
+    public static availableApps: any = [];
 }
 
 export interface ModuleConfiguration {
