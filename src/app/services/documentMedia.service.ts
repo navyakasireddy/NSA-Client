@@ -14,10 +14,10 @@ export class DocMediaService {
         this._serverURL = json.restBaseURL + json.media;
     }
     getList(mediaType: string) {
-        let _url = this._serverURL + '/' + mediaType; 
+        let _url = this._serverURL + '/' + this.GetMediaType(mediaType); 
 
         return new Promise((resolve, reject) => {
-            this._http.get(_url)
+            this._http.post(_url,{})
                 .map(res => res.json())
                 .catch((error: any) => {
                     console.error(error);
@@ -90,7 +90,7 @@ export class DocMediaService {
 
         let body = {
             "media": {
-                "documentMediaType": actionItem.documentMediaType,
+                "documentMediaType": this.GetMediaType(actionItem.mediaType),
                 "name": actionItem.mediumDesc,
                 "type": "virtual",
                 "storageCapacity": actionItem.storageCapacity,
@@ -98,7 +98,7 @@ export class DocMediaService {
                 "maximumSize": actionItem.maxSize,
                 "timeOut": actionItem.timeOut,
                 "container": actionItem.isContainer,
-
+                "isNamedPool": actionItem.isNamedPool,
                 "plugin": {
                     "pluginId": actionItem.pluginValue
                 }
@@ -119,5 +119,18 @@ export class DocMediaService {
                     resolve(data);
                 });
         });
+    }
+
+    GetMediaType(mediatype: string) {
+        //return "ALL_MEDIA"; 
+        switch (mediatype) {
+            case "Removable media": return "REMOVABLE_MEDIA";
+            case "Migrated media": return "MIGRATED_MEDIA"; 
+            case "Buffer media": return "BUFFER_MEDIA";
+            case "Imported media": return  "IMPORTED_MEDIA"; 
+            case "Closed media": return " CLOSED_MEDIA";
+            case "All media": return "ALL_MEDIA";
+            default: return "ALL_MEDIA"; 
+        }
     }
 }  

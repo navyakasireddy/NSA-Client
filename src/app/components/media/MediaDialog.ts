@@ -33,24 +33,14 @@ export class MediaDialog {
             maxNumber: "",
             maxSize: "",
             timeOut: "",
-            
+            mediatype : this.route.snapshot.queryParams['mediaType']
         };
-        this._pluginService.getList("plugins").then((res: any) => {
+        this._pluginService.getList().then((res: any) => {
             if (res.pluginList.length > 0) {
                 this.plugins = res.pluginList;
                 console.log(this.plugins);
             }
         });
-        var mediatype = this.route.snapshot.queryParams['mediaType'];
-        switch (mediatype) {
-            case "Removable media": this.mediaItem.documentMediaType = "REMOVABLE_MEDIA"; break;
-            case "Migrated media": this.mediaItem.documentMediaType = "MIGRATED_MEDIA"; break;
-            case "Buffer media": this.mediaItem.documentMediaType = "BUFFER_MEDIA"; break;
-            case "Imported media": this.mediaItem.documentMediaType = "IMPORTED_MEDIA"; break;
-            case "Closed media": this.mediaItem.documentMediaType = " CLOSED_MEDIA"; break;
-            case "All media": this.mediaItem.documentMediaType = "ALL_MEDIA"; break;
-            default: this.mediaItem.documentMediaType = "REMOVABLE_MEDIA"; break;
-        }
     }
 
     ApplyAction(actionItem) {

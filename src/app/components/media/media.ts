@@ -2,68 +2,68 @@ import { Component, ViewChild, ElementRef, ViewContainerRef, OnInit } from '@ang
 import { MediaDialog } from './MediaDialog';
 import { MdDialog, MdDialogRef, MdCard } from '@angular/material';
 import { PluginDataService } from "../../services/pluginData.service";
-import { DataSource } from '@angular/cdk/table';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
+import { DocMediaService } from "../../services/documentMedia.service";
+
+import {  MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { Router, ActivatedRoute  } from '@angular/router';
 import { DeleteDialog } from '../common/deleteDialog';
 
-var pluginData: any = {};
+
+import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+
+var mediaData: any[]=[] ;
 
 @Component({
     selector: 'page-media',
     templateUrl: 'media.html'
 })
-export class Media implements OnInit  {
-    routeSubscription: any;
-    @ViewChild(MdCard, { read: ViewContainerRef }) card;    
-    @ViewChild('filter') filter: ElementRef;
+export class Media implements OnInit {
+
+    @ViewChild(MdCard, { read: ViewContainerRef }) card;
+
     dialogRef: MdDialogRef<MediaDialog>;
     dialogRefDel: MdDialogRef<DeleteDialog>;
-    // table start
-    mediaType: string="";
-    pluginDatabase;//= new PluginDatabase();
-    dataSource: pluginDataSource | null;
+    prevType: string = "";
+    mediaType: string = "";
     showList: boolean = true;
-    @ViewChild(MdSort) sort: MdSort;
-    temppluginData: any = {};
-    displayedColumns = [];
-    constructor(private _dataService: PluginDataService, public dialog: MdDialog, public snackBar: MdSnackBar,
-        private route: ActivatedRoute) {
-    }
-    ngDoCheck() {
-    this.mediaType = this.route.snapshot.queryParams['mediaType'];
-    this.GetData();
-    }
+    displayedColumns: any[] = [
+    ];
+    dataSource = new ExampleDataSource();
 
+    constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService,
+        private routesRecognized: RoutesRecognized,
+        private route: ActivatedRoute) { alert(routesRecognized.url);}
+
+    ngDoCheck() {        
+       
+    }
     ngOnInit() {
+        this.mediaType = this.route.snapshot.queryParams['mediaType'];
+        this.GetData();
+        
+    }
+    ngOnChanges() {
+      
     }
 
     GetData() {
         this.showList = true;
-        //this._dataService.getList("plugins").then((res: any) => {
-        //    this.temppluginData = res.pluginList;
-        //    if (this.temppluginData.length > 0) {
-        //        pluginData = this.temppluginData;
-                
-        //        this.pluginDatabase = new PluginDatabase()
-        //        this.dataSource = new pluginDataSource(this.pluginDatabase, this.sort);
-
-        //        //Observable.fromEvent(this.filter.nativeElement, 'keyup')
-        //        //    .debounceTime(150)
-        //        //    .distinctUntilChanged()
-        //        //    .subscribe(() => {
-        //        //        if (!this.dataSource) { return; }
-        //        //        this.dataSource.filter = this.filter.nativeElement.value;
-        //        //    });
-        //    }
-        //    else {
-        //        this.showList = false;
-        //    }
-        //}, (error) => {
-        //    });
-        
+        this.prevType = this.mediaType;
+        this._mediadataService.getList(this.mediaType).then((res: any) => {
+            this.displayedColumns = res.columnList;
+            if (res.mediaList.length > 0) {
+                for (var i = 0; i < res.mediaList.length; i++) {
+                    var object = res.mediaList[i];                   
+                    mediaData.push(object);
+                }
+            }
+            else {
+                this.showList = false;
+            }
+        }, (error) => {
+        });
     }
 
     onApplyAction(action: string, item) {
@@ -86,7 +86,7 @@ export class Media implements OnInit  {
             });
 
 
-            this.dialogRefDel.afterClosed().subscribe(result => {                
+            this.dialogRefDel.afterClosed().subscribe(result => {
                 if (result) {
                     //this._dataService.Delete(item.pluginId).then((res: any) => {
                     //    console.log(res)
@@ -94,11 +94,11 @@ export class Media implements OnInit  {
                     //    this.GetData();
                     //    this.dialogRef = null;
                     //}, (error) => {
-                       
+
                     //});
                 }
-              
-               
+
+
             });
 
         }
@@ -127,104 +127,41 @@ export class Media implements OnInit  {
 }
 
 
-export interface pluginData {
-    pluginId: any;
-    name: any;
-    type: string;
-    module: string,
-}
 
-/** An plugin database that the data source uses to retrieve data for the table. */
-export class PluginDatabase {
-    /** Stream that emits whenever the data has been modified. */
-    dataChange: BehaviorSubject<pluginData[]> = new BehaviorSubject<pluginData[]>([]);
-    get data(): pluginData[] { return this.dataChange.value; }
+ const data: any[] = [
+    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
+    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
+    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
+    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
+    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
+    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+    { position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na' },
+    { position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg' },
+    { position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al' },
+    { position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si' },
+    { position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P' },
+    { position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S' },
+    { position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
+    { position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar' },
+    { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
+    { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
+];
 
-    constructor() {
-        var self = this;
-        if (pluginData != undefined) {
-            const copiedData = self.data.slice();
-            var item;
-            
-           
-            pluginData.forEach(function (childitem) {
-
-
-                item = {
-                    pluginId: childitem.pluginId,
-                    name: childitem.name,
-                    type: childitem.type,
-                    module: childitem.module
-                };
-                copiedData.push(item);
-                self.dataChange.next(copiedData);
-            });
-        }
-
-    }
-}
-
-export class pluginDataSource extends DataSource<any> {
-    _filterChange = new BehaviorSubject('');
-    get filter(): string { return this._filterChange.value; }
-    set filter(filter: string) { this._filterChange.next(filter); }
-
-    constructor(private _pluginDatabase: PluginDatabase, private _sort: MdSort) {
-        super();
-    }
-
+/**
+ * Data source to provide what data should be rendered in the table. The observable provided
+ * in connect should emit exactly the data that should be rendered by the table. If the data is
+ * altered, the observable should emit that new set of data on the stream. In our case here,
+ * we return a stream that contains only one set of data that doesn't change.
+ */
+export class ExampleDataSource extends DataSource<any> {
     /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<pluginData[]> {
-        const displayDataChanges = [
-            this._pluginDatabase.dataChange,
-            this._filterChange,
-            this._sort.mdSortChange,
-        ];
-        //const displayDataSortChanges = [
-        //    this._pluginDatabase.dataChange,
-
-        //];
-        return Observable.merge(...displayDataChanges).map(() => {
-
-
-            if (this._filterChange.value.length > 0) {
-                return this._pluginDatabase.data.slice().filter((item: pluginData) => {
-                    let searchStr = (item.pluginId + item.name + item.type + item.module).toLowerCase();
-                    return searchStr.indexOf(this.filter.toLowerCase()) != -1;
-                });
-            }
-            else {
-                return this.getSortedData();
-            }
-        });
+    connect(): Observable<any[]> {
+        return Observable.of(mediaData);
     }
 
-    disconnect() {
-       
-       
-    }
-
-    /** Returns a sorted copy of the database data. */
-    getSortedData(): pluginData[] {
-        const data = this._pluginDatabase.data.slice();
-        if (!this._sort.active || this._sort.direction == '') { return data; }
-
-        return data.sort((a, b) => {
-            let propertyA: number | string = '';
-            let propertyB: number | string = '';
-
-            switch (this._sort.active) {
-                case 'pluginId': [propertyA, propertyB] = [a.pluginId, b.pluginId]; break;
-                case 'name': [propertyA, propertyB] = [a.name, b.name]; break;
-                case 'type': [propertyA, propertyB] = [a.type, b.type]; break;
-                case 'module': [propertyA, propertyB] = [a.module, b.module]; break;
-
-            }
-
-            let valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-            let valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-
-            return (valueA < valueB ? -1 : 1) * (this._sort.direction == 'asc' ? 1 : -1);
-        });
-    }
+    disconnect() { }
 }
