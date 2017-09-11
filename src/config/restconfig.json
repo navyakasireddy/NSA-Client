@@ -6,7 +6,7 @@
 "IPBaseURL":"/connect"  ,
 "treeView":"/resources/list",
 "plugin":"/documents/plugin",
-"media":"/documents/media"
+"media":"/media"
 
 
 }

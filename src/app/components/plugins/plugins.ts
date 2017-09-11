@@ -103,8 +103,7 @@ export class Plugins {
                 disableClose: true
             });
 
-            this.dialogRef.afterClosed().subscribe(result => {
-                debugger;
+            this.dialogRef.afterClosed().subscribe(result => {              
                 console.log('result: ' + result);
                 this.dialogRef = null;
                 if (result != "")

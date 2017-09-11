@@ -14,8 +14,8 @@
      
 <br />
        <md-select placeholder="Plug-In"  required  name="pluginValue" [(ngModel)]="mediaItem.pluginValue" >
-  <md-option *ngFor="let item of plugins" [value]="item.value">
-    {{ item.viewValue }}
+  <md-option *ngFor="let item of plugins" [value]="item.pluginId">
+    {{ item.name }}
   </md-option>
 </md-select>
       <br />

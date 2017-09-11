@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { PluginDataService } from "../../services/pluginData.service";
-
+import { DocMediaService } from "../../services/documentMedia.service";
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'dialog-media',
     templateUrl: 'mediaDialog.html'
@@ -14,14 +15,10 @@ export class MediaDialog {
     mediaType: string = "";
    
     plugins = [
-        { value: 'DLL', viewValue: 'DLL' },
-        { value: 'EVENTSCRIPT', viewValue: 'EVENTSCRIPT' },
-        { value: 'JSTORE', viewValue: 'JSTORE' },
-        { value: 'COM_OBJECT', viewValue: 'COM_OBJECT' }
     ];
 
-    constructor( @Inject(MD_DIALOG_DATA) public data: any, private _dataService: PluginDataService,
-        private dialogRef: MdDialogRef<MediaDialog>) { }
+    constructor( @Inject(MD_DIALOG_DATA) public data: any, private _pluginService: PluginDataService, private _mediaService: DocMediaService,
+        private dialogRef: MdDialogRef<MediaDialog>,private route: ActivatedRoute) { }
 
 
     ngOnInit() { 
@@ -35,25 +32,40 @@ export class MediaDialog {
             isNamedPool: false,
             maxNumber: "",
             maxSize: "",
-            timeOut:""
+            timeOut: "",
+            
         };
+        this._pluginService.getList("plugins").then((res: any) => {
+            if (res.pluginList.length > 0) {
+                this.plugins = res.pluginList;
+                console.log(this.plugins);
+            }
+        });
+        var mediatype = this.route.snapshot.queryParams['mediaType'];
+        switch (mediatype) {
+            case "Removable media": this.mediaItem.documentMediaType = "REMOVABLE_MEDIA"; break;
+            case "Migrated media": this.mediaItem.documentMediaType = "MIGRATED_MEDIA"; break;
+            case "Buffer media": this.mediaItem.documentMediaType = "BUFFER_MEDIA"; break;
+            case "Imported media": this.mediaItem.documentMediaType = "IMPORTED_MEDIA"; break;
+            case "Closed media": this.mediaItem.documentMediaType = " CLOSED_MEDIA"; break;
+            case "All media": this.mediaItem.documentMediaType = "ALL_MEDIA"; break;
+            default: this.mediaItem.documentMediaType = "REMOVABLE_MEDIA"; break;
+        }
     }
 
     ApplyAction(actionItem) {
-        debugger;
         if (this.action == "Create") {
-            //this._dataService.create(actionItem).then((res: any) => {
-            //    console.log(res)
-            //    this.dialogRef.close(res.responseMsg);
-            //}, (error) => {
-            //});
+            this._mediaService.create(actionItem).then((res: any) => {                
+                this.dialogRef.close(res.responseMsg);
+            }, (error) => {
+            });
         }
         else if (this.action == "Update") {
-            //this._dataService.update(actionItem).then((res: any) => {
-            //    console.log(res)
-            //    this.dialogRef.close(res.responseMsg);
-            //}, (error) => {
-            //});
+            this._mediaService.update(actionItem).then((res: any) => {
+                console.log(res)
+                this.dialogRef.close(res.responseMsg);
+            }, (error) => {
+            });
         }
     }
 }

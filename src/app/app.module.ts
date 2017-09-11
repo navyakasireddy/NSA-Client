@@ -22,6 +22,7 @@ import { StorageService } from "./services/storage.service";
 import { FeatureService } from "./services/feature.service";
 import { AdminDataService } from "./services/adminData.service";
 import { PluginDataService } from "./services/pluginData.service";
+import { DocMediaService } from "./services/documentMedia.service";
 
 import DynamicComponent from "./components/dynamicComponent/dynamic-component";
 import { RouterModule, Routes } from "@angular/router";
@@ -116,7 +117,7 @@ const routes: Routes = [
         StorageService,
         FeatureService,
         AdminDataService,
-        PluginDataService,
+        PluginDataService, DocMediaService,
         AuthGuard]
 })
 export class AppModule {
