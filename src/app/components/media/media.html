@@ -9,9 +9,9 @@
    
 
 
-  <md-table #table [dataSource]="dataSource">
+  <md-table #table [dataSource]="dataSource" mdSort (mdSortChange)="sortData($event)">
             <ng-container *ngFor="let col of displayedColumns" cdkColumnDef={{col}}>
-		    <md-header-cell  *cdkHeaderCellDef > {{ col }}  </md-header-cell>
+		    <md-header-cell md-sort-header *cdkHeaderCellDef > {{ col }}  </md-header-cell>
 		    <md-cell  *cdkCellDef="let row"> {{row[(col.charAt(0).toLowerCase() + col.slice(1).replace(" ",""))]}}</md-cell>
 	    </ng-container>
     

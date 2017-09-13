@@ -1,19 +1,19 @@
 import { Component, ViewChild, ElementRef, ViewContainerRef, OnInit } from '@angular/core';
 import { MediaDialog } from './MediaDialog';
-import { MdDialog, MdDialogRef, MdCard } from '@angular/material';
+import { MdDialog, MdDialogRef, MdCard, MdSort, Sort } from '@angular/material';
 import { PluginDataService } from "../../services/pluginData.service";
 import { DocMediaService } from "../../services/documentMedia.service";
-
-import {  MdSnackBar, MdSnackBarConfig } from '@angular/material';
-import { Router, ActivatedRoute, NavigationEnd  } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DeleteDialog } from '../common/deleteDialog';
 
 
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-
-var mediaData: any[]=[] ;
+var tempmediaData: any[] = [];
+export interface mediaData { };
 
 @Component({
     selector: 'page-media',
@@ -25,58 +25,49 @@ export class Media implements OnInit {
     routeSubscription: any;
     dialogRef: MdDialogRef<MediaDialog>;
     dialogRefDel: MdDialogRef<DeleteDialog>;
-   
+    @ViewChild(MdSort) sort: MdSort;
     mediaType: string = "";
     showList: boolean = true;
     displayedColumns: any[] = ["Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On", "Id", "Retention Time", "Life"];
+    mediaDatabase = new MediaDatabase();
+    dataSource: MediaDataSource | null;
 
-    dataSource = new ExampleDataSource();
+    constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService,
+        private route: ActivatedRoute, private router: Router) { }
 
-    constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService,        
-        private route: ActivatedRoute, private router: Router) {
-        
-    }
-
-    
-    
     ngOnInit() {
         this.GetData();
-            //this.router.events
-            //    .filter((event) => event instanceof NavigationEnd)
-            //    .map(() => this.route)
-            //    .map((route) => {
-            //        while (route.firstChild) route = route.firstChild;
-            //        return route;
-            //    })
-            //    .filter((route) => route.outlet === 'primary')                
-            //    .subscribe((event) => this.GetData());
-        }
-    
-
-   
-   
+        //this.router.events
+        //    .filter((event) => event instanceof NavigationEnd)
+        //    .map(() => this.route)
+        //    .map((route) => {
+        //        while (route.firstChild) route = route.firstChild;
+        //        return route;
+        //    })
+        //    .filter((route) => route.outlet === 'primary')                
+        //    .subscribe((event) => this.GetData());
+    }
 
     GetData() {
         this.showList = true;
         this.routeSubscription = this.route.params.subscribe(params => {
             this.mediaType = params['type'];
-          
-            
-      
-        this._mediadataService.getList(this.mediaType).then((res: any) => {
-            //this.displayedColumns = res.columnList;
-            if (res.mediaList.length > 0) {
-                for (var i = 0; i < res.mediaList.length; i++) {
-                    var object = res.mediaList[i];                   
-                    mediaData.push(object);
+
+
+
+            this._mediadataService.getList(this.mediaType).then((res: any) => {
+                //this.displayedColumns = res.columnList;
+                if (res.mediaList.length > 0) {
+                    tempmediaData = res.mediaList;
+                    this.mediaDatabase = new MediaDatabase();
+                    this.dataSource = new MediaDataSource(this.mediaDatabase, this.sort);
                 }
-            }
-            else {
-                mediaData = [] 
-                this.showList = false;
-            }
-        }, (error) => {
-                });
+                else {
+
+                    this.showList = false;
+                }
+            }, (error) => {
+            });
 
         });
     }
@@ -144,18 +135,74 @@ export class Media implements OnInit {
 
 
 
- 
+
+export class MediaDatabase {
+    /** Stream that emits whenever the data has been modified. */
+    dataChange: BehaviorSubject<mediaData[]> = new BehaviorSubject<mediaData[]>([]);
+    get data(): mediaData[] { return this.dataChange.value; }
+
+    constructor() {
+        var self = this;
+        if (tempmediaData != undefined) {
+            const copiedData = self.data.slice();
+            var item;
+
+
+            tempmediaData.forEach(function (childitem) {
+                copiedData.push(childitem);
+                self.dataChange.next(copiedData);
+            });
+        }
+
+    }
+
+
+
+
+
+}
+
+
 /**
  * Data source to provide what data should be rendered in the table. The observable provided
  * in connect should emit exactly the data that should be rendered by the table. If the data is
  * altered, the observable should emit that new set of data on the stream. In our case here,
  * we return a stream that contains only one set of data that doesn't change.
  */
-export class ExampleDataSource extends DataSource<any> {
+export class MediaDataSource extends DataSource<any> {
+    constructor(private _mediaDatabase: MediaDatabase, private _sort: MdSort) {
+        super();
+    }
+
     /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<any[]> {
-        return Observable.of(mediaData);
+    connect(): Observable<mediaData[]> {
+        const displayDataChanges = [
+            this._mediaDatabase.dataChange,
+            this._sort.mdSortChange,
+        ];
+
+        return Observable.merge(...displayDataChanges).map(() => {
+            return this.getSortedData();
+        });
     }
 
     disconnect() { }
+
+    /** Returns a sorted copy of the database data. */
+    getSortedData(): mediaData[] {
+        const data = this._mediaDatabase.data.slice();
+        if (!this._sort.active || this._sort.direction == '') { return data; }
+
+        return data.sort((a, b) => {
+            let propertyA: number | string = '';
+            let propertyB: number | string = '';
+            let indexValue = (this._sort.active.charAt(0).toLowerCase() + this._sort.active.slice(1).replace(" ", ""))
+            propertyA = a[indexValue];
+            propertyB = b[indexValue];
+            let valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+            let valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+
+            return (valueA < valueB ? -1 : 1) * (this._sort.direction == 'asc' ? 1 : -1);
+        });
+    }
 }
