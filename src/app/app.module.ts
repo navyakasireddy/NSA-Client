@@ -58,7 +58,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [           
             { path: 'Plug-ins', component: Plugins, pathMatch: 'full' },
-            { path: 'Media', component: Media, pathMatch: 'full' },
+            { path: 'Media/:type', component: Media, pathMatch: 'full' },
             { path: '**', component: AboutPage, pathMatch: 'full' }
             
         ],

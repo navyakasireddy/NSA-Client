@@ -5,7 +5,7 @@ import { PluginDataService } from "../../services/pluginData.service";
 import { DocMediaService } from "../../services/documentMedia.service";
 
 import {  MdSnackBar, MdSnackBarConfig } from '@angular/material';
-import { Router, ActivatedRoute  } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd  } from '@angular/router';
 import { DeleteDialog } from '../common/deleteDialog';
 
 
@@ -22,37 +22,49 @@ var mediaData: any[]=[] ;
 export class Media implements OnInit {
 
     @ViewChild(MdCard, { read: ViewContainerRef }) card;
-
+    routeSubscription: any;
     dialogRef: MdDialogRef<MediaDialog>;
     dialogRefDel: MdDialogRef<DeleteDialog>;
-    prevType: string = "";
+   
     mediaType: string = "";
     showList: boolean = true;
-    displayedColumns: any[] = [
-    ];
+    displayedColumns: any[] = ["Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On", "Id", "Retention Time", "Life"];
+
     dataSource = new ExampleDataSource();
 
-    constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService,
-        private routesRecognized: RoutesRecognized,
-        private route: ActivatedRoute) { alert(routesRecognized.url);}
-
-    ngDoCheck() {        
-       
-    }
-    ngOnInit() {
-        this.mediaType = this.route.snapshot.queryParams['mediaType'];
-        this.GetData();
+    constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService,        
+        private route: ActivatedRoute, private router: Router) {
         
     }
-    ngOnChanges() {
-      
-    }
+
+    
+    
+    ngOnInit() {
+        this.GetData();
+            //this.router.events
+            //    .filter((event) => event instanceof NavigationEnd)
+            //    .map(() => this.route)
+            //    .map((route) => {
+            //        while (route.firstChild) route = route.firstChild;
+            //        return route;
+            //    })
+            //    .filter((route) => route.outlet === 'primary')                
+            //    .subscribe((event) => this.GetData());
+        }
+    
+
+   
+   
 
     GetData() {
         this.showList = true;
-        this.prevType = this.mediaType;
+        this.routeSubscription = this.route.params.subscribe(params => {
+            this.mediaType = params['type'];
+          
+            
+      
         this._mediadataService.getList(this.mediaType).then((res: any) => {
-            this.displayedColumns = res.columnList;
+            //this.displayedColumns = res.columnList;
             if (res.mediaList.length > 0) {
                 for (var i = 0; i < res.mediaList.length; i++) {
                     var object = res.mediaList[i];                   
@@ -60,9 +72,12 @@ export class Media implements OnInit {
                 }
             }
             else {
+                mediaData = [] 
                 this.showList = false;
             }
         }, (error) => {
+                });
+
         });
     }
 
@@ -104,7 +119,8 @@ export class Media implements OnInit {
         }
         else {
             this.dialogRef = this.dialog.open(MediaDialog, {
-                disableClose: true
+                disableClose: true,
+                data: this.mediaType
             });
 
             this.dialogRef.afterClosed().subscribe(result => {
@@ -128,29 +144,7 @@ export class Media implements OnInit {
 
 
 
- const data: any[] = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-    { position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na' },
-    { position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg' },
-    { position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al' },
-    { position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si' },
-    { position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P' },
-    { position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S' },
-    { position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
-    { position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar' },
-    { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
-    { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
-];
-
+ 
 /**
  * Data source to provide what data should be rendered in the table. The observable provided
  * in connect should emit exactly the data that should be rendered by the table. If the data is

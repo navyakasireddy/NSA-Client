@@ -122,15 +122,15 @@ export class DocMediaService {
     }
 
     GetMediaType(mediatype: string) {
-        //return "ALL_MEDIA"; 
-        switch (mediatype) {
-            case "Removable media": return "REMOVABLE_MEDIA";
-            case "Migrated media": return "MIGRATED_MEDIA"; 
-            case "Buffer media": return "BUFFER_MEDIA";
-            case "Imported media": return  "IMPORTED_MEDIA"; 
-            case "Closed media": return " CLOSED_MEDIA";
-            case "All media": return "ALL_MEDIA";
-            default: return "ALL_MEDIA"; 
-        }
+        return "ALL_MEDIA"; 
+        //switch (mediatype) {
+        //    case "Removable media": return "REMOVABLE_MEDIA";
+        //    case "Migrated media": return "MIGRATED_MEDIA"; 
+        //    case "Buffer media": return "BUFFER_MEDIA";
+        //    case "Imported media": return  "IMPORTED_MEDIA"; 
+        //    case "Closed media": return "CLOSED_MEDIA";
+        //    case "All media": return "ALL_MEDIA";
+        //    default: return "ALL_MEDIA"; 
+        //}
     }
 }  

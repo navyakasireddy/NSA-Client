@@ -13,18 +13,18 @@ export class MediaDialog {
     public action: string;
     public mediaItem: any;
     mediaType: string = "";
-   
+
     plugins = [
     ];
 
     constructor( @Inject(MD_DIALOG_DATA) public data: any, private _pluginService: PluginDataService, private _mediaService: DocMediaService,
-        private dialogRef: MdDialogRef<MediaDialog>,private route: ActivatedRoute) { }
+        private dialogRef: MdDialogRef<MediaDialog>, private route: ActivatedRoute) { }
 
 
-    ngOnInit() { 
-       
-        this.action = this.data == null ? "Create" : "Update";
-        this.mediaItem = this.data != null ? this.data : {
+    ngOnInit() {
+        alert(typeof (this.data));
+        this.action = typeof (this.data) == "string" ?"Create" : "Update";
+        this.mediaItem = typeof (this.data) != "string" ? this.data : {
             mediumDesc: "",
             storageCapacity: "",
             pluginValue: "",
@@ -33,7 +33,7 @@ export class MediaDialog {
             maxNumber: "",
             maxSize: "",
             timeOut: "",
-            mediatype : this.route.snapshot.queryParams['mediaType']
+            mediaType: this.data
         };
         this._pluginService.getList().then((res: any) => {
             if (res.pluginList.length > 0) {
@@ -45,7 +45,7 @@ export class MediaDialog {
 
     ApplyAction(actionItem) {
         if (this.action == "Create") {
-            this._mediaService.create(actionItem).then((res: any) => {                
+            this._mediaService.create(actionItem).then((res: any) => {
                 this.dialogRef.close(res.responseMsg);
             }, (error) => {
             });
