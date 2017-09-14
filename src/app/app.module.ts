@@ -30,12 +30,11 @@ import { UserInfoPage } from "./components/userInfo/userInfo";
 
 import { AuthGuard } from './auth.guard';
 
-import { TreeModule } from 'angular-tree-component';
-import { CdkTableModule } from '@angular/cdk/table';
+import { CdkTableModule } from '@angular/cdk';
 
 import { Media } from "./components/media/media";
 import { MediaDialog } from "./components/media/MediaDialog";
-
+import { TreeModule } from 'angular-tree-component';
 const routes: Routes = [
     {
         path: '',
@@ -83,7 +82,7 @@ const routes: Routes = [
         Plugins,
         ModalDialog,
         DeleteDialog,
-       MediaDialog
+        MediaDialog
         
     ],
     imports: [
