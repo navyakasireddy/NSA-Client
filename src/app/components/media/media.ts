@@ -9,7 +9,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DeleteDialog } from '../common/deleteDialog';
 
 
-import { DataSource } from '@angular/cdk';
+import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 var tempmediaData: any[] = [];

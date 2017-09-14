@@ -30,7 +30,7 @@ import { UserInfoPage } from "./components/userInfo/userInfo";
 
 import { AuthGuard } from './auth.guard';
 
-import { CdkTableModule } from '@angular/cdk';
+import { CdkTableModule } from '@angular/cdk/table';
 
 import { Media } from "./components/media/media";
 import { MediaDialog } from "./components/media/MediaDialog";
