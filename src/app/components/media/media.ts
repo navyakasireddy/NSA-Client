@@ -28,7 +28,7 @@ export class Media implements OnInit {
     @ViewChild(MdSort) sort: MdSort;
     mediaType: string = "";
     showList: boolean = true;
-    displayedColumns: any[] = ["Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On", "Id", "Retention Time", "Life"];
+    displayedColumns: any[] = ["actions","Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On", "Id", "Retention Time", "Life"];
     mediaDatabase = new MediaDatabase();
     dataSource: MediaDataSource | null;
 
