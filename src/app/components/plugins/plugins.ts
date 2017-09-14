@@ -36,7 +36,7 @@ export class Plugins {
 
     GetData() {
         this.showList = true;
-        this._dataService.getList("plugins").then((res: any) => {
+        this._dataService.getList().then((res: any) => {
             this.temppluginData = res.pluginList;
             if (this.temppluginData.length > 0) {
                 pluginData = this.temppluginData;

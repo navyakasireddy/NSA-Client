@@ -96,7 +96,7 @@ export class HomePage {
             if ($event.treeModel.activeNodes[0].parent.data.name === "Media") {
                 n = "Media";
                 p = "Documents";
-                this._router.navigate([p + '/' + n], { queryParams: { mediaType: $event.treeModel.activeNodes[0].data.name } });
+                this._router.navigate([p, n, $event.treeModel.activeNodes[0].data.name]);//, { queryParams: { mediaType: $event.treeModel.activeNodes[0].data.name } });
             }
             else if ($event.treeModel.activeNodes[0].data.name != "Media") {
                 n = $event.treeModel.activeNodes[0].data.name;

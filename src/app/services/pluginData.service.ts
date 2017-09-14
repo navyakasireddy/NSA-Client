@@ -12,7 +12,7 @@ export class PluginDataService {
 
         this._serverURL = json.restBaseURL + json.plugin;
     }
-    getList(dataType: string) {
+    getList() {
         let _url = this._serverURL; //+ "/Menu/GetMenuDetails?roleName=" + roleName;  
 
         return new Promise((resolve, reject) => {

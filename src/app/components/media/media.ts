@@ -1,69 +1,75 @@
 import { Component, ViewChild, ElementRef, ViewContainerRef, OnInit } from '@angular/core';
 import { MediaDialog } from './MediaDialog';
-import { MdDialog, MdDialogRef, MdCard } from '@angular/material';
+import { MdDialog, MdDialogRef, MdCard, MdSort, Sort } from '@angular/material';
 import { PluginDataService } from "../../services/pluginData.service";
-import { DataSource } from '@angular/cdk/table';
+import { DocMediaService } from "../../services/documentMedia.service";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
+import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DeleteDialog } from '../common/deleteDialog';
 
-var pluginData: any = {};
+
+import { DataSource } from '@angular/cdk/table';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+var tempmediaData: any[] = [];
+export interface mediaData { };
 
 @Component({
     selector: 'page-media',
     templateUrl: 'media.html'
 })
-export class Media implements OnInit  {
+export class Media implements OnInit {
+
+    @ViewChild(MdCard, { read: ViewContainerRef }) card;
     routeSubscription: any;
-    @ViewChild(MdCard, { read: ViewContainerRef }) card;    
-    @ViewChild('filter') filter: ElementRef;
     dialogRef: MdDialogRef<MediaDialog>;
     dialogRefDel: MdDialogRef<DeleteDialog>;
-    // table start
-    mediaType: string="";
-    pluginDatabase;//= new PluginDatabase();
-    dataSource: pluginDataSource | null;
-    showList: boolean = true;
     @ViewChild(MdSort) sort: MdSort;
-    temppluginData: any = {};
-    displayedColumns = [];
-    constructor(private _dataService: PluginDataService, public dialog: MdDialog, public snackBar: MdSnackBar,
-        private route: ActivatedRoute) {
-    }
-    ngDoCheck() {
-    this.mediaType = this.route.snapshot.queryParams['mediaType'];
-    this.GetData();
-    }
+    mediaType: string = "";
+    showList: boolean = true;
+    displayedColumns: any[] = ["actions","Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On", "Id", "Retention Time", "Life"];
+    mediaDatabase = new MediaDatabase();
+    dataSource: MediaDataSource | null;
+
+    constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService,
+        private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
+        this.GetData();
+        //this.router.events
+        //    .filter((event) => event instanceof NavigationEnd)
+        //    .map(() => this.route)
+        //    .map((route) => {
+        //        while (route.firstChild) route = route.firstChild;
+        //        return route;
+        //    })
+        //    .filter((route) => route.outlet === 'primary')                
+        //    .subscribe((event) => this.GetData());
     }
 
     GetData() {
         this.showList = true;
-        //this._dataService.getList("plugins").then((res: any) => {
-        //    this.temppluginData = res.pluginList;
-        //    if (this.temppluginData.length > 0) {
-        //        pluginData = this.temppluginData;
-                
-        //        this.pluginDatabase = new PluginDatabase()
-        //        this.dataSource = new pluginDataSource(this.pluginDatabase, this.sort);
+        this.routeSubscription = this.route.params.subscribe(params => {
+            this.mediaType = params['type'];
 
-        //        //Observable.fromEvent(this.filter.nativeElement, 'keyup')
-        //        //    .debounceTime(150)
-        //        //    .distinctUntilChanged()
-        //        //    .subscribe(() => {
-        //        //        if (!this.dataSource) { return; }
-        //        //        this.dataSource.filter = this.filter.nativeElement.value;
-        //        //    });
-        //    }
-        //    else {
-        //        this.showList = false;
-        //    }
-        //}, (error) => {
-        //    });
-        
+
+
+            this._mediadataService.getList(this.mediaType).then((res: any) => {
+                //this.displayedColumns = res.columnList;
+                if (res.mediaList.length > 0) {
+                    tempmediaData = res.mediaList;
+                    this.mediaDatabase = new MediaDatabase();
+                    this.dataSource = new MediaDataSource(this.mediaDatabase, this.sort);
+                }
+                else {
+
+                    this.showList = false;
+                }
+            }, (error) => {
+            });
+
+        });
     }
 
     onApplyAction(action: string, item) {
@@ -86,7 +92,7 @@ export class Media implements OnInit  {
             });
 
 
-            this.dialogRefDel.afterClosed().subscribe(result => {                
+            this.dialogRefDel.afterClosed().subscribe(result => {
                 if (result) {
                     //this._dataService.Delete(item.pluginId).then((res: any) => {
                     //    console.log(res)
@@ -94,17 +100,18 @@ export class Media implements OnInit  {
                     //    this.GetData();
                     //    this.dialogRef = null;
                     //}, (error) => {
-                       
+
                     //});
                 }
-              
-               
+
+
             });
 
         }
         else {
             this.dialogRef = this.dialog.open(MediaDialog, {
-                disableClose: true
+                disableClose: true,
+                data: this.mediaType
             });
 
             this.dialogRef.afterClosed().subscribe(result => {
@@ -127,100 +134,71 @@ export class Media implements OnInit  {
 }
 
 
-export interface pluginData {
-    pluginId: any;
-    name: any;
-    type: string;
-    module: string,
-}
 
-/** An plugin database that the data source uses to retrieve data for the table. */
-export class PluginDatabase {
+
+export class MediaDatabase {
     /** Stream that emits whenever the data has been modified. */
-    dataChange: BehaviorSubject<pluginData[]> = new BehaviorSubject<pluginData[]>([]);
-    get data(): pluginData[] { return this.dataChange.value; }
+    dataChange: BehaviorSubject<mediaData[]> = new BehaviorSubject<mediaData[]>([]);
+    get data(): mediaData[] { return this.dataChange.value; }
 
     constructor() {
         var self = this;
-        if (pluginData != undefined) {
+        if (tempmediaData != undefined) {
             const copiedData = self.data.slice();
             var item;
-            
-           
-            pluginData.forEach(function (childitem) {
 
 
-                item = {
-                    pluginId: childitem.pluginId,
-                    name: childitem.name,
-                    type: childitem.type,
-                    module: childitem.module
-                };
-                copiedData.push(item);
+            tempmediaData.forEach(function (childitem) {
+                copiedData.push(childitem);
                 self.dataChange.next(copiedData);
             });
         }
 
     }
+
+
+
+
+
 }
 
-export class pluginDataSource extends DataSource<any> {
-    _filterChange = new BehaviorSubject('');
-    get filter(): string { return this._filterChange.value; }
-    set filter(filter: string) { this._filterChange.next(filter); }
 
-    constructor(private _pluginDatabase: PluginDatabase, private _sort: MdSort) {
+/**
+ * Data source to provide what data should be rendered in the table. The observable provided
+ * in connect should emit exactly the data that should be rendered by the table. If the data is
+ * altered, the observable should emit that new set of data on the stream. In our case here,
+ * we return a stream that contains only one set of data that doesn't change.
+ */
+export class MediaDataSource extends DataSource<any> {
+    constructor(private _mediaDatabase: MediaDatabase, private _sort: MdSort) {
         super();
     }
 
     /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<pluginData[]> {
+    connect(): Observable<mediaData[]> {
         const displayDataChanges = [
-            this._pluginDatabase.dataChange,
-            this._filterChange,
+            this._mediaDatabase.dataChange,
             this._sort.mdSortChange,
         ];
-        //const displayDataSortChanges = [
-        //    this._pluginDatabase.dataChange,
 
-        //];
         return Observable.merge(...displayDataChanges).map(() => {
-
-
-            if (this._filterChange.value.length > 0) {
-                return this._pluginDatabase.data.slice().filter((item: pluginData) => {
-                    let searchStr = (item.pluginId + item.name + item.type + item.module).toLowerCase();
-                    return searchStr.indexOf(this.filter.toLowerCase()) != -1;
-                });
-            }
-            else {
-                return this.getSortedData();
-            }
+            return this.getSortedData();
         });
     }
 
-    disconnect() {
-       
-       
-    }
+    disconnect() { }
 
     /** Returns a sorted copy of the database data. */
-    getSortedData(): pluginData[] {
-        const data = this._pluginDatabase.data.slice();
+    getSortedData(): mediaData[] {
+        const data = this._mediaDatabase.data.slice();
         if (!this._sort.active || this._sort.direction == '') { return data; }
 
         return data.sort((a, b) => {
             let propertyA: number | string = '';
             let propertyB: number | string = '';
-
-            switch (this._sort.active) {
-                case 'pluginId': [propertyA, propertyB] = [a.pluginId, b.pluginId]; break;
-                case 'name': [propertyA, propertyB] = [a.name, b.name]; break;
-                case 'type': [propertyA, propertyB] = [a.type, b.type]; break;
-                case 'module': [propertyA, propertyB] = [a.module, b.module]; break;
-
-            }
-
+            let indexValue = (this._sort.active.charAt(0).toLowerCase() + this._sort.active.slice(1).replace(" ", ""))
+            propertyA = a[indexValue];
+            propertyB = b[indexValue];
             let valueA = isNaN(+propertyA) ? propertyA : +propertyA;
             let valueB = isNaN(+propertyB) ? propertyB : +propertyB;
 

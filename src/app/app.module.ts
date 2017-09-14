@@ -30,12 +30,11 @@ import { UserInfoPage } from "./components/userInfo/userInfo";
 
 import { AuthGuard } from './auth.guard';
 
-import { TreeModule } from 'angular-tree-component';
 import { CdkTableModule } from '@angular/cdk/table';
 
 import { Media } from "./components/media/media";
 import { MediaDialog } from "./components/media/MediaDialog";
-
+import { TreeModule } from 'angular-tree-component';
 const routes: Routes = [
     {
         path: '',
@@ -58,7 +57,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [           
             { path: 'Plug-ins', component: Plugins, pathMatch: 'full' },
-            { path: 'Media', component: Media, pathMatch: 'full' },
+            { path: 'Media/:type', component: Media, pathMatch: 'full' },
             { path: '**', component: AboutPage, pathMatch: 'full' }
             
         ],
@@ -83,7 +82,7 @@ const routes: Routes = [
         Plugins,
         ModalDialog,
         DeleteDialog,
-       MediaDialog
+        MediaDialog
         
     ],
     imports: [
