@@ -8,7 +8,7 @@
         <md-card-content *ngIf="showIPHolder">
     <form #IPForm="ngForm"> 
             <md-input-container  class="inputElements">
-                <input mdInput type="text" placeholder="IP" name="ip" [(ngModel)]="IPvalue" required />                
+                <input mdInput type="text" placeholder="IP" name="ip" [(ngModel)]="IPvalue" required maxlength="15" minlength="7" />                
             </md-input-container>
             
 

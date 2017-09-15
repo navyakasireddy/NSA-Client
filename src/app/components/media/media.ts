@@ -28,7 +28,7 @@ export class Media implements OnInit {
     @ViewChild(MdSort) sort: MdSort;
     mediaType: string = "";
     showList: boolean = true;
-    displayedColumns: any[] = ["actions","Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On", "Id", "Retention Time", "Life"];
+    displayedColumns: any[] = ["actions", "Id","Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On",  "Retention Time", "Life"];
     mediaDatabase = new MediaDatabase();
     dataSource: MediaDataSource | null;
 
@@ -126,10 +126,12 @@ export class Media implements OnInit {
 
 
     openSnackBar(message: string, action: string) {
-        let config = new MdSnackBarConfig();
-        config.duration = 1600;
-        config.extraClasses = ["position"];
-        this.snackBar.open(message, action, config);
+        if (message != "") {
+            let config = new MdSnackBarConfig();
+            config.duration = 1600;
+            config.extraClasses = ["position"];
+            this.snackBar.open(message, action, config);
+        }
     }
 }
 

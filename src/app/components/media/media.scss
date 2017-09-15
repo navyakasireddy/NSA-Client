@@ -1,14 +1,17 @@
-.mat-cell, .mat-header-cell {
-font-size:x-large;
-}
+page-media {
+
 
 .content
 {
     width: 79%;
     margin-left: 2% !important;
 }
-.position{
-position: fixed;
-top:8%;
-left:41%
+
+.mat-cell, .mat-header-cell{
+    font-size: x-large;
+    padding: inherit; 
+    max-width: max-content;	
+}
+
+
 }

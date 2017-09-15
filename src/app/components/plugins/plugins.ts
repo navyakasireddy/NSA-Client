@@ -115,10 +115,12 @@ export class Plugins {
 
 
     openSnackBar(message: string, action: string) {
-        let config = new MdSnackBarConfig();
-        config.duration = 1600;
-        config.extraClasses = ["position"];
-        this.snackBar.open(message, action, config);
+        if (message != "") {
+            let config = new MdSnackBarConfig();
+            config.duration = 1600;
+            config.extraClasses = ["position"];
+            this.snackBar.open(message, action, config);
+        }
     }
 }
 
