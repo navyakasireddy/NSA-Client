@@ -22,7 +22,7 @@ export class MediaDialog {
 
 
     ngOnInit() {
-        alert(typeof (this.data));
+       
         this.action = typeof (this.data) == "string" ?"Create" : "Update";
         this.mediaItem = typeof (this.data) != "string" ? this.data : {
             mediumDesc: "",

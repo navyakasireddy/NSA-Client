@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, ViewContainerRef, OnInit } from '@angular/core';
 import { MediaDialog } from './MediaDialog';
+import { InfoDialog } from './InfoDialog';
 import { MdDialog, MdDialogRef, MdCard, MdSort, Sort } from '@angular/material';
 import { PluginDataService } from "../../services/pluginData.service";
 import { DocMediaService } from "../../services/documentMedia.service";
@@ -107,6 +108,21 @@ export class Media implements OnInit {
 
             });
 
+        }
+        else if (action == 'info') {
+            //this.dialogRef =
+                this.dialog.open(InfoDialog, {
+                disableClose: true,
+                data: this.mediaType
+            });
+
+            //this.dialogRef.afterClosed().subscribe(result => {
+            //    debugger;
+            //    console.log('result: ' + result);
+            //    this.dialogRef = null;
+            //    this.openSnackBar(result, "");
+            //    this.GetData();
+            //});
         }
         else {
             this.dialogRef = this.dialog.open(MediaDialog, {

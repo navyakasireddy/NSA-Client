@@ -34,6 +34,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 
 import { Media } from "./components/media/media";
 import { MediaDialog } from "./components/media/MediaDialog";
+import { InfoDialog } from "./components/media/InfoDialog";
 import { TreeModule } from 'angular-tree-component';
 const routes: Routes = [
     {
@@ -82,7 +83,7 @@ const routes: Routes = [
         Plugins,
         ModalDialog,
         DeleteDialog,
-        MediaDialog
+        MediaDialog, InfoDialog
         
     ],
     imports: [
@@ -108,7 +109,8 @@ const routes: Routes = [
         LoginPage,
         ModalDialog,
         DeleteDialog,
-        MediaDialog
+        MediaDialog,
+        InfoDialog
     ],
     providers: [
         AppService,
