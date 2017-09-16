@@ -36,6 +36,7 @@ import { Media } from "./components/media/media";
 import { MediaDialog } from "./components/media/MediaDialog";
 import { InfoDialog } from "./components/media/InfoDialog";
 import { TreeModule } from 'angular-tree-component';
+import { ChartsModule } from 'ng2-charts';
 const routes: Routes = [
     {
         path: '',
@@ -95,7 +96,8 @@ const routes: Routes = [
         MdButtonModule, 
         RouterModule.forRoot(routes),
         MaterialModule,
-        CdkTableModule
+        CdkTableModule,
+        ChartsModule
     ],
     exports: [
         MaterialModule,

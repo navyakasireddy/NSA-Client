@@ -21,6 +21,14 @@
       <md-tab-group>
   <md-tab label="General"><br /><br />
         <div class="content">
+          
+       <div style="display: block;max-height:70%;max-width:75%">
+  <canvas baseChart
+          [data]="pieChartData"
+          [labels]="pieChartLabels"
+          [chartType]="pieChartType"></canvas>
+</div>
+    </div>
    <div>
                         <span class="property-label">Storage Used : </span>
                         <span class="property-value">{{mediaItem.storageUsed}} MB</span>
@@ -39,10 +47,16 @@
                         <span class="property-label">Unit Size : </span>
                         <span class="property-value">{{mediaItem.unitSize}} Bytes</span>
                     </div>
-            </div>
+            
   </md-tab>
   <md-tab label="Cache fill"><br /><br />
   <div class="content">
+      <div style="display: block;max-height:70%;max-width:75%">
+  <canvas baseChart
+          [data]="pieChartData1"
+          [labels]="pieChartLabels1"
+          [chartType]="pieChartType"></canvas>
+</div>
       <div>
                         <span class="property-label">Cache Objects : </span>
                         <span class="property-value">{{mediaItem.cacheObjects}}</span>

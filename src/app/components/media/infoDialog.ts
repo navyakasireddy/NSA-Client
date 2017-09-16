@@ -17,7 +17,13 @@ export class InfoDialog {
 
     constructor( @Inject(MD_DIALOG_DATA) public data: any, private _mediaService: DocMediaService,
        private route: ActivatedRoute) { }
-
+    public pieChartLabels: string[] = ['Storage Used', 'Free Storage'];
+    public pieChartData: number[] = [this.data.storageUsed, this.data.freeStorage];
+    public pieChartType: string = 'pie';
+    public pieChartLabels1: string[] = ['Cache Objects', 'Medium Objects'];
+    public pieChartData1: number[] = [this.data.cacheObjects, this.data.mediumObjects];
+    
+  
 
     ngOnInit() {
         
