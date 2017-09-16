@@ -50,7 +50,7 @@ export class Media implements OnInit {
     }
 
     GetData() {
-        this.showList = true;
+       
         this.routeSubscription = this.route.params.subscribe(params => {
             this.mediaType = params['type'];
 
@@ -59,6 +59,7 @@ export class Media implements OnInit {
             this._mediadataService.getList(this.mediaType).then((res: any) => {
                 //this.displayedColumns = res.columnList;
                 if (res.mediaList.length > 0) {
+                    this.showList = true;
                     tempmediaData = res.mediaList;
                     this.mediaDatabase = new MediaDatabase();
                     this.dataSource = new MediaDataSource(this.mediaDatabase, this.sort);
@@ -95,14 +96,14 @@ export class Media implements OnInit {
 
             this.dialogRefDel.afterClosed().subscribe(result => {
                 if (result) {
-                    //this._dataService.Delete(item.pluginId).then((res: any) => {
-                    //    console.log(res)
-                    //    this.openSnackBar(res.responseMsg, "");
-                    //    this.GetData();
-                    //    this.dialogRef = null;
-                    //}, (error) => {
+                    this._mediadataService.Delete(item.id).then((res: any) => {
+                        console.log(res)
+                        this.openSnackBar(res.responseMsg, "");
+                        this.GetData();
+                        this.dialogRef = null;
+                    }, (error) => {
 
-                    //});
+                    });
                 }
 
 
@@ -116,7 +117,8 @@ export class Media implements OnInit {
                 data: item
             });          
         }
-        else {
+        else if (action == 'create') {
+            this.showList = true;
             this.dialogRef = this.dialog.open(MediaDialog, {
                 disableClose: true,
                 data: this.mediaType
@@ -129,6 +131,17 @@ export class Media implements OnInit {
                 this.openSnackBar(result, "");
                 this.GetData();
             });
+        }
+        else if (action == 'lock') {
+            item.documentMediaType = "CLOSED_MEDIA";
+            this._mediadataService.update(item).then((res: any) => {
+                console.log(res)
+                this.openSnackBar(res.responseMsg, "");
+                this.GetData();
+                this.dialogRef = null;
+            }, (error) => {
+
+            });           
         }
     }
 
