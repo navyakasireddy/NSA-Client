@@ -113,16 +113,8 @@ export class Media implements OnInit {
             //this.dialogRef =
                 this.dialog.open(InfoDialog, {
                 disableClose: true,
-                data: this.mediaType
-            });
-
-            //this.dialogRef.afterClosed().subscribe(result => {
-            //    debugger;
-            //    console.log('result: ' + result);
-            //    this.dialogRef = null;
-            //    this.openSnackBar(result, "");
-            //    this.GetData();
-            //});
+                data: item
+            });          
         }
         else {
             this.dialogRef = this.dialog.open(MediaDialog, {

@@ -5,7 +5,7 @@
         <md-card-content>
   <form #myForm="ngForm"> 
             <md-input-container  class="inputElements">
-                <input mdInput type="text" placeholder="Medium Descriptor" name="mediumDesc" [(ngModel)]="mediaItem.mediumDesc" required/>
+                <input mdInput type="text" placeholder="Medium Descriptor" name="mediumDesc" [(ngModel)]="mediaItem.name" required/>
             </md-input-container><br />
    
    <md-input-container  class="inputElements">
@@ -13,22 +13,23 @@
             </md-input-container>
      
 <br />
-       <md-select placeholder="Plug-In"  required  name="pluginValue" [(ngModel)]="mediaItem.pluginValue" >
-  <md-option *ngFor="let item of plugins" [value]="item.pluginId">
-    {{ item.name }}
+       <md-select placeholder="Plug-In"  required  name="pluginValue" [(ngModel)]="mediaItem.plugin" >
+  <md-option *ngFor="let item of plugins" [value]="item"  >
+    {{ item.name }} 
   </md-option>
 </md-select>
+      
       <br />
             <section> 
-      <md-checkbox [(ngModel)]="isContainer" name="isContainer">Container</md-checkbox>
-      <md-checkbox  [(ngModel)]="isNamedPool" name="isNamedPool">For named pool (active/active) </md-checkbox>
+      <md-checkbox [(ngModel)]="mediaItem.container" name="isContainer">Container</md-checkbox>
+      <md-checkbox  [(ngModel)]="mediaItem.namedPool" name="isNamedPool">For named pool (active/active) </md-checkbox>
     </section> <md-input-container  class="inputElements">
-                <input mdInput type="number" placeholder="Maximum number of Objects" name="maxNumber" [(ngModel)]="mediaItem.maxNumber" required/>
+                <input mdInput type="number" placeholder="Maximum number of Objects" name="maxNumber" [(ngModel)]="mediaItem.maxNoOfObjects" required/>
             </md-input-container>
      
 <br />
        <md-input-container  class="inputElements">
-                <input mdInput type="number" placeholder="Maximum size" name="maxSize" [(ngModel)]="mediaItem.maxSize" required/>
+                <input mdInput type="number" placeholder="Maximum size" name="maxSize" [(ngModel)]="mediaItem.maximumSize" required/>
             <md-hint align="end"><strong>MB</strong></md-hint>           </md-input-container>
      
 <br /> <md-input-container  class="inputElements">

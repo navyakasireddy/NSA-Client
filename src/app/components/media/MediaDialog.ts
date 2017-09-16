@@ -22,25 +22,55 @@ export class MediaDialog {
 
 
     ngOnInit() {
-       
-        this.action = typeof (this.data) == "string" ?"Create" : "Update";
-        this.mediaItem = typeof (this.data) != "string" ? this.data : {
-            mediumDesc: "",
-            storageCapacity: "",
-            pluginValue: "",
-            isContainer: false,
-            isNamedPool: false,
-            maxNumber: "",
-            maxSize: "",
-            timeOut: "",
-            mediaType: this.data
-        };
+        this.action = typeof (this.data) == "string" ? "Create" : "Update";
         this._pluginService.getList().then((res: any) => {
             if (res.pluginList.length > 0) {
                 this.plugins = res.pluginList;
                 console.log(this.plugins);
             }
-        });
+        })
+            
+            
+        this.mediaItem = typeof (this.data) != "string" ? this.data : {
+            "documentMediaType": this.data,
+            "id": "",
+            "name": "",
+            "type": "",
+            "location": "",
+            "generatedOn": "",
+            "storageUsed": "",
+            "freeStorage": "",
+            "storageCapacity": "",
+            "objectCount": "",
+            "unitSize": "",
+            "cacheObjects": "",
+            "mediumObjects": "",
+            "usage": "",
+            "retentionTime": "",
+            "life": "",
+            "retentionPlace": "",
+            "plugin": {
+                "pluginId": "",
+                "name": "",
+                "type": "",
+                "module": "",
+                "status": ""
+            },
+            "maxNoOfObjects": "",
+            "maximumSize": "",
+            "timeOut": "",
+            "openTransactions": "",
+            "transactionData": "",
+            "container": "",
+            "dataHashActive": "",
+            "namedPool": ""
+        }
+
+    
+    }
+
+    ngAfterViewInit() {
+        // ...
     }
 
     ApplyAction(actionItem) {

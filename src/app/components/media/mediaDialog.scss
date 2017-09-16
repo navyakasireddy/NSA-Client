@@ -17,3 +17,40 @@ margin:10px;
 }
 }
 }
+
+
+dialog-info{
+height:100%;
+
+
+.inputElements{
+min-width:50%;
+}
+
+.buttonContainer{
+text-align:center;
+button{
+margin:10px;
+}}
+
+.property-label{
+
+margin:10px;
+border: none;
+    
+    display: -webkit-inline-box;
+    font: inherit;
+	    text-align: center;
+		font-size: large;
+		color: rgba(0, 0, 0, .54);
+}
+.property-value{
+display:inline;
+ display: -webkit-inline-box;
+    font: inherit;
+	    text-align: center;
+		font-size: large;
+	  
+		color: rgba(0, 0, 0, .87);
+}
+}

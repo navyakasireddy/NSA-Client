@@ -13,27 +13,18 @@ export class InfoDialog {
     public mediaItem: any;
    
 
-    plugins = [
-    ];
+    
 
-    constructor( @Inject(MD_DIALOG_DATA) public data: any, private _pluginService: PluginDataService, private _mediaService: DocMediaService,
+    constructor( @Inject(MD_DIALOG_DATA) public data: any, private _mediaService: DocMediaService,
        private route: ActivatedRoute) { }
 
 
     ngOnInit() {
-        //alert(typeof (this.data));
-        //this.action = typeof (this.data) == "string" ?"Create" : "Update";
-        //this.mediaItem = typeof (this.data) != "string" ? this.data : {
-        //    mediumDesc: "",
-        //    storageCapacity: "",
-        //    pluginValue: "",
-        //    isContainer: false,
-        //    isNamedPool: false,
-        //    maxNumber: "",
-        //    maxSize: "",
-        //    timeOut: "",
-        //    mediaType: this.data
-        //};
+        
+    
+        this.mediaItem = this.data;
+        console.log(this.mediaItem);
+        debugger;
         //this._pluginService.getList().then((res: any) => {
         //    if (res.pluginList.length > 0) {
         //        this.plugins = res.pluginList;
@@ -41,8 +32,11 @@ export class InfoDialog {
         //    }
         //});
     }
-
-    
+    updateValue(actionItem) {
+            this._mediaService.update(actionItem).then((res: any) => {                                
+            }, (error) => {
+            });        
+    }    
 }
 
 

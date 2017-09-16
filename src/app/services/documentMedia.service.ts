@@ -14,10 +14,10 @@ export class DocMediaService {
         this._serverURL = json.restBaseURL + json.media;
     }
     getList(mediaType: string) {
-        let _url = this._serverURL + '/' + this.GetMediaType(mediaType); 
+        let _url = this._serverURL + '/' + this.GetMediaType(mediaType);
 
         return new Promise((resolve, reject) => {
-            this._http.post(_url,{})
+            this._http.post(_url, {})
                 .map(res => res.json())
                 .catch((error: any) => {
                     console.error(error);
@@ -35,7 +35,7 @@ export class DocMediaService {
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         let _url = this._serverURL + "/" + id;
-       
+
         return new Promise((resolve, reject) => {
             this._http.delete(_url, { headers: headers })
                 .map(res => res.json())
@@ -51,24 +51,49 @@ export class DocMediaService {
     }
 
     update(actionItem: any) {
-
+        console.log(actionItem);
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         let body = {
             "media": {
-                "id": actionItem.mediaID,
-                "name": "nas1_update",
-                "type": "virtual",
-                "storageCapacity": 1024,
+                "documentMediaType": actionItem.documentMediaType,
+                "id": actionItem.id,
+                "name": actionItem.name,
+                "type": actionItem.type,
+                "location": actionItem.location,
+                "generatedOn": actionItem.generatedOn,
+                "storageUsed": actionItem.storageUsed,
+                "freeStorage": actionItem.freeStorage,
+                "storageCapacity": actionItem.storageCapacity,
+                "objectCount": actionItem.objectCount,
+                "unitSize": actionItem.unitSize,
+                "cacheObjects": actionItem.cacheObjects,
+                "mediumObjects": actionItem.mediumObjects,
+                "usage": actionItem.usage,
+                "retentionTime": actionItem.retentionTime,
+                "life": actionItem.life,
+                "retentionPlace": actionItem.retentionPlace,
                 "plugin": {
-                    "pluginId": "1"
-                }
+                    "pluginId": actionItem.plugin.pluginId,
+                    "name": actionItem.plugin.name,
+                    "type": actionItem.plugin.type,
+                    "module": actionItem.plugin.module,
+                    "status": actionItem.plugin.status
+                },
+                "maxNoOfObjects": actionItem.maxNoOfObjects,
+                "maximumSize": actionItem.maximumSize,
+                "timeOut": actionItem.timeOut,
+                "openTransactions": actionItem.openTransactions,
+                "transactionData": actionItem.transactionData,
+                "container": actionItem.container,
+                "dataHashActive": actionItem.dataHashActive,
+                "namedPool": actionItem.namedPool
             }
-        };
+        }
 
         let _url = this._serverURL;
-       
+
         return new Promise((resolve, reject) => {
             this._http.put(_url, body, { headers: headers })
                 .map(res => res.json())
@@ -83,27 +108,47 @@ export class DocMediaService {
         });
     }
 
-    create(actionItem: any) {        
+    create(actionItem: any) {
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
 
         let body = {
             "media": {
-                "documentMediaType": this.GetMediaType(actionItem.mediaType),
-                "name": actionItem.mediumDesc,
-                "type": "virtual",
+                "documentMediaType": this.GetMediaType(actionItem.documentMediaType),
+               // "id": actionItem.id,
+                "name": actionItem.name,
+                "type": actionItem.type,
+                "location": actionItem.location,
+                "generatedOn": actionItem.generatedOn,
+                "storageUsed": actionItem.storageUsed,
+                "freeStorage": actionItem.freeStorage,
                 "storageCapacity": actionItem.storageCapacity,
-                "maxNoOfObjects": actionItem.maxNumber,
-                "maximumSize": actionItem.maxSize,
-                "timeOut": actionItem.timeOut,
-                "container": actionItem.isContainer,
-                "isNamedPool": actionItem.isNamedPool,
+                "objectCount": actionItem.objectCount,
+                "unitSize": actionItem.unitSize,
+                "cacheObjects": actionItem.cacheObjects,
+                "mediumObjects": actionItem.mediumObjects,
+                "usage": actionItem.usage,
+                "retentionTime": actionItem.retentionTime,
+                "life": actionItem.life,
+                "retentionPlace": actionItem.retentionPlace,
                 "plugin": {
-                    "pluginId": actionItem.pluginValue
-                }
+                    "pluginId": actionItem.plugin.pluginId,
+                    "name": actionItem.plugin.name,
+                    "type": actionItem.plugin.type,
+                    "module": actionItem.plugin.module,
+                    "status": actionItem.plugin.status
+                },
+                "maxNoOfObjects": actionItem.maxNoOfObjects,
+                "maximumSize": actionItem.maximumSize,
+                "timeOut": actionItem.timeOut,
+                "openTransactions": actionItem.openTransactions,
+                "transactionData": actionItem.transactionData,
+                "container": actionItem.container,
+                "dataHashActive": actionItem.dataHashActive,
+                "namedPool": actionItem.namedPool
             }
-        };
+        }
 
         let _url = this._serverURL;
 
@@ -122,7 +167,7 @@ export class DocMediaService {
     }
 
     GetMediaType(mediatype: string) {
-        return "ALL_MEDIA"; 
+        return "ALL_MEDIA";
         //switch (mediatype) {
         //    case "Removable media": return "REMOVABLE_MEDIA";
         //    case "Migrated media": return "MIGRATED_MEDIA"; 
