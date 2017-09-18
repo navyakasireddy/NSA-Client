@@ -15,7 +15,6 @@ import { SettingsPage } from './components/settings/settings';
 import { Plugins } from './components/plugins/plugins';
 import { ModalDialog } from './components/plugins/modalDialog';
 import { DeleteDialog } from './components/common/deleteDialog';
-import { AppService } from "./services/app.service";
 //import {EventService} from "./services/event.service"
 import { LoginService } from "./services/login.service";
 import { StorageService } from "./services/storage.service";
@@ -24,14 +23,13 @@ import { AdminDataService } from "./services/adminData.service";
 import { PluginDataService } from "./services/pluginData.service";
 import { DocMediaService } from "./services/documentMedia.service";
 
-import DynamicComponent from "./components/dynamicComponent/dynamic-component";
 import { RouterModule, Routes } from "@angular/router";
 import { UserInfoPage } from "./components/userInfo/userInfo";
 
 import { AuthGuard } from './auth.guard';
 
 import { CdkTableModule } from '@angular/cdk/table';
-
+import { Logger } from "angular2-logger/core";
 import { Media } from "./components/media/media";
 import { MediaDialog } from "./components/media/MediaDialog";
 import { InfoDialog } from "./components/media/InfoDialog";
@@ -78,7 +76,7 @@ const routes: Routes = [
         SettingsPage,
         LoginPage,
         Message,
-        DynamicComponent,
+        
         UserInfoPage,
         Media,
         Plugins,
@@ -115,12 +113,12 @@ const routes: Routes = [
         InfoDialog
     ],
     providers: [
-        AppService,
         LoginService,
         StorageService,
         FeatureService,
         AdminDataService,
         PluginDataService, DocMediaService,
+        Logger,
         AuthGuard]
 })
 export class AppModule {

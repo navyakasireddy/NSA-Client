@@ -2,7 +2,6 @@ import { Component, ViewEncapsulation, ViewChild, OnInit, NgModule, ElementRef }
 
 import { AboutPage } from "../about/about";
 
-import { AppService } from "../../services/app.service";
 import { LoginService } from "../../services/login.service";
 import { AdminDataService } from "../../services/adminData.service";
 import { AppModule } from "../../app.module";

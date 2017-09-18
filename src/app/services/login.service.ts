@@ -7,12 +7,12 @@ import {Injectable} from "@angular/core";
 import {Location} from '@angular/common';
 import {StorageService} from "./storage.service";
 import { Observable } from 'rxjs/Observable';
-import { AppService } from "./app.service";
+import * as json from '../../config/restconfig.json';
 const LOGIN_TOKEN = 'token';
 const keyLocalRemindMe = 'local_storeLogonValues';
 const keyLocalUsername = 'local_username';
 const keyLocalTenant = 'local_tenant';
-import * as json from '../../config/restconfig.json';
+
 @Injectable()
 export class LoginService {
 
@@ -30,7 +30,7 @@ export class LoginService {
   private _currentUser: any = null;
 
   constructor(/*public events: Events,*/ private location: Location, private storageService: StorageService, private _http: Http, private _requestOptions: RequestOptions
-      , private appService: AppService ) {
+    ) {
       
     
     //this.credentialAuthentication = this.appService.sdkService.CredentialAuthentication;
