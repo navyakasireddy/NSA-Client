@@ -15,7 +15,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 var tempmediaData: any[] = [];
 export interface mediaData { };
-
+var showList: boolean = true;
 @Component({
     selector: 'page-media',
     templateUrl: 'media.html'
@@ -28,7 +28,7 @@ export class Media implements OnInit {
     dialogRefDel: MdDialogRef<DeleteDialog>;
     @ViewChild(MdSort) sort: MdSort;
     mediaType: string = "";
-    showList: boolean = true;
+   
     displayedColumns: any[] = ["actions", "Id","Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On",  "Retention Time", "Life"];
     mediaDatabase = new MediaDatabase();
     dataSource: MediaDataSource | null;
@@ -60,19 +60,22 @@ export class Media implements OnInit {
             this.mediaType = params['type'];
             console.log(this.mediaType);
             //alert(this.mediaType);
-            this.showList = true;
+           
             this._mediadataService.getList(this.mediaType).then((res: any) => {
                 //this.displayedColumns = res.columnList;
                 if (res.mediaList.length > 0) {
-                    this.showList = true;
+                    
                     tempmediaData = res.mediaList;
                     this.mediaDatabase = new MediaDatabase();
                     this.dataSource = new MediaDataSource(this.mediaDatabase, this.sort);
                 }
                 else {
 
-                    this.showList = false;
+                   
                     tempmediaData = [];
+                    this.mediaDatabase = new MediaDatabase();
+                    this.dataSource = new MediaDataSource(this.mediaDatabase, this.sort);
+                  
                    
                 }
             }, (error) => {
@@ -125,7 +128,7 @@ export class Media implements OnInit {
             });          
         }
         else if (action == 'create') {
-            this.showList = true;
+            
             this.dialogRef = this.dialog.open(MediaDialog, {
                 disableClose: true,
                 data: this.mediaType
@@ -173,23 +176,23 @@ export class MediaDatabase {
 
     constructor() {
         var self = this;
-        if (tempmediaData != undefined) {
+        debugger;
+        if (tempmediaData != undefined && tempmediaData.length > 0) {
             const copiedData = self.data.slice();
             var item;
-
+            showList = true;
 
             tempmediaData.forEach(function (childitem) {
                 copiedData.push(childitem);
                 self.dataChange.next(copiedData);
             });
         }
+        else {
+            self.dataChange = new BehaviorSubject<mediaData[]>([]);
+            showList = false
+        }
 
     }
-
-
-
-
-
 }
 
 
