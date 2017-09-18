@@ -34,28 +34,33 @@ export class Media implements OnInit {
     dataSource: MediaDataSource | null;
 
     constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService,
-        private route: ActivatedRoute, private router: Router) { }
+        private route: ActivatedRoute, private router: Router) {
+        this.GetData()
+    }
 
-    ngOnInit() {
-        this.GetData();
-        //this.router.events
-        //    .filter((event) => event instanceof NavigationEnd)
-        //    .map(() => this.route)
-        //    .map((route) => {
-        //        while (route.firstChild) route = route.firstChild;
-        //        return route;
-        //    })
-        //    .filter((route) => route.outlet === 'primary')                
-        //    .subscribe((event) => this.GetData());
+    
+
+ 
+
+    ngOnInit() {       
+         this.router.events
+            .filter((event) => event instanceof NavigationEnd)
+            .map(() => this.route)
+            // .map((route) => {
+            //    while (route.firstChild) route = route.firstChild;
+            //    return route;
+            //})
+             .filter((route) => route.outlet === 'primary')
+             .subscribe((event) => this.GetData());
     }
 
     GetData() {
        
         this.routeSubscription = this.route.params.subscribe(params => {
             this.mediaType = params['type'];
-
-
-
+            console.log(this.mediaType);
+            //alert(this.mediaType);
+            this.showList = true;
             this._mediadataService.getList(this.mediaType).then((res: any) => {
                 //this.displayedColumns = res.columnList;
                 if (res.mediaList.length > 0) {
@@ -67,6 +72,8 @@ export class Media implements OnInit {
                 else {
 
                     this.showList = false;
+                    tempmediaData = [];
+                   
                 }
             }, (error) => {
             });
