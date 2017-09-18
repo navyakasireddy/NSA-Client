@@ -4,11 +4,11 @@
                         <md-icon  class="material-icons" >add</md-icon>
                     </button>
         </div>
-    <div style="margin:10px" *ngIf="showList">
+    <div style="margin:10px" >
          
 
 
-  <md-table #table [dataSource]="dataSource" mdSort >
+  <md-table #table [dataSource]="dataSource" mdSort *ngIf="showList">
        <ng-container cdkColumnDef="actions">
     <md-header-cell *cdkHeaderCellDef>  </md-header-cell>
     <md-cell *cdkCellDef="let row" >
