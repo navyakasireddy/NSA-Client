@@ -5,7 +5,7 @@ import { Message } from '../nonModalMessages/nonModalMessage'
 import { LoginService } from "../../services/login.service";
 import { FeatureService } from "../../services/feature.service";
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA, MdSnackBar, MdSnackBarConfig } from '@angular/material';
-
+import { Logger } from "angular2-logger/core";
 declare const gapi: any;
 
 @Component({
@@ -15,12 +15,10 @@ declare const gapi: any;
 export class LoginPage implements OnInit {
 
     returnUrl: string;
-    componentData = null;
     public IPvalue: string;
     showIPHolder: boolean = true;
     showProgress: boolean = false;
-
-    public errorMessage: string="";
+    
     public action: string;
     public pluginItem: any;
 
@@ -37,20 +35,12 @@ export class LoginPage implements OnInit {
         { value: '3', viewValue: 'admin' }
     ];
 
-    constructor(public dialog: MdDialog, public snackBar: MdSnackBar,
+    constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _logger: Logger,
         private router: Router,
         private route: ActivatedRoute,
         private loginService: LoginService,
         private featureService: FeatureService) {
-
-        const state: RouterState = router.routerState;
-        const snapshot: RouterStateSnapshot = state.snapshot;
-        const root: ActivatedRouteSnapshot = snapshot.root;
-        const child = root.firstChild;
-        //const id: Observable<string> = child.params.map(p => p.id);
-        //debugger;
-        let self = this;
-
+        this._logger.info('form : login.ts');
     }
 
     /**
@@ -58,7 +48,7 @@ export class LoginPage implements OnInit {
      * TODO: check if there is an earlier place for the check, because the user sees the login view for some seconds. Better will be a direct forwarding when the app starts.
      */
     ngOnInit() {
-        console.log('ngOnInit');
+        
         this.userName = "";
         this.password = "";
         this.tenant = "";
@@ -83,13 +73,12 @@ export class LoginPage implements OnInit {
         this.loginService.connectToIP(this.IPvalue).then((res: any) => {
             console.log('IP connect' + this.IPvalue);
             self.showIPHolder = res.connectionActive ? false : true;
-            self.errorMessage = "";
+            this._logger.log("Logged in IP : " + this.IPvalue);
             self.openSnackBar("Server active", "");
         }, function (error) {
             self.showIPHolder = true;
-            console.log(error);
             self.showProgress = false;
-           // self.errorMessage = "IP is inactive.";
+            this._logger.error('Error : '+error);
             self.openSnackBar("Server not started", "");
         });
     }
@@ -97,25 +86,17 @@ export class LoginPage implements OnInit {
 
     ecmLoginButtonPressed() {
         let self = this;
-        
+
         let successHandler = function () {
-            console.log('logged in');
+            this._logger.info("log-in success");
             // navigate to redirectUrl
             self.router.navigate([self.returnUrl]);
-            self.errorMessage = "";
+            
         };
 
-        let errorHandler = function (error) {
-            self.componentData = {
-                component: Message,
-                inputs: {
-                    msg: error,
-                    type: 'error',
-                }
-            };
-            console.log(error);
+        let errorHandler = function (error) {                  
             self.openSnackBar("Invalid Credentials,please try again.", "");
-            //self.errorMessage=""
+            this._logger.error('Error : ' + error);
         };
 
         this.loginService.login(this.userName, this.password, this.tenant, this.licenseType)

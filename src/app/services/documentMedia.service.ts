@@ -3,17 +3,18 @@ import { Observable } from 'rxjs/Observable';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import * as json from '../../config/restconfig.json';
-
+import { Logger } from "angular2-logger/core";
 @Injectable()
 
 export class DocMediaService {
 
     _serverURL: any;
-    constructor(private _http: Http, private _requestOptions: RequestOptions) {
-
+    constructor(private _http: Http, private _requestOptions: RequestOptions, private _logger: Logger) {
+        this._logger.info('Service :Document Media ');
         this._serverURL = json.restBaseURL + json.media;
     }
     getList(mediaType: string) {
+        this._logger.info('MediaService : getList');
         let _url = this._serverURL + '/' + this.GetMediaType(mediaType);
 
         return new Promise((resolve, reject) => {
@@ -30,7 +31,7 @@ export class DocMediaService {
         });
     }
     Delete(id: string) {
-
+        this._logger.info('MediaService : Delete');
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
@@ -51,6 +52,7 @@ export class DocMediaService {
     }
 
     update(actionItem: any) {
+        this._logger.info('MediaService : update');
         console.log(actionItem);
         let headers = new Headers();
         headers.append('Accept', 'application/json');
@@ -109,6 +111,7 @@ export class DocMediaService {
     }
 
     create(actionItem: any) {
+        this._logger.info('MediaService : create');
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');

@@ -3,10 +3,11 @@
  */
 import { Http, RequestOptions, Headers } from '@angular/http';
 import {Injectable} from "@angular/core";
-//import {Events} from "ionic-angular";
 import {Location} from '@angular/common';
 import {StorageService} from "./storage.service";
 import { Observable } from 'rxjs/Observable';
+
+import { Logger } from "angular2-logger/core";
 import * as json from '../../config/restconfig.json';
 const LOGIN_TOKEN = 'token';
 const keyLocalRemindMe = 'local_storeLogonValues';
@@ -29,10 +30,10 @@ export class LoginService {
 
   private _currentUser: any = null;
 
-  constructor(/*public events: Events,*/ private location: Location, private storageService: StorageService, private _http: Http, private _requestOptions: RequestOptions
+  constructor(/*public events: Events,*/ private location: Location, private storageService: StorageService, private _http: Http, private _requestOptions: RequestOptions,private _logger: Logger
     ) {
-      
-    
+
+      this._logger.info('Service : Login');
     //this.credentialAuthentication = this.appService.sdkService.CredentialAuthentication;
     //this.tokenAuthentication = this.appService.sdkService.TokenAuthentication;
     //this.googleAuthentication = this.appService.sdkService.GoogleAuthentication;
@@ -96,7 +97,7 @@ export class LoginService {
 
   // we need it as a promise
   public login(userName?: string, password?: string, tenant?: string, licenceType?: string){ //: Promise<any> {
-
+      this._logger.info('LoginService : login');
       let headers = new Headers();
       headers.append('Authorization', 'Basic ' + this.getbase64encode(userName, password));
       headers.append('Accept', 'application/json');
@@ -174,6 +175,7 @@ export class LoginService {
   }
 
   public connectToIP(IPvalue: string) {
+      this._logger.info('LoginService : connectToIP');
       let headers = new Headers();
       headers.append('Accept', 'application/json');
       headers.append('Content-Type', 'application/json');

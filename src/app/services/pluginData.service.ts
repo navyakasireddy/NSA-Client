@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, RequestOptions, Headers } from '@angular/http';
+import { Logger } from "angular2-logger/core";
 import 'rxjs/Rx';
 import * as json from '../../config/restconfig.json';
 @Injectable()
@@ -8,11 +9,12 @@ import * as json from '../../config/restconfig.json';
 export class PluginDataService {
 
     _serverURL: any;
-    constructor(private _http: Http, private _requestOptions: RequestOptions) {
-
+    constructor(private _http: Http, private _requestOptions: RequestOptions,private _logger: Logger) {
+        this._logger.info('Service : Plugin Data');
         this._serverURL = json.restBaseURL + json.plugin;
     }
     getList() {
+        this._logger.info('PluginService : getList');
         let _url = this._serverURL; //+ "/Menu/GetMenuDetails?roleName=" + roleName;  
 
         return new Promise((resolve, reject) => {
@@ -29,7 +31,7 @@ export class PluginDataService {
         });
     }
     Delete(id: string) {
-
+        this._logger.info('PluginService : delete');
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
@@ -50,7 +52,7 @@ export class PluginDataService {
     }
 
     update(actionItem: any) {
-
+        this._logger.info('PluginService : update');
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
@@ -79,7 +81,8 @@ export class PluginDataService {
         });
     }
 
-    create(actionItem: any) {        
+    create(actionItem: any) {  
+        this._logger.info('PluginService : create');      
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');

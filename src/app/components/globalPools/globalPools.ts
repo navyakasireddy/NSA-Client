@@ -5,7 +5,7 @@ import { AboutPage } from "../about/about";
 import { LoginService } from "../../services/login.service";
 import { AdminDataService } from "../../services/adminData.service";
 import { AppModule } from "../../app.module";
-import { Logger } from "angular2-logger/core";
+
 import { MdSidenav, MdSidenavModule } from '@angular/material';
 import { Router, RouterModule } from '@angular/router';
 
@@ -49,9 +49,7 @@ export class HomePage {
 
 
 
-    constructor(private _adminDataService: AdminDataService, private _router: Router, private loginService: LoginService, private elRef: ElementRef, private _logger: Logger) {
-        this._logger.info('Page : home.ts');
-    }
+    constructor(private _adminDataService: AdminDataService, private _router: Router, private loginService: LoginService, private elRef: ElementRef, private _logger: Logger) { }
     @ViewChild(MdSidenav) sidenav: MdSidenav;
 
 
@@ -80,7 +78,6 @@ export class HomePage {
             this.nodes = res;           
             var tree = this.elRef.nativeElement.querySelector('#tree');
         }, (error) => {
-            this._logger.error('Error : ' + error);
         });
     }
 

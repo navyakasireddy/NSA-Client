@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, ViewContainerRef, OnInit } from '@angular/core';
+import { Logger } from "angular2-logger/core";
 import { MediaDialog } from './MediaDialog';
 import { InfoDialog } from './InfoDialog';
 import { MdDialog, MdDialogRef, MdCard, MdSort, Sort } from '@angular/material';
@@ -31,9 +32,9 @@ export class Media implements OnInit {
     mediaDatabase = new MediaDatabase();
     dataSource: MediaDataSource | null;
 
-    constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService,
+    constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService, private _logger: Logger,
         private route: ActivatedRoute, private router: Router) {
-        this.GetData()
+        this._logger.info('form : Media.ts');
     }
 
     ngOnInit() {
@@ -66,6 +67,7 @@ export class Media implements OnInit {
                     this.showList = false;
                 }
             }, (error) => {
+                this._logger.error('Error : ' + error);
             });
         });
     }
@@ -94,11 +96,11 @@ export class Media implements OnInit {
             this.dialogRefDel.afterClosed().subscribe(result => {
                 if (result) {
                     this._mediadataService.Delete(item.id).then((res: any) => {
-                        console.log(res)
                         this.openSnackBar(res.responseMsg, "");
                         this.GetData();
                         this.dialogRef = null;
                     }, (error) => {
+                        this._logger.error('Error : ' + error);
                     });
                 }
             });
@@ -131,6 +133,7 @@ export class Media implements OnInit {
                 this.GetData();
                 this.dialogRef = null;
             }, (error) => {
+                this._logger.error('Error : ' + error);
             });
         }
     }

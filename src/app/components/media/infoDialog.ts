@@ -3,6 +3,8 @@ import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { PluginDataService } from "../../services/pluginData.service";
 import { DocMediaService } from "../../services/documentMedia.service";
 import { Router, ActivatedRoute } from '@angular/router';
+import { Logger } from "angular2-logger/core";
+
 @Component({
     selector: 'dialog-info',
     templateUrl: 'infoDialog.html'
@@ -15,8 +17,10 @@ export class InfoDialog {
 
     
 
-    constructor( @Inject(MD_DIALOG_DATA) public data: any, private _mediaService: DocMediaService,
-       private route: ActivatedRoute) { }
+    constructor( @Inject(MD_DIALOG_DATA) public data: any, private _mediaService: DocMediaService, private _logger: Logger,
+        private route: ActivatedRoute) {
+        this._logger.info('Page : infoDialog.ts');
+    }
     public pieChartLabels: string[] = ['Storage Used', 'Free Storage'];
     public pieChartData: number[] = [this.data.storageUsed, this.data.freeStorage];
     public pieChartType: string = 'pie';
@@ -27,7 +31,7 @@ export class InfoDialog {
 
     ngOnInit() {
         
-    
+       
         this.mediaItem = this.data;
         console.log(this.mediaItem);
         debugger;
@@ -41,6 +45,7 @@ export class InfoDialog {
     updateValue(actionItem) {
             this._mediaService.update(actionItem).then((res: any) => {                                
             }, (error) => {
+                this._logger.error('Error : ' + error);
             });        
     }    
 }

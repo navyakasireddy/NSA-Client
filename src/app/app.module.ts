@@ -29,7 +29,7 @@ import { UserInfoPage } from "./components/userInfo/userInfo";
 import { AuthGuard } from './auth.guard';
 
 import { CdkTableModule } from '@angular/cdk/table';
-import { Logger } from "angular2-logger/core";
+import { Logger, Options } from "angular2-logger/core";
 import { Media } from "./components/media/media";
 import { MediaDialog } from "./components/media/MediaDialog";
 import { InfoDialog } from "./components/media/InfoDialog";
@@ -118,6 +118,7 @@ const routes: Routes = [
         FeatureService,
         AdminDataService,
         PluginDataService, DocMediaService,
+        { provide: Options, useValue: { store: true } },
         Logger,
         AuthGuard]
 })
