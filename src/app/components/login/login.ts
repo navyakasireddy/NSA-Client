@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
         private route: ActivatedRoute,
         private loginService: LoginService,
         private featureService: FeatureService) {
-        this._logger.info('form : login.ts');
+        //._logger.info('form : login.ts');
     }
 
     /**
@@ -73,12 +73,12 @@ export class LoginPage implements OnInit {
         this.loginService.connectToIP(this.IPvalue).then((res: any) => {
             console.log('IP connect' + this.IPvalue);
             self.showIPHolder = res.connectionActive ? false : true;
-            this._logger.log("Logged in IP : " + this.IPvalue);
+            self._logger.log("Logged in IP : " + this.IPvalue);
             self.openSnackBar("Server active", "");
         }, function (error) {
             self.showIPHolder = true;
             self.showProgress = false;
-            this._logger.error('Error : '+error);
+            self._logger.error('Error : '+error);
             self.openSnackBar("Server not started", "");
         });
     }
@@ -88,7 +88,7 @@ export class LoginPage implements OnInit {
         let self = this;
 
         let successHandler = function () {
-            this._logger.info("log-in success");
+            self._logger.info("log-in success");
             // navigate to redirectUrl
             self.router.navigate([self.returnUrl]);
             
@@ -96,7 +96,7 @@ export class LoginPage implements OnInit {
 
         let errorHandler = function (error) {                  
             self.openSnackBar("Invalid Credentials,please try again.", "");
-            this._logger.error('Error : ' + error);
+            self._logger.error('Error : ' + error);
         };
 
         this.loginService.login(this.userName, this.password, this.tenant, this.licenseType)

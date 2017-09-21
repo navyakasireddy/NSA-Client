@@ -17,7 +17,7 @@ const SMALL_WIDTH_BREAKPOINT = 840;
 
 })
 export class HomePage {
-    
+
     //@ViewChild('aaa') tree: ElementRef;
     public nodes: any;/*= [
     {
@@ -49,7 +49,8 @@ export class HomePage {
 
 
 
-    constructor(private _adminDataService: AdminDataService, private _router: Router, private loginService: LoginService, private elRef: ElementRef, private _logger: Logger) {
+    constructor(private _adminDataService: AdminDataService, private _router: Router, private loginService: LoginService,
+        private elRef: ElementRef, private _logger: Logger) {
         this._logger.info('Page : home.ts');
     }
     @ViewChild(MdSidenav) sidenav: MdSidenav;
@@ -63,8 +64,8 @@ export class HomePage {
 
     check() {
         var tree = this.elRef.nativeElement.querySelector('#tree');
-             tree.treeModel.getNodeByName("Plug-ins")
-             .setActiveAndVisible();
+        tree.treeModel.getNodeByName("Plug-ins")
+            .setActiveAndVisible();
     }
 
     ngOnInit() {
@@ -73,11 +74,11 @@ export class HomePage {
                 this.sidenav.close();
             }
         });
-     
-       
+
+
 
         this._adminDataService.getAdminListDetails().then((res: any) => {
-            this.nodes = res;           
+            this.nodes = res;
             var tree = this.elRef.nativeElement.querySelector('#tree');
         }, (error) => {
             this._logger.error('Error : ' + error);
@@ -85,27 +86,33 @@ export class HomePage {
     }
 
     ngAfterViewInit() {
-        
+
     }
 
     onEvent($event) {
+        debugger;
         var n, p;
-        if ($event.eventName == "initialized") {           
+        if ($event.eventName == "initialized") {
             $event.treeModel.getNodeBy((node) => node.data.id === '4.9')
                 .setActiveAndVisible();
         }
-        if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined ){ //&& $event.treeModel.activeNodes[0].children.length == 0) {
+        if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined) { //&& $event.treeModel.activeNodes[0].children.length == 0) {
             if ($event.treeModel.activeNodes[0].parent.data.name === "Media") {
                 n = "Media";
                 p = "Documents";
                 this._router.navigate([p, n, $event.treeModel.activeNodes[0].data.name]);//, { queryParams: { mediaType: $event.treeModel.activeNodes[0].data.name } });
+            }
+            else if ($event.treeModel.activeNodes[0].parent.data.name === "Media pools") {
+                n = $event.treeModel.activeNodes[0].data.name;
+                p = "Documents";
+                this._router.navigate([p + '/' + n]);
             }
             else if ($event.treeModel.activeNodes[0].data.name != "Media") {
                 n = $event.treeModel.activeNodes[0].data.name;
                 p = $event.treeModel.activeNodes[0].parent.data.name;
                 this._router.navigate([p + '/' + n]);
             }
-           
+
         }
         //else if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined && $event.treeModel.activeNodes[0].children.length > 0) {
         //    debugger;
