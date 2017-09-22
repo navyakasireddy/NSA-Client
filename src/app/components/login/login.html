@@ -1,58 +1,61 @@
 <div class="container">
-    <md-card>
-     <md-card-title>{{title}}</md-card-title>
-        <md-card-header align="center">
-            <img src="../../../assets/img/Saperion-logo.png" class="companyImage" />
-        </md-card-header>
-        <div>{{errorMessage}}</div>
-        <md-card-content *ngIf="showIPHolder">
-    <form #IPForm="ngForm"> 
-            <md-input-container  class="inputElements">
-                <input mdInput type="text" placeholder="IP" name="ip" [(ngModel)]="IPvalue" required maxlength="15" minlength="7" />                
-            </md-input-container>
-            
+	<md-card>
+		<md-card-title>{{title}}</md-card-title>
+		<md-card-header align="center">
+			<img src="../../../assets/img/Saperion-logo.png" class="companyImage" />
+		</md-card-header>
+		<div>{{errorMessage}}</div>
+		<md-card-content *ngIf="showIPHolder">
+			<form #IPForm="ngForm">
+				<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="IP" name="ip" [(ngModel)]="IPvalue" required maxlength="15" minlength="7" />
+				</md-input-container>
+				<div md-card-actions class="buttonContainer">
+					<button md-raised-button color="primary" (click)="IPConnectButtonPressed()" class="inputElements" [disabled]="!IPForm.form.valid">
+						Connect
 
-            <div md-card-actions class="buttonContainer">
-                <button md-raised-button color="primary" (click)="IPConnectButtonPressed()" class="inputElements" [disabled]="!IPForm.form.valid" >
-                   Connect
-                  
-                </button>
-                <div *ngIf="showProgress">
-                 <md-progress-bar mode="indeterminate" > connecting</md-progress-bar>
-                    </div>
-            </div>
-        <div>
-            
-        </div>
-</form>  
-        </md-card-content>
-         <md-card-content *ngIf="!showIPHolder">
-              <form #myloginForm="ngForm"> 
-                  <p><b>Please enter credentials to login</b></p>
-            <md-input-container  class="inputElements">
-                <input mdInput type="text" placeholder="Username" name="username" [(ngModel)]="userName" required/>
-            </md-input-container><br />
-            <md-input-container  class="inputElements">
-                <input mdInput type="password" placeholder="Password" name="password" [(ngModel)]="password" required/>
-            </md-input-container><br />
-            <md-input-container class="inputElements">
-                <input mdInput type="text" placeholder="Tenant" [(ngModel)]="tenant" name="tenent" required/>
-            </md-input-container><br />
+					</button>
+					<div *ngIf="showProgress">
+						<md-progress-bar mode="indeterminate"> connecting</md-progress-bar>
+					</div>
+				</div>
+				<div>
 
-                   <md-select placeholder="License-type"  required [(ngModel)]="licenseType" name="licenseType" >
-  <md-option *ngFor="let item of licenseTypes" [value]="item.value">
-    {{ item.viewValue }}
-  </md-option>
-</md-select><br /><br />
-         <!--   <section class="reminderSection">
+				</div>
+			</form>
+		</md-card-content>
+		<md-card-content *ngIf="!showIPHolder">
+			<form #myloginForm="ngForm">
+				<p><b>Please enter credentials to login</b></p>
+				<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Username" name="username" [(ngModel)]="userName" required/>
+				</md-input-container>
+				<br />
+				<md-input-container class="inputElements">
+					<input mdInput type="password" placeholder="Password" name="password" [(ngModel)]="password" required/>
+				</md-input-container>
+				<br />
+				<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Tenant" [(ngModel)]="tenant" name="tenent" required/>
+				</md-input-container>
+				<br />
+
+				<md-select placeholder="License-type" required [(ngModel)]="licenseType" name="licenseType">
+					<md-option *ngFor="let item of licenseTypes" [value]="item.value">
+						{{ item.viewValue }}
+					</md-option>
+				</md-select>
+				<br />
+				<br />
+				<!--   <section class="reminderSection">
                 <md-checkbox [(ngModel)]="remindMe" [align]="end">Remind me</md-checkbox>
             </section>-->
-            <div md-card-actions class="buttonContainer">
-                <button md-raised-button color="primary" (click)="ecmLoginButtonPressed()" class="inputElements" [disabled]="!myloginForm.form.valid">
-                   Validate
-                </button>
-            </div>
-             </form>
-        </md-card-content>
-    </md-card>
+				<div md-card-actions class="buttonContainer">
+					<button md-raised-button color="primary" (click)="ecmLoginButtonPressed()" class="inputElements" [disabled]="!myloginForm.form.valid">
+						Validate
+					</button>
+				</div>
+			</form>
+		</md-card-content>
+	</md-card>
 </div>

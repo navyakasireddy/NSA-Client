@@ -1,129 +1,140 @@
 <div class="container">
-    <md-card>
-     
-        <md-card-title align="center">Medium Info</md-card-title>
-        <md-card-content>
+	<md-card>
 
-      <div class="content">
-<div>
-                        <span class="property-label">Name : </span>
-                        <span class="property-value">{{mediaItem.name}}</span>
-                    </div>
-          <div>
-                        <span class="property-label">Type : </span>
-                        <span class="property-value">{{mediaItem.type}}</span>
-                    </div>
-          <div>
-                        <span class="property-label">Media UID : </span>
-                        <span class="property-value">{{mediaItem.id}}</span>
-                    </div>
-          </div><br /><br />
-      <md-tab-group>
-  <md-tab label="General"><br /><br />
-        <div class="content">
-          
-       <div style="display: block;max-height:70%;max-width:75%">
-  <canvas baseChart
-          [data]="pieChartData"
-          [labels]="pieChartLabels"
-          [chartType]="pieChartType"></canvas>
-</div>
-    </div>
-   <div>
-                        <span class="property-label">Storage Used : </span>
-                        <span class="property-value">{{mediaItem.storageUsed}} MB</span>
-                    </div><div>
-                        <span class="property-label">Free Storage : </span>
-                        <span class="property-value">{{mediaItem.freeStorage}} MB</span>
-                    </div>
-      <hr />
-      <div>
-                        <span class="property-label">Storage Capacity : </span>
-                        <span class="property-value">{{mediaItem.storageCapacity}} MB</span>
-                    </div><div>
-                        <span class="property-label">Objects : </span>
-                        <span class="property-value">{{mediaItem.objectCount}}</span>
-                    </div><div>
-                        <span class="property-label">Unit Size : </span>
-                        <span class="property-value">{{mediaItem.unitSize}} Bytes</span>
-                    </div>
-            
-  </md-tab>
-  <md-tab label="Cache fill"><br /><br />
-  <div class="content">
-      <div style="display: block;max-height:70%;max-width:75%">
-  <canvas baseChart
-          [data]="pieChartData1"
-          [labels]="pieChartLabels1"
-          [chartType]="pieChartType"></canvas>
-</div>
-      <div>
-                        <span class="property-label">Cache Objects : </span>
-                        <span class="property-value">{{mediaItem.cacheObjects}}</span>
-                    </div>
-                        <div>
-                        <span class="property-label">Medium Objects : </span>
-                        <span class="property-value">{{mediaItem.mediumObjects}}</span>
-                    </div>
-                        <div>
-                        <span class="property-label">Usage : </span>
-                        <span class="property-value">{{mediaItem.usage}} MB</span>
-                    </div>
-                        </div>
-  </md-tab>
-           <md-tab label="Miscellaneous"><br /><br />
-               <div class="content" style="min-height:225px;">
-    <md-input-container  class="inputElements">
-                <input mdInput type="number" placeholder="Retention time" name="retentionTime" [(ngModel)]="mediaItem.retentionTime" />  <md-hint align="end"><strong>Years</strong></md-hint>
-            </md-input-container><button md-raised-button  (click)="updateValue(mediaItem)"   >
-Set                </button><br />
-               <md-input-container  class="inputElements">
-                <input mdInput type="number" placeholder="Life" name="life" [(ngModel)]="mediaItem.life" /><md-hint align="end"><strong>Years</strong></md-hint>
-            </md-input-container><button md-raised-button    (click)="updateValue(mediaItem)">
-Set                </button> <br />
-               <md-input-container  class="inputElements">
-                <input mdInput type="text" placeholder="Retention Place" name="retentionPlace" [(ngModel)]="mediaItem.retentionPlace" />
-            </md-input-container><button md-raised-button    (click)="updateValue(mediaItem)">
-Set                </button><br /><md-checkbox [(ngModel)]="mediaItem.dataHashActive" (click)="updateValue(mediaItem)">Data Hashing active</md-checkbox><br />
-                   </div>
-               
-  </md-tab>
-           <md-tab label="Storage system"><br /><br />
-  <div class="content">
- <div>
-                        <span class="property-label">Plug-In : </span>
-                        <span class="property-value">{{mediaItem.plugin.name}}</span>
-                    </div>
-                        <div>
-                        <span class="property-label">Maximum Number of Objects : </span>
-                        <span class="property-value">{{mediaItem.maxNoOfObjects}}</span>
-                    </div>
-                        <div>
-                        <span class="property-label">Maximum Size : </span>
-                        <span class="property-value">{{mediaItem.maximumSize}} MB</span>
-                    </div>
-       <div>
-                        <span class="property-label">Timeout : </span>
-                        <span class="property-value">{{mediaItem.timeOut}} Minutes</span>
-                    </div>
+		<md-card-title align="center">Medium Info</md-card-title>
+		<md-card-content>
 
-  </div>
+			<div class="content">
+				<div>
+					<span class="property-label">Name : </span>
+					<span class="property-value">{{mediaItem.name}}</span>
+				</div>
+				<div>
+					<span class="property-label">Type : </span>
+					<span class="property-value">{{mediaItem.type}}</span>
+				</div>
+				<div>
+					<span class="property-label">Media UID : </span>
+					<span class="property-value">{{mediaItem.id}}</span>
+				</div>
+			</div>
+			<br />
+			<br />
+			<md-tab-group>
+				<md-tab label="General">
+					<br />
+					<br />
+					<div class="content">
 
-  </md-tab>
-</md-tab-group>
-     
-<br />
-            
-            <div md-card-actions class="buttonContainer">
+						<div style="display: block;max-height:70%;max-width:75%">
+							<canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"></canvas>
+						</div>
+					</div>
+					<div>
+						<span class="property-label">Storage Used : </span>
+						<span class="property-value">{{mediaItem.storageUsed}} MB</span>
+					</div>
+					<div>
+						<span class="property-label">Free Storage : </span>
+						<span class="property-value">{{mediaItem.freeStorage}} MB</span>
+					</div>
+					<hr />
+					<div>
+						<span class="property-label">Storage Capacity : </span>
+						<span class="property-value">{{mediaItem.storageCapacity}} MB</span>
+					</div>
+					<div>
+						<span class="property-label">Objects : </span>
+						<span class="property-value">{{mediaItem.objectCount}}</span>
+					</div>
+					<div>
+						<span class="property-label">Unit Size : </span>
+						<span class="property-value">{{mediaItem.unitSize}} Bytes</span>
+					</div>
 
-                 <button md-raised-button color="primary"    md-dialog-close>
-Cancel                </button>
-    
-             
-            </div>
+				</md-tab>
+				<md-tab label="Cache fill">
+					<br />
+					<br />
+					<div class="content">
+						<div style="display: block;max-height:70%;max-width:75%">
+							<canvas baseChart [data]="pieChartData1" [labels]="pieChartLabels1" [chartType]="pieChartType"></canvas>
+						</div>
+						<div>
+							<span class="property-label">Cache Objects : </span>
+							<span class="property-value">{{mediaItem.cacheObjects}}</span>
+						</div>
+						<div>
+							<span class="property-label">Medium Objects : </span>
+							<span class="property-value">{{mediaItem.mediumObjects}}</span>
+						</div>
+						<div>
+							<span class="property-label">Usage : </span>
+							<span class="property-value">{{mediaItem.usage}} MB</span>
+						</div>
+					</div>
+				</md-tab>
+				<md-tab label="Miscellaneous">
+					<br />
+					<br />
+					<div class="content" style="min-height:225px;">
+						<md-input-container class="inputElements">
+							<input mdInput type="number" placeholder="Retention time" name="retentionTime" [(ngModel)]="mediaItem.retentionTime" />
+							<md-hint align="end"><strong>Years</strong></md-hint>
+						</md-input-container>
+						<button md-raised-button (click)="updateValue(mediaItem)">
+							Set </button>
+						<br />
+						<md-input-container class="inputElements">
+							<input mdInput type="number" placeholder="Life" name="life" [(ngModel)]="mediaItem.life" />
+							<md-hint align="end"><strong>Years</strong></md-hint>
+						</md-input-container>
+						<button md-raised-button (click)="updateValue(mediaItem)">
+							Set </button>
+						<br />
+						<md-input-container class="inputElements">
+							<input mdInput type="text" placeholder="Retention Place" name="retentionPlace" [(ngModel)]="mediaItem.retentionPlace" />
+						</md-input-container>
+						<button md-raised-button (click)="updateValue(mediaItem)">
+							Set </button>
+						<br />
+						<md-checkbox [(ngModel)]="mediaItem.dataHashActive" (click)="updateValue(mediaItem)">Data Hashing active</md-checkbox>
+						<br />
+					</div>
 
+				</md-tab>
+				<md-tab label="Storage system">
+					<br />
+					<br />
+					<div class="content">
+						<div>
+							<span class="property-label">Plug-In : </span>
+							<span class="property-value">{{mediaItem.plugin.name}}</span>
+						</div>
+						<div>
+							<span class="property-label">Maximum Number of Objects : </span>
+							<span class="property-value">{{mediaItem.maxNoOfObjects}}</span>
+						</div>
+						<div>
+							<span class="property-label">Maximum Size : </span>
+							<span class="property-value">{{mediaItem.maximumSize}} MB</span>
+						</div>
+						<div>
+							<span class="property-label">Timeout : </span>
+							<span class="property-value">{{mediaItem.timeOut}} Minutes</span>
+						</div>
 
-        </md-card-content>
+					</div>
 
-    </md-card>
+				</md-tab>
+			</md-tab-group>
+			<br />
+
+			<div md-card-actions class="buttonContainer">
+
+				<button md-raised-button color="primary" md-dialog-close>
+					Cancel </button>
+			</div>
+		</md-card-content>
+	</md-card>
 </div>

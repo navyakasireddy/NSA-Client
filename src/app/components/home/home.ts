@@ -77,7 +77,7 @@ export class HomePage {
 
 
 
-        this._adminDataService.getAdminListDetails().then((res: any) => {
+        this._adminDataService.getTreeListDetails().then((res: any) => {
             this.nodes = res;
             var tree = this.elRef.nativeElement.querySelector('#tree');
         }, (error) => {

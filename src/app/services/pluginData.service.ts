@@ -15,10 +15,15 @@ export class PluginDataService {
     }
     getList() {
         this._logger.info('PluginService : getList');
-        let _url = this._serverURL; //+ "/Menu/GetMenuDetails?roleName=" + roleName;  
-
+        let _url = this._serverURL; 
+        let headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-ECM-LicenseType', '3');
+        headers.append('X-ECM-Tenant', 'system');
+        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
         return new Promise((resolve, reject) => {
-            this._http.get(_url)
+            this._http.get(_url, { headers: headers })
                 .map(res => res.json())
                 .catch((error: any) => {
                     console.error(error);
@@ -35,6 +40,9 @@ export class PluginDataService {
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
+        headers.append('X-ECM-LicenseType', '3');
+        headers.append('X-ECM-Tenant', 'system');
+        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
         let _url = this._serverURL + "/" + id;
         // let _options= new RequestOptions({headers:headers});
         return new Promise((resolve, reject) => {
@@ -56,6 +64,9 @@ export class PluginDataService {
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
+        headers.append('X-ECM-LicenseType', '3');
+        headers.append('X-ECM-Tenant', 'system');
+        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
         let body = {
             "plugin": {
                 "pluginId": actionItem.pluginId,
@@ -86,6 +97,9 @@ export class PluginDataService {
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
+        headers.append('X-ECM-LicenseType', '3');
+        headers.append('X-ECM-Tenant', 'system');
+        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
 
         let body = {
             "plugin": {

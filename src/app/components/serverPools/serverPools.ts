@@ -1,8 +1,7 @@
 import { Component, ViewEncapsulation, ViewChild, OnInit, NgModule, ElementRef } from '@angular/core';
 import { Logger } from "angular2-logger/core";
 import { Router, RouterModule } from '@angular/router';
-import { MdDialog, MdDialogRef, MdCard } from '@angular/material';
-import { MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { MdDialog, MdDialogRef, MdCard ,MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { DeleteDialog } from '../common/deleteDialog';
 import { ServerPoolDialog } from './spDialog';
 import { MediaPoolsService } from "../../services/mediapools.service";

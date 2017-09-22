@@ -21,8 +21,8 @@ export class ServerPoolDialog {
         { value: 'TB' }
     ];
 
-    constructor( @Inject(MD_DIALOG_DATA) public data: any, private _logger: Logger,
-        private _dataService: MediaPoolsService, private _mediaService: DocMediaService
+    constructor(@Inject(MD_DIALOG_DATA) public data: any, private _logger: Logger,
+        private _dataService: MediaPoolsService, private _mediaService: DocMediaService, private dialogRef: MdDialogRef<ServerPoolDialog>
         ) {
         this._logger.info('form : server pool Dialog.ts' );
     }
@@ -45,7 +45,23 @@ export class ServerPoolDialog {
         };
     }
 
-   
+    ApplyAction(actionItem) {
+        if (this.action == "Create") {
+            this._mediaService.create(actionItem).then((res: any) => {
+                this.dialogRef.close(res.responseMsg);
+            }, (error) => {
+                this._logger.error('Error : ' + error);
+            });
+        }
+        else if (this.action == "Update") {
+            this._mediaService.update(actionItem).then((res: any) => {
+                console.log(res)
+                this.dialogRef.close(res.responseMsg);
+            }, (error) => {
+                this._logger.error('Error : ' + error);
+            });
+        }
+    }
 }
 
 
