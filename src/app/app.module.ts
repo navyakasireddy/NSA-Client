@@ -22,6 +22,7 @@ import { Plugins } from './components/plugins/plugins';
 import { UserInfoPage } from "./components/userInfo/userInfo";
 import { GlobalPools } from './components/globalPools/globalPools';
 import { ServerPools } from "./components/serverPools/serverPools";
+import { ExternalMedia } from "./components/externalMedia/extMedia";
 
 //Dialogs
 import { MediaDialog } from "./components/media/MediaDialog";
@@ -30,6 +31,7 @@ import { ModalDialog } from './components/plugins/modalDialog';
 import { DeleteDialog } from './components/common/deleteDialog';
 import { GlobalPoolDialog } from './components/globalPools/gpDialog';
 import { ServerPoolDialog } from "./components/serverPools/spDialog";
+import { ExtMediaDialog } from "./components/externalMedia/extMediaDialog";
 
 //Services
 import { LoginService } from "./services/login.service";
@@ -65,6 +67,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: 'Plug-ins', component: Plugins, pathMatch: 'full' },
+            { path: 'Media/Cloud Media', component: ExternalMedia, pathMatch: 'full' },
             { path: 'Media/:type', component: Media, pathMatch: 'full' },
             { path: 'Server pools', component: ServerPools, pathMatch: 'full' },
             { path: 'Global pools', component: GlobalPools, pathMatch: 'full' },
@@ -91,12 +94,13 @@ const routes: Routes = [
         UserInfoPage,
         Media,
         Plugins,
+        ExternalMedia,
         ModalDialog,
         DeleteDialog,
         MediaDialog, InfoDialog
         , GlobalPoolDialog
         , ServerPoolDialog
-
+        , ExtMediaDialog
     ],
     imports: [
         HttpModule,
@@ -125,7 +129,8 @@ const routes: Routes = [
         MediaDialog,
         InfoDialog,
         GlobalPoolDialog,
-        ServerPoolDialog
+        ServerPoolDialog,
+        ExtMediaDialog
     ],
     providers: [
         LoginService,
