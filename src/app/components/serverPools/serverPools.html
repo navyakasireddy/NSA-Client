@@ -1,24 +1,8 @@
-<div class="container">
-    <md-sidenav-container class="docs-component-viewer-sidenav-container">       
-    <md-sidenav #sidenav class="docs-component-viewer-sidenav" 
-              [opened]="!isScreenSmall()"
-              [mode]="isScreenSmall() ? 'over' : 'side'">
-    <nav *ngFor="let node of nodes" style="margin: 15px 0 0 35px;
-    font-size: x-large;">
-     
-        <tree-root [nodes]="nodes" (event)="onEvent($event)">
-  <ng-template #treeNodeTemplate let-node let-index="index">
-   <!--<span><img src="../../../assets/icon/{{node.data.name}}.bmp" title="" width="24" height="24"></span>-->
-       <span>{{ node.data.name }}</span>
-   
-  </ng-template>
-</tree-root>
-        
-        
-       <!-- <tree-root id="tree"  #tree [nodes]="nodes" (event)="onEvent($event)"></tree-root>-->
-    </nav>
-   
-  </md-sidenav>
-<router-outlet></router-outlet>
-</md-sidenav-container>
+<div class="content">
+     <div id="divid">
+          <button id="create"  (click)="onApplyAction('create','')" md-raised-button color="primary" mdTooltip="Create new Plug-in medium">
+                        <md-icon  class="material-icons" >add</md-icon>
+                    </button>
+        </div>
+    
 </div>

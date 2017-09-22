@@ -1,45 +1,35 @@
-<div class="container">
+<div class="container" style="width:500px;">
     <md-card>
      
-        <md-card-title align="center">{{action}} Plug-in medium</md-card-title>
+        <md-card-title align="center">{{action}} Media Pool</md-card-title>
         <md-card-content>
   <form #myForm="ngForm"> 
             <md-input-container  class="inputElements">
-                <input mdInput type="text" placeholder="Medium Descriptor" name="mediumDesc" [(ngModel)]="mediaItem.name" required/>
+                <input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="ServerPoolItem.name" required/>
             </md-input-container><br />
    
-   <md-input-container  class="inputElements">
-                <input mdInput type="number" placeholder="Storage Capacity" name="storageCapacity" [(ngModel)]="mediaItem.storageCapacity" required/>
-            </md-input-container>
-     
-<br />
-       <md-select placeholder="Plug-In"  required  name="pluginValue" [(ngModel)]="mediaItem.plugin" >
-  <md-option *ngFor="let item of plugins" [value]="item"  >
-    {{ item.name }} 
+  <md-select placeholder="Medium "  required [(ngModel)]="ServerPoolItem.mediumType" name="mediumType">
+  <md-option *ngFor="let item of mediaTypes" [value]="item">
+    {{ item.name }}  
   </md-option>
 </md-select>
-      
+     
+<br />
+            <md-input-container  class="inputElements">
+                <input mdInput type="number" placeholder="Maximum Usage" name="module" [(ngModel)]="ServerPoolItem.maximumUsage" required/>
+            </md-input-container>
+  <md-select placeholder="Usage Type"  required [(ngModel)]="ServerPoolItem.usageType" name="usageType">
+  <md-option *ngFor="let item of usageTypes" [value]="item.value">
+    {{ item.value }}  
+  </md-option>
+</md-select>
+
       <br />
             <section> 
-      <md-checkbox [(ngModel)]="mediaItem.container" name="isContainer">Container</md-checkbox>
-      <md-checkbox  [(ngModel)]="mediaItem.namedPool" name="isNamedPool">For named pool (active/active) </md-checkbox>
-    </section> <md-input-container  class="inputElements">
-                <input mdInput type="number" placeholder="Maximum number of Objects" name="maxNumber" [(ngModel)]="mediaItem.maxNoOfObjects" required/>
-            </md-input-container>
-     
-<br />
-       <md-input-container  class="inputElements">
-                <input mdInput type="number" placeholder="Maximum size" name="maxSize" [(ngModel)]="mediaItem.maximumSize" required/>
-            <md-hint align="end"><strong>MB</strong></md-hint>           </md-input-container>
-     
-<br /> <md-input-container  class="inputElements">
-                <input mdInput type="number" placeholder="Timeout" name="timeOut" [(ngModel)]="mediaItem.timeOut" required/>
-           <md-hint align="end"><strong>Minutes</strong></md-hint>  </md-input-container>
-     
-<br />
-            
+      <md-checkbox [(ngModel)]="ServerPoolItem.IsClient" name="IsClient">Client</md-checkbox>
+    </section><br />
             <div md-card-actions class="buttonContainer">
-                <button md-raised-button color="primary" (click)="ApplyAction(mediaItem)" [disabled]="!myForm.form.valid" class="inputElements" >
+                <button md-raised-button color="primary" (click)="ApplyAction(pluginItem)" [disabled]="!myForm.form.valid" class="inputElements" >
 {{action}}             </button>
                  <button md-raised-button color="primary"  class="inputElements"  md-dialog-close>
 Cancel                </button>

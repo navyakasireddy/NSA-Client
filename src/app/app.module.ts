@@ -38,6 +38,7 @@ import { FeatureService } from "./services/feature.service";
 import { AdminDataService } from "./services/adminData.service";
 import { PluginDataService } from "./services/pluginData.service";
 import { DocMediaService } from "./services/documentMedia.service";
+import { MediaPoolsService } from "./services/mediapools.service";
 
 import { AuthGuard } from './auth.guard';
 
@@ -130,7 +131,7 @@ const routes: Routes = [
         LoginService,
         StorageService,
         FeatureService,
-        AdminDataService,
+        AdminDataService, MediaPoolsService,
         PluginDataService, DocMediaService,
         { provide: Options, useValue: { store: true } },
         Logger,
