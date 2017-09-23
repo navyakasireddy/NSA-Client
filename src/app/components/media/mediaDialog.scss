@@ -1,56 +1,53 @@
-dialog-media{
-.mat-select-trigger {
-    font-size: 14px !important;
-	min-width:550px !important;
+dialog-media {
+	.mat-select-trigger {
+		font-size: 14px !important;
+		min-width: 550px !important;
+	}
+	.mat-option {
+		font-size: 14px !important;
+	}
+	.mat-checkbox-layout {
+		margin: 15px
+	}
+
 }
 
-.mat-option {
-font-size:14px !important;
-}
-.mat-checkbox-layout{
-margin:15px
-}
-.buttonContainer{
-text-align:center;
-button{
-margin:10px;
-}
-}
-}
-
-
-dialog-info{
-height:100%;
-
-
-.inputElements{
-min-width:50%;
-}
-
-.buttonContainer{
-text-align:center;
-button{
-margin:10px;
-}}
-
-.property-label{
-
-margin:10px;
-border: none;
-    
-    display: -webkit-inline-box;
-    font: inherit;
-	    text-align: center;
+dialog-info {
+	height: 100%;
+	.inputElements {
+		min-width: 50%;
+	}
+	.buttonContainer {
+		text-align: center;
+		button {
+			margin: 10px;
+		}
+	}
+	.property-label {
+		margin: 10px;
+		border: none;
+		display: -webkit-inline-box;
+		font: inherit;
+		text-align: center;
 		font-size: large;
 		color: rgba(0, 0, 0, .54);
-}
-.property-value{
-display:inline;
- display: -webkit-inline-box;
-    font: inherit;
-	    text-align: center;
+	}
+	.property-value {
+		display: inline;
+		display: -webkit-inline-box;
+		font: inherit;
+		text-align: center;
 		font-size: large;
-	  
 		color: rgba(0, 0, 0, .87);
+	}
 }
+
+
+
+.buttonContainer {
+	text-align: center;
+	button {
+		margin: 10px;
+	}
 }
+

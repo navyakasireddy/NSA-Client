@@ -20,7 +20,7 @@ export class MediaPoolsService {
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');
+        headers.append('X-ECM-Tenant', 'system');        
         headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
 
         return new Promise((resolve, reject) => {

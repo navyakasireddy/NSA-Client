@@ -4,7 +4,7 @@
 "ecmsUrl":"/ecms",
 "authUrl":"/ecms-auth",
 "IPBaseURL":"/connect"  ,
-"treeView":"/resources/list",
+"treeView":"/documents/list",
 "plugin":"/documents/plugin",
-"media":"/media"
+"media":"/documents/media"
 }

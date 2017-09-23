@@ -20,13 +20,17 @@ export class DocMediaService {
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');
+        headers.append('X-ECM-Tenant', 'system');    
         headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
 
-        let _url = this._serverURL + '/' + this.GetMediaType(mediaType);
-
+        let _url = this._serverURL + '/' + "mediaType";
+        let body = {
+            "media": {
+                "documentMediaType": this.GetMediaType(mediaType)
+            }
+        }
         return new Promise((resolve, reject) => {
-            this._http.post(_url, { headers: headers })
+            this._http.post(_url, body, { headers: headers })
                 .map(res => res.json())
                 .catch((error: any) => {
                     console.error(error);
@@ -47,7 +51,7 @@ export class DocMediaService {
         headers.append('X-ECM-Tenant', 'system');
         headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
         let _url = this._serverURL + "/" + id;
-
+        
         return new Promise((resolve, reject) => {
             this._http.delete(_url, { headers: headers })
                 .map(res => res.json())
