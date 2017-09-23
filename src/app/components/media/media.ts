@@ -31,6 +31,7 @@ export class Media implements OnInit {
     displayedColumns: any[] = ["actions", "Id", "Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On", "Retention Time", "Life"];
     mediaDatabase = new MediaDatabase();
     dataSource: MediaDataSource | null;
+    prevMediaType: string = "";
 
     constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService, private _logger: Logger,
         private route: ActivatedRoute, private router: Router) {
@@ -50,26 +51,30 @@ export class Media implements OnInit {
     }
 
     GetData() {
-      
+
         this.showList = true;
         this.routeSubscription = this.route.params.subscribe(params => {
             this.mediaType = params['type'];
-            console.log(this.mediaType);
-            
-            this._mediadataService.getList(this.mediaType).then((res: any) => {
-                //this.displayedColumns = res.columnList;
-                if (res.mediaList.length > 0) {
-                    tempmediaData = res.mediaList;
-                    this.mediaDatabase = new MediaDatabase();
-                    this.dataSource = new MediaDataSource(this.mediaDatabase, this.sort);
-                }
-                else {                   
-                    this.showList = false;
-                }
-            }, (error) => {
-                this._logger.error('Error : ' + error);
+           
+            if (this.prevMediaType === "" || this.mediaType != this.prevMediaType) {
+                this.prevMediaType = this.mediaType;
+                console.log(this.mediaType);
+                this._mediadataService.getList(this.mediaType).then((res: any) => {
+                    //this.displayedColumns = res.columnList;
+                    if (res.mediaList.length > 0) {
+                        tempmediaData = res.mediaList;
+                        this.mediaDatabase = new MediaDatabase();
+                        this.dataSource = new MediaDataSource(this.mediaDatabase, this.sort);
+                    }
+                    else {
+                        this.showList = false;
+                    }
+                }, (error) => {
+                    this._logger.error('Error : ' + error);
+                    });
+            }
             });
-        });
+    
     }
 
   

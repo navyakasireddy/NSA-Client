@@ -1,5 +1,5 @@
-<div class="container" style="width:500px;">
-	<md-card>
+<div class="container" style="width: 500px;">
+    <md-card>
 		<md-card-title align="center">{{action}} Media Pool</md-card-title>
 		<md-card-content>
 			<form #myForm="ngForm">
@@ -14,23 +14,26 @@
 				</md-select>
 				<br />
 				<md-input-container class="inputElements">
-					<input mdInput type="text" placeholder="SRS Profile" name="module" [(ngModel)]="GlobalPoolItem.srsProfile" required/>
+					<input mdInput type="text" placeholder="SRS Profile" name="module" [(ngModel)]="GlobalPoolItem.SRSProfile" required/>
 				</md-input-container>
 				<br />
 				<md-input-container class="inputElements">
 					<textarea mdInput type="text" placeholder="Condition" name="condition" [(ngModel)]="GlobalPoolItem.condition" required></textarea>
 				</md-input-container>
 				<br />
-                <md-select placeholder="Client" required [(ngModel)]="GlobalPoolItem.client" name="serverPools">
-					<md-option *ngFor="let item of serverPools" [value]="item">
-						{{ item.name }}
+                 <fieldset class="fieldset">
+    <legend>Encryption</legend>
+                <md-select placeholder="Client" required [(ngModel)]="GlobalPoolItem.client" name="client">
+					<md-option *ngFor="let item of clients" [value]="item.value">
+						{{ item.value }}
 					</md-option>
 				</md-select>
-                <md-select placeholder="Profile" required [(ngModel)]="GlobalPoolItem.profile" name="serverPools">
-					<md-option *ngFor="let item of serverPools" [value]="item">
-						{{ item.name }}
+                <md-select placeholder="Profile" required [(ngModel)]="GlobalPoolItem.profile" name="profile">
+					<md-option *ngFor="let item of profiles" [value]="item.value">
+						{{ item.value }}
 					</md-option>
 				</md-select>
+                     </fieldset>
                 <br /><br />
 				<div md-card-actions class="buttonContainer">
 					<button md-raised-button color="primary" (click)="ApplyAction(pluginItem)" [disabled]="!myForm.form.valid" class="inputElements">

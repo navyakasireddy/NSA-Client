@@ -28,8 +28,6 @@ export class ExtMediaDialog {
     ngOnInit() {
         this.action = this.data == null ? "Create" : "Update";
 
-       
-
         this.mediaItem = this.data != null ? this.data : {
             mediaName: "",
             mediaStorageKind: "",
@@ -40,14 +38,14 @@ export class ExtMediaDialog {
 
     ApplyAction(actionItem) {
         if (this.action == "Create") {
-            this._mediaService.create(actionItem).then((res: any) => {
+            this._mediaService.createCloudmedia(actionItem).then((res: any) => {
                 this.dialogRef.close(res.responseMsg);
             }, (error) => {
                 this._logger.error('Error : ' + error);
             });
         }
         else if (this.action == "Update") {
-            this._mediaService.update(actionItem).then((res: any) => {
+            this._mediaService.updateCloudmedia(actionItem).then((res: any) => {
                 console.log(res)
                 this.dialogRef.close(res.responseMsg);
             }, (error) => {

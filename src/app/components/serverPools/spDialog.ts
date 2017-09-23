@@ -16,9 +16,9 @@ export class ServerPoolDialog {
     public mediaTypes: any = [];
     public usageTypes: any = [
         { value: 'MB' },
-        { value: '%' },
-        { value: 'GB' },
-        { value: 'TB' }
+        { value: '%' }
+        //{ value: 'GB' },
+        //{ value: 'TB' }
     ];
 
     constructor(@Inject(MD_DIALOG_DATA) public data: any, private _logger: Logger,
@@ -38,23 +38,23 @@ export class ServerPoolDialog {
 
         this.ServerPoolItem = this.data != null ? this.data : {
             name: "",
-            mediumType: [],
-            maximumUsage: "",
-            IsClient: false,
-            usageType:""
+            media: [],
+            maxUsage: "",
+            maxUsageType:"",
+            client: false            
         };
     }
 
     ApplyAction(actionItem) {
         if (this.action == "Create") {
-            this._mediaService.create(actionItem).then((res: any) => {
+            this._dataService.create(actionItem,"SP").then((res: any) => {
                 this.dialogRef.close(res.responseMsg);
             }, (error) => {
                 this._logger.error('Error : ' + error);
             });
         }
         else if (this.action == "Update") {
-            this._mediaService.update(actionItem).then((res: any) => {
+            this._dataService.update(actionItem,"SP").then((res: any) => {
                 console.log(res)
                 this.dialogRef.close(res.responseMsg);
             }, (error) => {

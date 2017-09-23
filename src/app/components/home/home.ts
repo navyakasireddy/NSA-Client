@@ -89,8 +89,7 @@ export class HomePage {
 
     }
 
-    onEvent($event) {
-        debugger;
+    onEvent($event) {       
         var n, p;
         if ($event.eventName == "initialized") {
             $event.treeModel.getNodeBy((node) => node.data.id === '4.9')

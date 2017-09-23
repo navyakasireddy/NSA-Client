@@ -9,7 +9,7 @@
 				</md-input-container>
 				<br />
 
-				<md-select placeholder="Medium " required [(ngModel)]="ServerPoolItem.mediumType" name="mediumType">
+				<md-select placeholder="Medium " required [(ngModel)]="ServerPoolItem.media" name="media">
 					<md-option *ngFor="let item of mediaTypes" [value]="item">
 						{{ item.name }}
 					</md-option>
@@ -17,9 +17,9 @@
 
 				<br />
 				<md-input-container class="inputElements">
-					<input mdInput type="number" placeholder="Maximum Usage" name="module" [(ngModel)]="ServerPoolItem.maximumUsage" required/>
+					<input mdInput type="number" placeholder="Maximum Usage" name="maxUsage" [(ngModel)]="ServerPoolItem.maxUsage" required/>
 				</md-input-container>
-				<md-select placeholder="Usage Type" required [(ngModel)]="ServerPoolItem.usageType" name="usageType">
+				<md-select placeholder="Usage Type" required [(ngModel)]="ServerPoolItem.maxUsageType" name="maxUsageType">
 					<md-option *ngFor="let item of usageTypes" [value]="item.value">
 						{{ item.value }}
 					</md-option>
@@ -27,7 +27,7 @@
 
 				<br />
 				<section>
-					<md-checkbox [(ngModel)]="ServerPoolItem.IsClient" name="IsClient">Client</md-checkbox>
+					<md-checkbox [(ngModel)]="ServerPoolItem.client" name="IsClient">Client</md-checkbox>
 				</section>
 				<br />
 				<div md-card-actions class="buttonContainer">

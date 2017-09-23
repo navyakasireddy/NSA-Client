@@ -6,5 +6,8 @@
 "IPBaseURL":"/connect"  ,
 "treeView":"/documents/list",
 "plugin":"/documents/plugin",
-"media":"/documents/media"
+"media":"/documents/media",
+"serverPool":"/documents/serverpool",
+"globalPool":"/documents/globalpool",
+"cloudMedia":"/cloud/media"
 }

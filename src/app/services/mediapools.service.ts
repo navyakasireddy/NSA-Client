@@ -7,15 +7,14 @@ import * as json from '../../config/restconfig.json';
 @Injectable()
 
 export class MediaPoolsService {
-
-    _serverURL: any;
     constructor(private _http: Http, private _requestOptions: RequestOptions,private _logger: Logger) {
         this._logger.info('Service : Media Pools');
-        this._serverURL = json.restBaseURL + json.plugin;
+       
     }
-    getList() {
+
+    getList(type:string) {
         this._logger.info('MediapoolsService : getList');
-        let _url = this._serverURL; 
+        let _url = this.getURL(type); 
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
@@ -36,7 +35,7 @@ export class MediaPoolsService {
                 });
         });
     }
-    Delete(id: string) {
+    Delete(id: string,type:string) {
         this._logger.info('MediapoolsService : delete');
         let headers = new Headers();
         headers.append('Accept', 'application/json');
@@ -45,7 +44,7 @@ export class MediaPoolsService {
         headers.append('X-ECM-Tenant', 'system');
         headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
 
-        let _url = this._serverURL + "/" + id;
+        let _url = this.getURL(type) + "/" + id;
         // let _options= new RequestOptions({headers:headers});
         return new Promise((resolve, reject) => {
             this._http.delete(_url, { headers: headers })
@@ -61,7 +60,7 @@ export class MediaPoolsService {
         });
     }
 
-    update(actionItem: any) {
+    update(actionItem: any,type : string) {
         this._logger.info('MediapoolsService : update');
         let headers = new Headers();
         headers.append('Accept', 'application/json');
@@ -69,17 +68,35 @@ export class MediaPoolsService {
         headers.append('X-ECM-LicenseType', '3');
         headers.append('X-ECM-Tenant', 'system');
         headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        let body = {};
 
-        let body = {
-            "plugin": {
-                "pluginId": actionItem.pluginId,
-                "name": actionItem.name,
-                "type": actionItem.type,
-                "module": actionItem.module
-            }
-        };
+        if (type === "SP") {
+            body = {
+                "serverPool": {
+                    "serverPoolId": actionItem.serverPoolId,
+                    "name": actionItem.name,
+                    "maxUsage": actionItem.maxUsage,
+                    "maxUsageType": actionItem.maxUsageType,
+                    "client": actionItem.client,
+                    "media": actionItem.media
+                }
+            };
+        }
+        else if (type === "GP") {
+            body = {
+                "globalPool": {
+                    "globalPoolId": actionItem.globalPoolId,
+                    "name": actionItem.name ,
+                    "condition": actionItem.condition,
+                    "SRSProfile": actionItem.SRSProfile,
+                    "client": actionItem.client ,
+                    "profile": actionItem.profile ,
+                    "serverPool": actionItem.serverPool
+                }
+            };
+        }
 
-        let _url = this._serverURL;
+        let _url = this.getURL(type);
         // let _options= new RequestOptions({headers:headers});
         return new Promise((resolve, reject) => {
             this._http.put(_url, body, { headers: headers })
@@ -95,7 +112,7 @@ export class MediaPoolsService {
         });
     }
 
-    create(actionItem: any) {  
+    create(actionItem: any, type:string) {  
         this._logger.info('MediapoolsService : create');      
         let headers = new Headers();
         headers.append('Accept', 'application/json');
@@ -103,18 +120,34 @@ export class MediaPoolsService {
         headers.append('X-ECM-LicenseType', '3');
         headers.append('X-ECM-Tenant', 'system');
         headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        let body = {};
+        if (type === "SP") {
+            body = {
+                "serverPool": {
+                    "name": actionItem.name ,
+                    "maxUsage": actionItem.maxUsage,
+                    "maxUsageType": actionItem.maxUsageType,
+                    "client": actionItem.client,
+                    "media": actionItem.media
+                }
+            };
+        }
+        else if (type === "GP") {
+            body = {
+                "globalPool": {
+                   
+                    "name": actionItem.name,
+                    "condition": actionItem.condition,
+                    "SRSProfile": actionItem.SRSProfile,
+                    "client": actionItem.client,
+                    "profile": actionItem.profile,
+                    "serverPool": actionItem.serverPool
+                }
+            };
+        }
 
 
-        let body = {
-            "plugin": {
-                "pluginId": "",
-                "name": actionItem.name,
-                "type": actionItem.type,
-                "module": actionItem.module
-            }
-        };
-
-        let _url = this._serverURL;
+        let _url = this.getURL(type);
 
         return new Promise((resolve, reject) => {
             this._http.post(_url, body, { headers: headers })
@@ -128,5 +161,13 @@ export class MediaPoolsService {
                     resolve(data);
                 });
         });
+    }
+
+
+    getURL(type: string): string {
+        if (type === "SP")
+            return json.restBaseURL + json.serverPool;
+        else
+            return json.restBaseURL + json.globalPool;
     }
 }  

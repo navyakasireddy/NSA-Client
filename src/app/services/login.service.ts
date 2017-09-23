@@ -175,6 +175,7 @@ export class LoginService {
   }
 
   public connectToIP(IPvalue: string) {
+      debugger;
       this._logger.info('LoginService : connectToIP');
       let headers = new Headers();
       headers.append('Accept', 'application/json');

@@ -20,7 +20,7 @@ export class DocMediaService {
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
         headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');    
+        headers.append('X-ECM-Tenant', 'system');
         headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
 
         let _url = this._serverURL + '/' + "mediaType";
@@ -51,7 +51,7 @@ export class DocMediaService {
         headers.append('X-ECM-Tenant', 'system');
         headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
         let _url = this._serverURL + "/" + id;
-        
+
         return new Promise((resolve, reject) => {
             this._http.delete(_url, { headers: headers })
                 .map(res => res.json())
@@ -140,7 +140,7 @@ export class DocMediaService {
         let body = {
             "media": {
                 "documentMediaType": this.GetMediaType(actionItem.documentMediaType),
-               // "id": actionItem.id,
+                // "id": actionItem.id,
                 "name": actionItem.name,
                 "type": actionItem.type,
                 "location": actionItem.location,
@@ -192,14 +192,111 @@ export class DocMediaService {
 
     GetMediaType(mediatype: string) {
         //return "ALL_MEDIA";
+
         switch (mediatype) {
             case "Removable media": return "REMOVABLE_MEDIA";
-            case "Migrated media": return "MIGRATED_MEDIA"; 
+            case "Migrated media": return "MIGRATED_MEDIA";
             case "Buffer media": return "BUFFER_MEDIA";
-            case "Imported media": return  "IMPORTED_MEDIA"; 
+            case "Imported media": return "IMPORTED_MEDIA";
             case "Closed media": return "CLOSED_MEDIA";
             case "All media": return "ALL_MEDIA";
-            default: return "ALL_MEDIA"; 
+            default: return "ALL_MEDIA";
         }
+    }
+
+
+
+    //// External Cloud media
+    DeleteCloudmedia(id: string) {
+        this._logger.info('CloudMediaService : Delete');
+        let headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        //headers.append('X-ECM-LicenseType', '3');
+        //headers.append('X-ECM-Tenant', 'system');
+        //headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        let _url = json.restBaseURL + json.cloudMedia + "/" + id;
+
+        return new Promise((resolve, reject) => {
+            this._http.delete(_url, { headers: headers })
+                .map(res => res.json())
+                .catch((error: any) => {
+                    console.error(error);
+                    reject(error);
+                    return Observable.throw(error.json().error || 'Server error');
+                })
+                .subscribe((data) => {
+                    resolve(data);
+                });
+        });
+    }
+
+    updateCloudmedia(actionItem: any) {
+        this._logger.info('CloudMediaService : update');
+        console.log(actionItem);
+        let headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        //headers.append('X-ECM-LicenseType', '3');
+        //headers.append('X-ECM-Tenant', 'system');
+        //headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        let body = {
+            "cloudMedia": {
+                "mediaId": actionItem.mediaId,
+                "mediaName": actionItem.mediaName,
+                "mediaStorageKind": actionItem.mediaStorageKind,
+                "url": actionItem.url,
+                "token": actionItem.token
+            }
+        }
+
+        let _url = json.restBaseURL + json.cloudMedia;
+
+        return new Promise((resolve, reject) => {
+            this._http.put(_url, body, { headers: headers })
+                .map(res => res.json())
+                .catch((error: any) => {
+                    console.error(error);
+                    reject(error);
+                    return Observable.throw(error.json().error || 'Server error');
+                })
+                .subscribe((data) => {
+                    resolve(data);
+                });
+        });
+    }
+
+    createCloudmedia(actionItem: any) {
+        this._logger.info('CloudMediaService : create');
+        let headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        //headers.append('X-ECM-LicenseType', '3');
+        //headers.append('X-ECM-Tenant', 'system');
+        //headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+
+        let body = {
+            "cloudMedia": {                
+                "mediaName": actionItem.mediaName,
+                "mediaStorageKind": actionItem.mediaStorageKind,
+                "url": actionItem.url,
+                "token": actionItem.token
+            }
+        }
+
+        let _url = json.restBaseURL + json.cloudMedia;
+
+        return new Promise((resolve, reject) => {
+            this._http.post(_url, body, { headers: headers })
+                .map(res => res.json())
+                .catch((error: any) => {
+                    console.error(error);
+                    reject(error);
+                    return Observable.throw(error.json().error || 'Server error');
+                })
+                .subscribe((data) => {
+                    resolve(data);
+                });
+        });
     }
 }  
