@@ -9,7 +9,41 @@ dialog-media {
 	.mat-checkbox-layout {
 		margin: 15px
 	}
+}
 
+page-media {
+	.content {
+		width: 79%;
+		margin-left: 2% !important;
+	}
+	.mat-cell,
+	.mat-header-cell {
+		font-size: x-large;
+		padding: inherit;
+		max-width: max-content;
+		text-align: center
+	}
+	/*.mat-header-cell:nth-child(1),.mat-cell:nth-child(1){display:none !important;}
+.mat-row :hover {
+.mat-header-cell:nth-child(1),.mat-cell:nth-child(1){display:block !important;}
+}*/
+	.mat-table {
+		display: table;
+		width: 100%;
+		> .mat-header-row,
+		> .mat-row {
+			display: table-row;
+			padding-left: 10px;
+			border: none;
+			> .mat-header-cell,
+			> .mat-cell {
+				display: table-cell;
+				height: 48px;
+				vertical-align: middle;
+				border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+			}
+		}
+	}
 }
 
 dialog-info {
@@ -42,12 +76,9 @@ dialog-info {
 	}
 }
 
-
-
 .buttonContainer {
 	text-align: center;
 	button {
 		margin: 10px;
 	}
 }
-

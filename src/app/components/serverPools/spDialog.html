@@ -1,4 +1,4 @@
-<div class="container" style="width:500px;">
+<div class="container">
 	<md-card>
 
 		<md-card-title align="center">{{action}} Media Pool</md-card-title>
@@ -16,22 +16,24 @@
 				</md-select>
 
 				<br />
-				<md-input-container class="inputElements">
+                
+				<md-input-container class="half">
 					<input mdInput type="number" placeholder="Maximum Usage" name="maxUsage" [(ngModel)]="ServerPoolItem.maxUsage" required/>
 				</md-input-container>
-				<md-select placeholder="Usage Type" required [(ngModel)]="ServerPoolItem.maxUsageType" name="maxUsageType">
+                
+				<md-select  class="selecthalf" placeholder="Usage Type" required [(ngModel)]="ServerPoolItem.maxUsageType" name="maxUsageType">
 					<md-option *ngFor="let item of usageTypes" [value]="item.value">
 						{{ item.value }}
 					</md-option>
 				</md-select>
-
+               
 				<br />
 				<section>
 					<md-checkbox [(ngModel)]="ServerPoolItem.client" name="IsClient">Client</md-checkbox>
 				</section>
 				<br />
 				<div md-card-actions class="buttonContainer">
-					<button md-raised-button color="primary" (click)="ApplyAction(pluginItem)" [disabled]="!myForm.form.valid" class="inputElements">
+					<button md-raised-button color="primary" (click)="ApplyAction(ServerPoolItem)" [disabled]="!myForm.form.valid" class="inputElements">
 						{{action}} </button>
 					<button md-raised-button color="primary" class="inputElements" md-dialog-close>
 						Cancel </button>

@@ -21,7 +21,7 @@ export class ServerPools {
     dialogRefDel: MdDialogRef<DeleteDialog>;
     showList: boolean;
     @ViewChild(MdSort) sort: MdSort;
-    displayedColumns: any[] = ["actions", "Id", "Name","Medium", "Maximum Usage"];
+    displayedColumns: any[] = ["actions", "serverPoolId", "name", "media", "maxUsage"];
     serverpoolDatabase = new serverpoolDatabase();
     dataSource: serverpoolDataSource | null;
 

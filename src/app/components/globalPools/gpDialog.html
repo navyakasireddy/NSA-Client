@@ -1,5 +1,5 @@
-<div class="container" style="width: 500px;">
-    <md-card>
+<div class="container">
+	<md-card>
 		<md-card-title align="center">{{action}} Media Pool</md-card-title>
 		<md-card-content>
 			<form #myForm="ngForm">
@@ -7,7 +7,7 @@
 					<input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="GlobalPoolItem.name" required/>
 				</md-input-container>
 				<br />
-				<md-select placeholder="Server Pools " required [(ngModel)]="GlobalPoolItem.serverPool" name="serverPools">
+				<md-select class="pools" placeholder="Server Pools " required [(ngModel)]="GlobalPoolItem.serverPool" name="serverPools">
 					<md-option *ngFor="let item of serverPools" [value]="item">
 						{{ item.name }}
 					</md-option>
@@ -21,22 +21,23 @@
 					<textarea mdInput type="text" placeholder="Condition" name="condition" [(ngModel)]="GlobalPoolItem.condition" required></textarea>
 				</md-input-container>
 				<br />
-                 <fieldset class="fieldset">
-    <legend>Encryption</legend>
-                <md-select placeholder="Client" required [(ngModel)]="GlobalPoolItem.client" name="client">
-					<md-option *ngFor="let item of clients" [value]="item.value">
-						{{ item.value }}
-					</md-option>
-				</md-select>
-                <md-select placeholder="Profile" required [(ngModel)]="GlobalPoolItem.profile" name="profile">
-					<md-option *ngFor="let item of profiles" [value]="item.value">
-						{{ item.value }}
-					</md-option>
-				</md-select>
-                     </fieldset>
-                <br /><br />
+				<fieldset class="fieldset">
+					<legend>Encryption</legend>
+					<md-select placeholder="Client" required [(ngModel)]="GlobalPoolItem.client" name="client">
+						<md-option *ngFor="let item of clients" [value]="item.value">
+							{{ item.value }}
+						</md-option>
+					</md-select>
+					<md-select placeholder="Profile" required [(ngModel)]="GlobalPoolItem.profile" name="profile">
+						<md-option *ngFor="let item of profiles" [value]="item.value">
+							{{ item.value }}
+						</md-option>
+					</md-select>
+				</fieldset>
+				<br />
+				<br />
 				<div md-card-actions class="buttonContainer">
-					<button md-raised-button color="primary" (click)="ApplyAction(pluginItem)" [disabled]="!myForm.form.valid" class="inputElements">
+					<button md-raised-button color="primary" (click)="ApplyAction(GlobalPoolItem)" [disabled]="!myForm.form.valid" class="inputElements">
 						{{action}} </button>
 					<button md-raised-button color="primary" class="inputElements" md-dialog-close>
 						Cancel </button>

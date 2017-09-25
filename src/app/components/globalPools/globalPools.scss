@@ -1,17 +1,20 @@
-﻿page-globalpool{
+﻿page-globalpool {}
 
-}
-
-dialog-globalpool{
-.fieldset {
-width:90%;margin:1%
-}
-.fieldset > mat-select-trigger {
-		font-size: 14px !important;
-		min-width: 150px !important;
+dialog-globalpool {
+	.fieldset {
+		margin: 10px 0 10px 0;
+		height: 80px;
 	}
-.fieldset .mat-option {
+	.mat-select-trigger {
 		font-size: 14px !important;
+		width: 200px;
+		margin: 10px 10px 10px 0;
 	}
-
+	.pools {
+		.mat-select-trigger {
+			font-size: 14px !important;
+			width: 443px;
+			margin: 10px 0 10px 0;
+		}
+	}
 }

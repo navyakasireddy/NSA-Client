@@ -1,51 +1,60 @@
 page-login {
-    .container {           
-    position: fixed;
-    top:35%;
-    left: 50%;
-    -webkit-transform: translateX(-50%) translateY(-50%);
-    transform: translateX(-50%) translateY(-50%);
-    width: 300px;
-    height: 300px;
-
-    }
-    .companyImage {
-        margin-bottom: 40px;
-        height: 92px;
-        width: 250px;
-      /*transform: translateX(25%);*/
-    }
-    .inputElements {
-        width: 100%;
-    }
-    .buttonContainer{
-        padding-top: 10px;
-    }
-    .reminderSection {
-        margin-top: 5px;
-        margin-bottom: 15px;
-        text-align: right;
-    }
-    .orDivider {
-        margin-top: 5px;
-        margin-bottom: 5px;
-        text-align: center;
-    }
-
-	
-.mat-select-trigger {
-    font-size: 14px !important;
-	width:254px;;
+	.container {
+		position: fixed;
+		top: 35%;
+		left: 50%;
+		-webkit-transform: translateX(-50%) translateY(-50%);
+		transform: translateX(-50%) translateY(-50%);
+		width: 300px;
+		height: 300px;
+	}
+	.companyImage {
+		margin-bottom: 40px;
+		height: 92px;
+		width: 250px;
+		/*transform: translateX(25%);*/
+	}
+	.inputElements {
+		width: 100%;
+	}
+	.buttonContainer {
+		padding-top: 10px;
+	}
+	.reminderSection {
+		margin-top: 5px;
+		margin-bottom: 15px;
+		text-align: right;
+	}
+	.orDivider {
+		margin-top: 5px;
+		margin-bottom: 5px;
+		text-align: center;
+	}
+	.mat-select-trigger {
+		font-size: 14px !important;
+		width: 254px;
+		;
+	}
+	.mat-option {
+		font-size: 14px !important;
+	}
 }
 
-.mat-option {
-font-size:14px !important;
+snack-bar-container {
+	color: white;
+	box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+	background: #323232;
+	border-radius: 2px;
+	box-sizing: content-box;
+	display: block;
+	max-width: 568px;
+	min-width: 288px;
+	padding: 14px 24px;
+	transform: translateY(100%)
 }
 
-
-
-}
-
-snack-bar-container{color:white;
-box-shadow:0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12);background:#323232;border-radius:2px;box-sizing:content-box;display:block;max-width:568px;min-width:288px;padding:14px 24px;transform:translateY(100%)}@media screen and (-ms-high-contrast:active){:host{border:solid 1px}
+@media screen and (-ms-high-contrast:active) {
+	:host {
+		border: solid 1px
+	}
 }

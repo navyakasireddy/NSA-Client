@@ -1,11 +1,18 @@
-﻿page-serverpools {
+﻿page-serverpools {}
 
-}
-
-
-
-
-
-dialog-serverpool{
-
+dialog-serverpool {
+	.half {
+		min-width: 50%
+	}
+	.mat-select-trigger {
+		font-size: 14px !important;
+		width: 285px;
+		margin: 10px 0 10px 0;
+	}
+	.selecthalf {
+		.mat-select-trigger {
+			font-size: 14px !important;
+			width: 45px;
+		}
+	}
 }
