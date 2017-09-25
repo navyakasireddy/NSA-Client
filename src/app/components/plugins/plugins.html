@@ -6,7 +6,26 @@
 
 		<div style="overflow:auto;margin:10px" *ngIf="showList">
 			<md-table #table [dataSource]="dataSource" mdSort>
-				<ng-container cdkColumnDef="actions">
+                <ng-container cdkColumnDef="actions">
+			<md-header-cell *cdkHeaderCellDef> </md-header-cell>
+			<md-cell *cdkCellDef="let row">
+				<button md-icon-button [mdMenuTriggerFor]="menu">
+					<md-icon>more_vert</md-icon>
+				</button>
+
+				<md-menu #menu="mdMenu">
+					<button md-menu-item (click)="onApplyAction('update',row)">
+						<md-icon>create</md-icon>
+						<span>Edit</span>
+					</button>
+					<button md-menu-item (click)="onApplyAction('delete',row)">
+						<md-icon>delete</md-icon>
+						<span>Delete</span>
+					</button>
+				</md-menu>
+			</md-cell>
+		</ng-container>
+				<!--<ng-container cdkColumnDef="actions">
 					<md-header-cell *cdkHeaderCellDef md-sort-header> Actions </md-header-cell>
 					<md-cell *cdkCellDef="let row">
 						<button id="update" (click)="onApplyAction('update',row)" color="primary" mdTooltip="Edit">
@@ -16,7 +35,7 @@
 							<md-icon class="material-icons">delete</md-icon>
 						</button>
 					</md-cell>
-				</ng-container>
+				</ng-container>-->
 				<!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
 
