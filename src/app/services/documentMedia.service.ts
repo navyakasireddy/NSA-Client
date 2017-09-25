@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
-import * as json from '../../config/restconfig.json';
+import * as json from '../../assets/config/restconfig.json';
 import { Logger } from "angular2-logger/core";
 @Injectable()
 

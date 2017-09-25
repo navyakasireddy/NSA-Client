@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/Rx';
-import * as json from '../../config/restconfig.json';
+import * as json from '../../assets/config/restconfig.json';
 @Injectable()
 export class AdminDataService {
     _serverURL: any;

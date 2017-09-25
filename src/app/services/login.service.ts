@@ -8,7 +8,7 @@ import {StorageService} from "./storage.service";
 import { Observable } from 'rxjs/Observable';
 
 import { Logger } from "angular2-logger/core";
-import * as json from '../../config/restconfig.json';
+import * as json from '../../assets/config/restconfig.json';
 const LOGIN_TOKEN = 'token';
 const keyLocalRemindMe = 'local_storeLogonValues';
 const keyLocalUsername = 'local_username';

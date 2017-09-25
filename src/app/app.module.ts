@@ -67,7 +67,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: 'Plug-ins', component: Plugins, pathMatch: 'full' },
-            { path: 'Media/Cloud Media', component: ExternalMedia, pathMatch: 'full' },
+            { path: 'Media/Cloud media', component: ExternalMedia, pathMatch: 'full' },
             { path: 'Media/:type', component: Media, pathMatch: 'full' },
             { path: 'Server pools', component: ServerPools, pathMatch: 'full' },
             { path: 'Global pools', component: GlobalPools, pathMatch: 'full' },
