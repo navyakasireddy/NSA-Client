@@ -29,6 +29,7 @@ export class Plugins {
     displayedColumns = ["actions", "pluginId", "name", "type", "module"];
     constructor(private _dataService: PluginDataService, public dialog: MdDialog, public snackBar: MdSnackBar, private _logger: Logger) {
         this._logger.info('Page : plugin.ts');
+        this.GetData();
     }
 
 

@@ -88,7 +88,7 @@ export class MediaPoolsService {
                     "globalPoolId": actionItem.globalPoolId,
                     "name": actionItem.name ,
                     "condition": actionItem.condition,
-                    "SRSProfile": actionItem.SRSProfile,
+                    "srsprofile": actionItem.srsprofile,
                     "client": actionItem.client ,
                     "profile": actionItem.profile ,
                     "serverPool": actionItem.serverPool
@@ -138,7 +138,7 @@ export class MediaPoolsService {
                    
                     "name": actionItem.name,
                     "condition": actionItem.condition,
-                    "SRSProfile": actionItem.SRSProfile,
+                    "srsprofile": actionItem.srsprofile,
                     "client": actionItem.client,
                     "profile": actionItem.profile,
                     "serverPool": actionItem.serverPool

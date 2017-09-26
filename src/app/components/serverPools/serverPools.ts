@@ -31,6 +31,7 @@ export class ServerPools {
         , public dialog: MdDialog, public snackBar: MdSnackBar, private _dataService: MediaPoolsService
     ) {
         this._logger.info('form : serverpool.ts');
+        this.GetData();
     }
 
 
@@ -76,7 +77,7 @@ export class ServerPools {
 
             this.dialogRefDel.afterClosed().subscribe(result => {
                 if (result) {
-                    this._dataService.Delete(item.pluginId,"SP").then((res: any) => {
+                    this._dataService.Delete(item.serverPoolId,"SP").then((res: any) => {
                         console.log(res);
                         if (result != "")
                             this.openSnackBar(res.responseMsg, "");

@@ -207,6 +207,37 @@ export class DocMediaService {
 
 
     //// External Cloud media
+
+
+    getCloudmediaList() {
+        this._logger.info('CloudMediaService : getList');
+
+        let headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-ECM-LicenseType', '3');
+        headers.append('X-ECM-Tenant', 'system');
+        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+
+        let _url = json.restBaseURL + json.cloudMedia + '/' + "mediaType";
+        let body = {
+           
+        }
+        return new Promise((resolve, reject) => {
+            this._http.post(_url, body, { headers: headers })
+                .map(res => res.json())
+                .catch((error: any) => {
+                    console.error(error);
+                    reject(error);
+                    return Observable.throw(error.json().error || 'Server error');
+                })
+                .subscribe((data) => {
+                    resolve(data);
+                });
+        });
+    }
+
+
     DeleteCloudmedia(id: string) {
         this._logger.info('CloudMediaService : Delete');
         let headers = new Headers();

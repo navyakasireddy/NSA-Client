@@ -30,6 +30,7 @@ export class GlobalPools {
         , public dialog: MdDialog, public snackBar: MdSnackBar, private _dataService: MediaPoolsService
     ) {
         this._logger.info('form : globalpool.ts');
+        this.GetData();
     }
 
 
@@ -72,7 +73,7 @@ export class GlobalPools {
 
             this.dialogRefDel.afterClosed().subscribe(result => {
                 if (result) {
-                    this._dataService.Delete(item.pluginId,"GP").then((res: any) => {
+                    this._dataService.Delete(item.globalPoolId,"GP").then((res: any) => {
                         console.log(res);
                         if (result != "")
                             this.openSnackBar(res.responseMsg, "");

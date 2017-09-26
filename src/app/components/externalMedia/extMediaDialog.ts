@@ -13,14 +13,15 @@ import { Logger } from "angular2-logger/core";
 export class ExtMediaDialog {
     public action: string;
     public mediaItem: any;
-    public mediaStorageKinds: any = [{ value: 'Amazon' },
-    { value: 'Asure' },
-    { value: 'Others' }];
+    public mediaStorageKinds: any = [{value: 'Amazon S3' },
+        { value: 'Azure' },
+        { value: 'SAS' }];
 
     constructor( @Inject(MD_DIALOG_DATA) public data: any,
         private dialogRef: MdDialogRef<ExtMediaDialog>,private _mediaService: DocMediaService, private _logger: Logger
     ) {
         this._logger.info('Page : extMediaDialog.ts');
+        
     }
     
 
@@ -38,6 +39,7 @@ export class ExtMediaDialog {
 
     ApplyAction(actionItem) {
         if (this.action == "Create") {
+            debugger;
             this._mediaService.createCloudmedia(actionItem).then((res: any) => {
                 this.dialogRef.close(res.responseMsg);
             }, (error) => {

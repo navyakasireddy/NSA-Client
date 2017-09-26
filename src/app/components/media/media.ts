@@ -27,7 +27,7 @@ export class Media implements OnInit {
     dialogRefDel: MdDialogRef<DeleteDialog>;
     @ViewChild(MdSort) sort: MdSort;
     mediaType: string = "";
-    showList: boolean ;
+    showList: boolean = true;
     displayedColumns: any[] = ["actions", "Id", "Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On", "Retention Time", "Life"];
     mediaDatabase = new MediaDatabase();
     dataSource: MediaDataSource | null;
@@ -36,16 +36,17 @@ export class Media implements OnInit {
     constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService, private _logger: Logger,
         private route: ActivatedRoute, private router: Router) {
         this._logger.info('form : Media.ts');
+        this.GetData();
     }
 
     ngOnInit() {
         this.router.events
             .filter((event) => event instanceof NavigationEnd)
             .map(() => this.route)
-            // .map((route) => {
-            //    while (route.firstChild) route = route.firstChild;
-            //    return route;
-            //})
+            .map((route) => {
+                while (route.firstChild) route = route.firstChild;
+                return route;
+            })
             .filter((route) => route.outlet === 'primary')
             .subscribe((event) => this.GetData());
     }
@@ -55,13 +56,15 @@ export class Media implements OnInit {
         this.showList = true;
         this.routeSubscription = this.route.params.subscribe(params => {
             this.mediaType = params['type'];
-           
+            console.log(this.prevMediaType);
             if (this.prevMediaType === "" || this.mediaType != this.prevMediaType) {
                 this.prevMediaType = this.mediaType;
                 console.log(this.mediaType);
                 this._mediadataService.getList(this.mediaType).then((res: any) => {
+                    console.log(res.mediaList.length);
                     //this.displayedColumns = res.columnList;
                     if (res.mediaList.length > 0) {
+                        debugger;
                         tempmediaData = res.mediaList;
                         this.mediaDatabase = new MediaDatabase();
                         this.dataSource = new MediaDataSource(this.mediaDatabase, this.sort);
@@ -71,13 +74,13 @@ export class Media implements OnInit {
                     }
                 }, (error) => {
                     this._logger.error('Error : ' + error);
-                    });
+                });
             }
-            });
-    
+        });
+
     }
 
-  
+
 
     onApplyAction(action: string, item) {
         if (action == 'update') {
@@ -171,7 +174,7 @@ export class MediaDatabase {
         }
         else {
             self.dataChange = new BehaviorSubject<mediaData[]>([]);
-            
+
         }
     }
 }

@@ -43,7 +43,7 @@ export class GlobalPoolDialog {
         this.GlobalPoolItem = this.data != null ? this.data : {
             name: "",
             serverPool: [],
-            SRSProfile: "",
+            srsprofile: "",
             condition: "",
             client: "",
             profile:""

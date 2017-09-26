@@ -18,7 +18,7 @@ var tempextMediaData: any[] = [];
 export class ExternalMedia {
     dialogRef: MdDialogRef<ExtMediaDialog>;
     dialogRefDel: MdDialogRef<DeleteDialog>;
-    showList: boolean;
+    showList: boolean = true;
     @ViewChild(MdSort) sort: MdSort;
     displayedColumns: any[] = ["actions", "mediaId", "mediaName", "mediaStorageKind", "url"];
     extMediaDatabase = new extMediaDatabase();
@@ -28,13 +28,14 @@ export class ExternalMedia {
         , public dialog: MdDialog, public snackBar: MdSnackBar, private _dataService: DocMediaService
     ) {
         this._logger.info('form : external media.ts');
+        this.GetData();
     }
 
 
     GetData() {
 
         this.showList = true;
-        this._dataService.getList("GP").then((res: any) => {
+        this._dataService.getCloudmediaList().then((res: any) => {
             if (res.cloudMediaList.length > 0) {
                 tempextMediaData = res.cloudMediaList;
                 this.extMediaDatabase = new extMediaDatabase();
@@ -71,7 +72,7 @@ export class ExternalMedia {
 
             this.dialogRefDel.afterClosed().subscribe(result => {
                 if (result) {
-                    this._dataService.Delete(item.pluginId).then((res: any) => {
+                    this._dataService.Delete(item.mediaId).then((res: any) => {
                         console.log(res);
                         if (result != "")
                             this.openSnackBar(res.responseMsg, "");
