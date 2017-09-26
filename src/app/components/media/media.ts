@@ -27,7 +27,7 @@ export class Media implements OnInit {
     dialogRefDel: MdDialogRef<DeleteDialog>;
     @ViewChild(MdSort) sort: MdSort;
     mediaType: string = "";
-    showList: boolean = true;
+    showList: boolean ;
     displayedColumns: any[] = ["actions", "Id", "Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On", "Retention Time", "Life"];
     mediaDatabase = new MediaDatabase();
     dataSource: MediaDataSource | null;
@@ -52,7 +52,6 @@ export class Media implements OnInit {
     }
 
     GetData() {
-
         this.showList = true;
         this.routeSubscription = this.route.params.subscribe(params => {
             this.mediaType = params['type'];
@@ -64,12 +63,13 @@ export class Media implements OnInit {
                     console.log(res.mediaList.length);
                     //this.displayedColumns = res.columnList;
                     if (res.mediaList.length > 0) {
-                        debugger;
+                      
                         tempmediaData = res.mediaList;
                         this.mediaDatabase = new MediaDatabase();
                         this.dataSource = new MediaDataSource(this.mediaDatabase, this.sort);
                     }
                     else {
+
                         this.showList = false;
                     }
                 }, (error) => {

@@ -29,6 +29,7 @@ export class Plugins {
     displayedColumns = ["actions", "pluginId", "name", "type", "module"];
     constructor(private _dataService: PluginDataService, public dialog: MdDialog, public snackBar: MdSnackBar, private _logger: Logger) {
         this._logger.info('Page : plugin.ts');
+        this.showList = true;
         this.GetData();
     }
 
@@ -38,12 +39,12 @@ export class Plugins {
     }
 
     GetData() {
-        this.showList = true;
+        
         this._dataService.getList().then((res: any) => {
             this.temppluginData = res.pluginList;
             if (this.temppluginData.length > 0) {
                 pluginData = this.temppluginData;
-                
+               
                 this.pluginDatabase = new PluginDatabase()
                 this.dataSource = new pluginDataSource(this.pluginDatabase, this.sort);
 
