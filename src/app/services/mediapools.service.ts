@@ -3,11 +3,12 @@ import { Observable } from 'rxjs/Observable';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Logger } from "angular2-logger/core";
 import 'rxjs/Rx';
+import { StorageService } from "./storage.service";
 import * as json from '../../assets/config/restconfig.json';
 @Injectable()
 
 export class MediaPoolsService {
-    constructor(private _http: Http, private _requestOptions: RequestOptions,private _logger: Logger) {
+    constructor(private _http: Http, private _requestOptions: RequestOptions, private _logger: Logger, private storageService: StorageService) {
         this._logger.info('Service : Media Pools');
        
     }
@@ -15,12 +16,9 @@ export class MediaPoolsService {
     getList(type:string) {
         this._logger.info('MediapoolsService : getList');
         let _url = this.getURL(type); 
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');        
-        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+
+        let headers = this.storageService.getHeaders();
+   
 
         return new Promise((resolve, reject) => {
             this._http.get(_url, { headers: headers})
@@ -37,12 +35,7 @@ export class MediaPoolsService {
     }
     Delete(id: string,type:string) {
         this._logger.info('MediapoolsService : delete');
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');
-        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        let headers = this.storageService.getHeaders();
 
         let _url = this.getURL(type) + "/" + id;
         // let _options= new RequestOptions({headers:headers});
@@ -62,12 +55,7 @@ export class MediaPoolsService {
 
     update(actionItem: any,type : string) {
         this._logger.info('MediapoolsService : update');
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');
-        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        let headers = this.storageService.getHeaders();
         let body = {};
 
         if (type === "SP") {
@@ -112,14 +100,10 @@ export class MediaPoolsService {
         });
     }
 
-    create(actionItem: any, type:string) {  
+    create(actionItem: any, type: string) { 
+       
         this._logger.info('MediapoolsService : create');      
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');
-        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        let headers = this.storageService.getHeaders();
         let body = {};
         if (type === "SP") {
             body = {
@@ -169,5 +153,10 @@ export class MediaPoolsService {
             return json.restBaseURL + json.serverPool;
         else
             return json.restBaseURL + json.globalPool;
+    }
+
+
+    getHeaders() {
+
     }
 }  

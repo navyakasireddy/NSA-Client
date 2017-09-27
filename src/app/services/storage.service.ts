@@ -2,9 +2,13 @@
  * storage service for handling all storage issues
  */
 import {Injectable} from "@angular/core";
+import { Http, RequestOptions, Headers } from '@angular/http';
 
 @Injectable()
 export class StorageService {
+
+   
+
 
   public getValue(key: string): string {
     return sessionStorage.getItem(key);
@@ -24,5 +28,20 @@ export class StorageService {
 
   public removeItem(itemKey: string): void {
     sessionStorage.removeItem(itemKey);
+  }
+
+
+  public getHeaders() {
+      let token = this.getItem('token');
+      let tenant = this.getItem('tenant');
+      let LicenseType = this.getItem('LicenseType');
+      let headers = new Headers();
+      headers.append('Accept', 'application/json');
+      headers.append('Content-Type', 'application/json');
+      headers.append('X-ECM-LicenseType', LicenseType);
+      headers.append('X-ECM-Tenant', tenant);
+      headers.append('Authorization', 'Bearer ' + token);
+
+      return headers;
   }
 }

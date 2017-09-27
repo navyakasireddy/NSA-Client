@@ -3,25 +3,21 @@ import { Observable } from 'rxjs/Observable';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/Rx';
 import * as json from '../../assets/config/restconfig.json';
+import { StorageService } from "./storage.service";
 import { Logger } from "angular2-logger/core";
 @Injectable()
 
 export class DocMediaService {
 
     _serverURL: any;
-    constructor(private _http: Http, private _requestOptions: RequestOptions, private _logger: Logger) {
+    constructor(private _http: Http, private _requestOptions: RequestOptions, private _logger: Logger, private storageService: StorageService) {
         this._logger.info('Service :Document Media ');
         this._serverURL = json.restBaseURL + json.media;
     }
     getList(mediaType: string) {
         this._logger.info('MediaService : getList');
 
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');
-        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        let headers = this.storageService.getHeaders();
 
         let _url = this._serverURL + '/' + "mediaType";
         let body = {
@@ -44,12 +40,7 @@ export class DocMediaService {
     }
     Delete(id: string) {
         this._logger.info('MediaService : Delete');
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');
-        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        let headers = this.storageService.getHeaders();
         let _url = this._serverURL + "/" + id;
 
         return new Promise((resolve, reject) => {
@@ -69,12 +60,7 @@ export class DocMediaService {
     update(actionItem: any) {
         this._logger.info('MediaService : update');
         console.log(actionItem);
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');
-        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        let headers = this.storageService.getHeaders();
         let body = {
             "media": {
                 "documentMediaType": actionItem.documentMediaType,
@@ -130,12 +116,7 @@ export class DocMediaService {
 
     create(actionItem: any) {
         this._logger.info('MediaService : create');
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');
-        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        let headers = this.storageService.getHeaders();
 
         let body = {
             "media": {
@@ -215,9 +196,9 @@ export class DocMediaService {
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
-        headers.append('X-ECM-LicenseType', '3');
-        headers.append('X-ECM-Tenant', 'system');
-        headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
+        //headers.append('X-ECM-LicenseType', '3');
+        //headers.append('X-ECM-Tenant', 'system');
+        //headers.append('Authorization', 'Basic YWRtaW5pc3RyYXRvcjpxYQ==');
 
         let _url = json.restBaseURL + json.cloudMedia + '/' + "mediaType";
         let body = {

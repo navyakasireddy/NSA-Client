@@ -109,7 +109,7 @@ const routes: Routes = [
         BrowserModule,
         BrowserAnimationsModule,
         MdButtonModule,
-        RouterModule.forRoot(routes),
+        RouterModule.forRoot(routes, { useHash: true }),
         MaterialModule,
         CdkTableModule,
         ChartsModule

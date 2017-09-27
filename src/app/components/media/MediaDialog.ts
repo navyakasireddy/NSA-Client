@@ -13,8 +13,9 @@ import { Logger } from "angular2-logger/core";
 export class MediaDialog {
     private errorMessage: string;
     public action: string;
+    public mediaType: string;
     public mediaItem: any;
-    mediaType: string = "";
+   
 
     plugins = [
     ];
@@ -27,6 +28,7 @@ export class MediaDialog {
 
     ngOnInit() {
         this.action = typeof (this.data) == "string" ? "Create" : "Update";
+        
         this._pluginService.getList().then((res: any) => {
             if (res.pluginList.length > 0) {
                 this.plugins = res.pluginList;
@@ -68,7 +70,7 @@ export class MediaDialog {
             "dataHashActive": "",
             "namedPool": ""
         }
-
+        
     
     }
 

@@ -44,7 +44,7 @@ export class Plugins {
             this.temppluginData = res.pluginList;
             if (this.temppluginData.length > 0) {
                 pluginData = this.temppluginData;
-               
+                this.showList = true;
                 this.pluginDatabase = new PluginDatabase()
                 this.dataSource = new pluginDataSource(this.pluginDatabase, this.sort);
 
