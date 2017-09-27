@@ -23,8 +23,7 @@ export class LoginService {
     private serviceConnection: any;
     private token: any;
     private static NSAUrl = json.restBaseURL + json.IPBaseURL;
-    private static ecmsUrl = json.ecmBaseURL + json.ecmsUrl + '/';
-    private static authUrl = json.ecmBaseURL + json.authUrl + '/';
+  
 
 
 
@@ -99,19 +98,22 @@ export class LoginService {
     public login(userName?: string, password?: string, tenant?: string, licenceType?: string) { 
         let self = this;
         let token = self.storageService.getItem(LOGIN_TOKEN);
+        self.storageService.setItem('tenant', tenant);
+        self.storageService.setItem('licenceType', licenceType);
+
         this._logger.info('LoginService : login');
         let headers = new Headers();
-        headers.append('Authorization', 'Basic ' + this.getbase64encode(userName, password));
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
+        headers.append('Authorization', 'Basic ' + this.getbase64encode(userName, password));      
         headers.append('X-ECM-Tenant', tenant);
         headers.append('X-ECM-LicenseType', licenceType);
-        let _url = LoginService.authUrl + 'api/token';
+        let _url = json.authUrl + '/api/token';
         // let _options= new RequestOptions({headers:headers});
         return new Promise((resolve, reject) => {
             this._http.get(_url, { headers: headers })
-                .map((res) => {                           
+                .map((res) => {
+                                    
                     console.log('logged in to saperion,\nreceived token\n', JSON.stringify(res));
+                    debugger;
                     let body = JSON.parse(JSON.stringify(res))._body;
                     self.token = JSON.parse(body).token;
                     self.storageService.setItem(LOGIN_TOKEN, self.token);
