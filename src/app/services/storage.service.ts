@@ -35,12 +35,13 @@ export class StorageService {
       let token = this.getItem('token');
       let tenant = this.getItem('tenant');
       let LicenseType = this.getItem('LicenseType');
+      let Basic = this.getItem('Basic');
       let headers = new Headers();
       headers.append('Accept', 'application/json');
       headers.append('Content-Type', 'application/json');
       headers.append('X-ECM-LicenseType', LicenseType);
       headers.append('X-ECM-Tenant', tenant);
-      headers.append('Authorization', 'Bearer ' + token);
+      headers.append('Authorization', 'Basic ' + Basic);
 
       return headers;
   }

@@ -97,13 +97,15 @@ export class LoginService {
     // we need it as a promise
     public login(userName?: string, password?: string, tenant?: string, licenceType?: string) { 
         let self = this;
+        let basic = this.getbase64encode(userName, password);
         let token = self.storageService.getItem(LOGIN_TOKEN);
         self.storageService.setItem('tenant', tenant);
         self.storageService.setItem('licenceType', licenceType);
-
+        self.storageService.setItem('Basic', basic );   
         this._logger.info('LoginService : login');
         let headers = new Headers();
-        headers.append('Authorization', 'Basic ' + this.getbase64encode(userName, password));      
+        headers.append('Authorization', 'Basic ' + basic); 
+          
         headers.append('X-ECM-Tenant', tenant);
         headers.append('X-ECM-LicenseType', licenceType);
         let _url = json.authUrl + '/api/token';
