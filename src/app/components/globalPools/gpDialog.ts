@@ -57,8 +57,8 @@ export class GlobalPoolDialog {
                 serverPool: [],
                 srsprofile: "",
                 condition: "",
-                client: "",
-                profile: ""
+                client: "Non-client-specific",
+                profile: "Standard profile"
             };
         }
     }

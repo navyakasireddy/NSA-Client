@@ -39,8 +39,8 @@ export class ServerPoolDialog {
         this.ServerPoolItem = this.data != null ? this.data : {
             name: "",
             media: [],
-            maxUsage: "",
-            maxUsageType:"",
+            maxUsage: "100",
+            maxUsageType:"PERCENTILE",
             client: false            
         };
     }
