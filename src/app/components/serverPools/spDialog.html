@@ -18,7 +18,7 @@
 				<br />
                 
 				<md-input-container class="half">
-					<input mdInput type="number" placeholder="Maximum Usage" name="maxUsage" [(ngModel)]="ServerPoolItem.maxUsage" required/>
+					<input mdInput type="number" placeholder="Maximum Usage" name="maxUsage" [(ngModel)]="ServerPoolItem.maxUsage" step="5" min="5" max="100" required/>
 				</md-input-container>
                 
 				<md-select  class="selecthalf" placeholder="Usage Type" required [(ngModel)]="ServerPoolItem.maxUsageType" name="maxUsageType">
