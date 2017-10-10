@@ -36,7 +36,7 @@ export class Media implements OnInit {
     constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService, private _logger: Logger,
         private route: ActivatedRoute, private router: Router) {
         this._logger.info('form : Media.ts');
-        this.GetData();
+        this.GetData("");
     }
 
     ngOnInit() {
@@ -48,15 +48,15 @@ export class Media implements OnInit {
                 return route;
             })
             .filter((route) => route.outlet === 'primary')
-            .subscribe((event) => this.GetData());
+            .subscribe((event) => this.GetData(""));
     }
 
-    GetData() {
+    GetData(loadpath) {
         this.showList = true;
         this.routeSubscription = this.route.params.subscribe(params => {
             this.mediaType = params['type'];
-            console.log(this.prevMediaType);
-            if (this.prevMediaType === "" || this.mediaType != this.prevMediaType) {
+            
+            if ((this.prevMediaType === "" || this.mediaType != this.prevMediaType) || loadpath.length>0) {
                 this.prevMediaType = this.mediaType;
                 console.log(this.mediaType);
                 this._mediadataService.getList(this.mediaType).then((res: any) => {
@@ -92,7 +92,7 @@ export class Media implements OnInit {
             this.dialogRef.afterClosed().subscribe(result => {
                 console.log('result: ' + result);
                 this.dialogRef = null;
-                this.GetData();
+                this.GetData("U");
                 this.openSnackBar(result, "");
             });
         }
@@ -105,7 +105,7 @@ export class Media implements OnInit {
                 if (result) {
                     this._mediadataService.Delete(item.id).then((res: any) => {
                         this.openSnackBar(res.responseMsg, "");
-                        this.GetData();
+                        this.GetData("U");
                         this.dialogRef = null;
                     }, (error) => {
                         this._logger.error('Error : ' + error);
@@ -130,7 +130,7 @@ export class Media implements OnInit {
                 console.log('result: ' + result);
                 this.dialogRef = null;
                 this.openSnackBar(result, "");
-                this.GetData();
+                this.GetData("U");
             });
         }
         else if (action == 'lock') {
@@ -138,7 +138,7 @@ export class Media implements OnInit {
             this._mediadataService.update(item).then((res: any) => {
                 console.log(res)
                 this.openSnackBar(res.responseMsg, "");
-                this.GetData();
+                this.GetData("U");
                 this.dialogRef = null;
             }, (error) => {
                 this._logger.error('Error : ' + error);

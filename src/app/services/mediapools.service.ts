@@ -33,6 +33,49 @@ export class MediaPoolsService {
                 });
         });
     }
+
+    getClients() {
+        this._logger.info('MediapoolsService : getClients');
+        let _url = this.getURL("GP")+"/client";
+
+        let headers = this.storageService.getHeaders();
+
+
+        return new Promise((resolve, reject) => {
+            this._http.get(_url, { headers: headers })
+                .map(res => res.json())
+                .catch((error: any) => {
+                    console.error(error);
+                    reject(error);
+                    return Observable.throw(error.json().error || 'Server error');
+                })
+                .subscribe((data) => {
+                    resolve(data);
+                });
+        });
+    }
+
+    getProfiles(client:string) {
+        this._logger.info('MediapoolsService : getProfiles');
+        let _url = this.getURL("GP") + "/client/" + client;
+
+        let headers = this.storageService.getHeaders();
+
+
+        return new Promise((resolve, reject) => {
+            this._http.get(_url, { headers: headers })
+                .map(res => res.json())
+                .catch((error: any) => {
+                    console.error(error);
+                    reject(error);
+                    return Observable.throw(error.json().error || 'Server error');
+                })
+                .subscribe((data) => {
+                    resolve(data);
+                });
+        });
+    }
+
     Delete(id: string,type:string) {
         this._logger.info('MediapoolsService : delete');
         let headers = this.storageService.getHeaders();

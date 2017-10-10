@@ -30,8 +30,9 @@ export class ModalDialog {
         this.action = this.data == null ? "Create" : "Update";
         this.pluginItem = this.data != null ? this.data : {
             name: "",
-            type: "",
-            module: ""
+            type: "DLL",
+            module: "",
+            class:""
         };
     }
 

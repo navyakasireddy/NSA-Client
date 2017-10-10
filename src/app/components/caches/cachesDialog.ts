@@ -4,12 +4,12 @@ import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { MediaPoolsService } from "../../services/mediapools.service";
 
 @Component({
-    selector: 'dialog-globalpool',
-    templateUrl: 'gpDialog.html'
+    selector: 'dialog-caches',
+    templateUrl: 'cachesDialog.html'
 
 })
-export class GlobalPoolDialog {
-    public GlobalPoolItem: any;
+export class CachesDialog {
+    public cachesItem: any;
     public action: string;
     public serverPools: any = [];
     public clients: any = [
@@ -19,13 +19,13 @@ export class GlobalPoolDialog {
         //{ value: 'TB' }
     ];
     public profiles: any = [
-        //{ value: 'standard profile' },
-        // { value: 'no encryption' }
+        { value: 'standard profile' },
+         { value: 'no encryption' }
         //{ value: 'GB' },
         //{ value: 'TB' }
     ];
 
-    constructor( @Inject(MD_DIALOG_DATA) public data: any, private _logger: Logger, private dialogRef: MdDialogRef<GlobalPoolDialog>,
+    constructor( @Inject(MD_DIALOG_DATA) public data: any, private _logger: Logger, private dialogRef: MdDialogRef<CachesDialog>,
         private _dataService: MediaPoolsService
     ) {
         this._logger.info('form : globalpool Dialog.ts');
@@ -40,35 +40,19 @@ export class GlobalPoolDialog {
             }
         });
 
-        this._dataService.getClients().then((res: any) => {
-            if (res.clientList.length > 0) {
-                this.clients = res.clientList;
-            }
-        });
+        
 
-        debugger;
-        if (this.data != null) {
-            this.GlobalPoolItem = this.data;
-            this.AddProfiles() 
-        }
-        else {
-            this.GlobalPoolItem = {
-                name: "",
-                serverPool: [],
-                srsprofile: "",
-                condition: "",
-                client: "",
-                profile: ""
-            };
-        }
-    }
+        this.cachesItem = this.data != null ? this.data : {
+            name: "",
+            data: "",
+            table: "",
+            Mode: "",
+            maxSize: 1024,
+            minFree:5
+        };
 
-    AddProfiles() {
-        this._dataService.getProfiles(this.GlobalPoolItem.client).then((res: any) => {
-            if (res.profileList.length > 0) {
-                this.profiles = res.profileList ;
-            }
-        });
+
+
     }
 
     ApplyAction(actionItem) {

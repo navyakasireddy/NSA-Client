@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, ViewChild, OnInit, NgModule, ElementRef }
 import { Logger } from "angular2-logger/core";
 import { DeleteDialog } from '../common/deleteDialog';
 import { MdDialog, MdDialogRef, MdCard, MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
-import { GlobalPoolDialog } from './gpDialog';
+import { CachesDialog } from './cachesDialog';
 import { MediaPoolsService } from "../../services/mediapools.service";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
@@ -11,13 +11,14 @@ import { DataSource } from '@angular/cdk/table';
 
 
 var tempglobalpoolData: any[] = [];
+
 @Component({
-    selector: 'page-globalpool',
-    templateUrl: 'globalPools.html',
+    selector: 'page-caches',
+    templateUrl: 'caches.html',
 
 })
-export class GlobalPools {
-    dialogRef: MdDialogRef<GlobalPoolDialog>;
+export class Caches {
+    dialogRef: MdDialogRef<CachesDialog>;
     dialogRefDel: MdDialogRef<DeleteDialog>;
     showList: boolean;
     @ViewChild(MdSort) sort: MdSort;
@@ -50,11 +51,9 @@ export class GlobalPools {
         });
     }
 
-
-
     onApplyAction(action: string, item) {
         if (action == 'update') {
-            this.dialogRef = this.dialog.open(GlobalPoolDialog, {
+            this.dialogRef = this.dialog.open(CachesDialog, {
                 disableClose: true,
                 data: item
             });
@@ -91,7 +90,7 @@ export class GlobalPools {
 
         }
         else {
-            this.dialogRef = this.dialog.open(GlobalPoolDialog, {
+            this.dialogRef = this.dialog.open(CachesDialog, {
                 disableClose: true
             });
 

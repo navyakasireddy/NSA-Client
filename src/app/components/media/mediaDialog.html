@@ -8,7 +8,8 @@
 				</md-input-container>
 				<br />
 				<md-input-container class="inputElements">
-					<input mdInput type="number" placeholder="Storage Capacity" name="storageCapacity" [(ngModel)]="mediaItem.storageCapacity" required/>
+					<input mdInput type="number" placeholder="Storage Capacity" name="storageCapacity" [(ngModel)]="mediaItem.storageCapacity" required step="1024" min="0" />
+                    <md-hint align="end"><strong>MB</strong></md-hint>
 				</md-input-container>
 				<br />
 				<md-select placeholder="Plug-In" required name="pluginValue" [(ngModel)]="mediaItem.plugin">
@@ -23,18 +24,18 @@
 					<md-checkbox [(ngModel)]="mediaItem.namedPool" name="isNamedPool">For named pool (active/active) </md-checkbox>
 				</section>
 				<md-input-container class="inputElements">
-					<input mdInput type="number" placeholder="Maximum number of Objects" name="maxNumber" [(ngModel)]="mediaItem.maxNoOfObjects" required/>
+					<input mdInput type="number" placeholder="Maximum number of Objects" name="maxNumber" [(ngModel)]="mediaItem.maxNoOfObjects" disabled/>
 				</md-input-container>
 
 				<br />
 				<md-input-container class="inputElements">
-					<input mdInput type="number" placeholder="Maximum size" name="maxSize" [(ngModel)]="mediaItem.maximumSize" required/>
+					<input mdInput type="number" placeholder="Maximum size" name="maxSize" [(ngModel)]="mediaItem.maximumSize" disabled/>
 					<md-hint align="end"><strong>MB</strong></md-hint>
 				</md-input-container>
 
 				<br />
 				<md-input-container class="inputElements">
-					<input mdInput type="number" placeholder="Timeout" name="timeOut" [(ngModel)]="mediaItem.timeOut" required/>
+					<input mdInput type="number" placeholder="Timeout" name="timeOut" [(ngModel)]="mediaItem.timeOut" disabled/>
 					<md-hint align="end"><strong>Minutes</strong></md-hint>
 				</md-input-container>
 

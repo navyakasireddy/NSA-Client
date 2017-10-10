@@ -23,6 +23,7 @@ import { UserInfoPage } from "./components/userInfo/userInfo";
 import { GlobalPools } from './components/globalPools/globalPools';
 import { ServerPools } from "./components/serverPools/serverPools";
 import { ExternalMedia } from "./components/externalMedia/extMedia";
+import { Caches } from "./components/caches/caches";
 
 //Dialogs
 import { MediaDialog } from "./components/media/MediaDialog";
@@ -32,6 +33,7 @@ import { DeleteDialog } from './components/common/deleteDialog';
 import { GlobalPoolDialog } from './components/globalPools/gpDialog';
 import { ServerPoolDialog } from "./components/serverPools/spDialog";
 import { ExtMediaDialog } from "./components/externalMedia/extMediaDialog";
+import { CachesDialog } from "./components/caches/cachesDialog";
 
 //Services
 import { LoginService } from "./services/login.service";
@@ -71,6 +73,7 @@ const routes: Routes = [
             { path: 'Media/:type', component: Media, pathMatch: 'full' },
             { path: 'Server pools', component: ServerPools, pathMatch: 'full' },
             { path: 'Global pools', component: GlobalPools, pathMatch: 'full' },
+            { path: 'caches', component: Caches, pathMatch: 'full' },
             { path: '**', component: AboutPage, pathMatch: 'full' }
 
         ],
@@ -94,6 +97,7 @@ const routes: Routes = [
         UserInfoPage,
         Media,
         Plugins,
+        Caches,
         ExternalMedia,
         ModalDialog,
         DeleteDialog,
@@ -101,6 +105,7 @@ const routes: Routes = [
         , GlobalPoolDialog
         , ServerPoolDialog
         , ExtMediaDialog
+        , CachesDialog
     ],
     imports: [
         HttpModule,
@@ -130,7 +135,8 @@ const routes: Routes = [
         InfoDialog,
         GlobalPoolDialog,
         ServerPoolDialog,
-        ExtMediaDialog
+        ExtMediaDialog,
+        CachesDialog
     ],
     providers: [
         LoginService,

@@ -15,8 +15,8 @@ export class ServerPoolDialog {
     public action: string;
     public mediaTypes: any = [];
     public usageTypes: any = [
-        { value: 'MB' },
-        { value: '%' }
+        { value: 'MB' ,viewValue:'MB'},
+        { value: 'PERCENTILE',viewValue : '%' }
         //{ value: 'GB' },
         //{ value: 'TB' }
     ];
