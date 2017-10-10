@@ -6,7 +6,7 @@ import { DataSource } from '@angular/cdk/table';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
-
+import { Logger } from "angular2-logger/core";
 import { DeleteDialog } from '../common/deleteDialog';
 
 var pluginData: any = {};
@@ -27,7 +27,11 @@ export class Plugins {
     @ViewChild(MdSort) sort: MdSort;
     temppluginData: any = {};
     displayedColumns = ["actions", "pluginId", "name", "type", "module"];
-    constructor(private _dataService: PluginDataService, public dialog: MdDialog, public snackBar: MdSnackBar) { }
+    constructor(private _dataService: PluginDataService, public dialog: MdDialog, public snackBar: MdSnackBar, private _logger: Logger) {
+        this._logger.info('Page : plugin.ts');
+        this.showList = true;
+        this.GetData();
+    }
 
 
     ngOnInit() {
@@ -35,12 +39,12 @@ export class Plugins {
     }
 
     GetData() {
-        this.showList = true;
+        
         this._dataService.getList().then((res: any) => {
             this.temppluginData = res.pluginList;
             if (this.temppluginData.length > 0) {
                 pluginData = this.temppluginData;
-                
+                this.showList = true;
                 this.pluginDatabase = new PluginDatabase()
                 this.dataSource = new pluginDataSource(this.pluginDatabase, this.sort);
 
@@ -56,6 +60,7 @@ export class Plugins {
                 this.showList = false;
             }
         }, (error) => {
+            this._logger.error('Error : ' + error);
             });
         
     }
@@ -90,7 +95,7 @@ export class Plugins {
                         this.GetData();
                         this.dialogRef = null;
                     }, (error) => {
-                       
+                        this._logger.error('Error : ' + error);
                     });
                 }
               

@@ -1,0 +1,55 @@
+<div class="container">
+    <md-card>
+		<md-card-title align="center">{{action}} Caches</md-card-title>
+		<md-card-content>
+			<form #myForm="ngForm">
+				<md-tab-group>
+  <md-tab label="General">
+    <md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="cachesItem.name" required/>
+				</md-input-container>
+      				<fieldset class="fieldset">
+					<legend>Directories</legend>
+					<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Data" name="data" [(ngModel)]="cachesItem.data" required/>
+				</md-input-container>
+                          <md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Table" name="table" [(ngModel)]="cachesItem.table" required/>
+				</md-input-container>
+					
+				</fieldset>
+      <md-select placeholder="Mode" required [(ngModel)]="cachesItem.Mode" name="Mode">
+						<md-option [value]="Read" selected>
+							Read
+						</md-option>
+          <md-option [value]="Compatability">
+							Compatability
+						</md-option>
+					</md-select>
+      <fieldset class="fieldset">
+					<legend>Size</legend>
+					<md-input-container class="inputElements">
+					<input mdInput type="number" placeholder="Max Size" name="maxSize" [(ngModel)]="cachesItem.maxSize" required/>
+                        <md-hint align="end"><strong>MB</strong></md-hint>
+				</md-input-container>
+                          <md-input-container class="inputElements">
+					<input mdInput type="number" placeholder="Min Free" name="minFree" [(ngModel)]="cachesItem.minFree" required/>
+                              <md-hint align="end"><strong>MB</strong></md-hint>
+				</md-input-container>
+					
+				</fieldset>
+  </md-tab>
+  <md-tab label="Media">
+   
+  </md-tab>
+</md-tab-group>
+				<div md-card-actions class="buttonContainer">
+					<button md-raised-button color="primary" (click)="ApplyAction(cachesItem)" [disabled]="!myForm.form.valid" class="inputElements">
+						{{action}} </button>
+					<button md-raised-button color="primary" class="inputElements" md-dialog-close>
+						Cancel </button>
+				</div>
+			</form>
+		</md-card-content>
+	</md-card>
+</div>

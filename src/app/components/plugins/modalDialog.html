@@ -1,36 +1,37 @@
-<div class="container" >
-    <md-card>
-     
-        <md-card-title align="center">{{action}} plug-in</md-card-title>
-        <md-card-content>
-  <form #myForm="ngForm"> 
-            <md-input-container  class="inputElements">
-                <input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="pluginItem.name" required/>
-            </md-input-container><br />
-   
-  <md-select placeholder="Type"  required [(ngModel)]="pluginItem.type" name="type">
-  <md-option *ngFor="let item of types" [value]="item.value">
-    {{ item.viewValue }}
-  </md-option>
-</md-select>
-     
-<br />
-            
-             <md-input-container  class="inputElements">
-                <input mdInput type="text" placeholder="Module" name="module" [(ngModel)]="pluginItem.module" required/>
-            </md-input-container>
-            <div md-card-actions class="buttonContainer">
-                <button md-raised-button color="primary" (click)="ApplyAction(pluginItem)" [disabled]="!myForm.form.valid" class="inputElements" >
-{{action}}             </button>
-                 <button md-raised-button color="primary"  class="inputElements"  md-dialog-close>
-Cancel                </button>
-    
-             
-            </div>
+<div class="container">
+	<md-card>
 
-      </form>
+		<md-card-title align="center">{{action}} plug-in</md-card-title>
+		<md-card-content>
+			<form #myForm="ngForm">
+				<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="pluginItem.name" required/>
+				</md-input-container>
+				<br />
 
-        </md-card-content>
+				<md-select placeholder="Type" required [(ngModel)]="pluginItem.type" name="type">
+					<md-option *ngFor="let item of types" [value]="item.value">
+						{{ item.viewValue }}
+					</md-option>
+				</md-select>
 
-    </md-card>
+				<br />
+
+				<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Module" name="module" [(ngModel)]="pluginItem.module" required/>
+				</md-input-container>
+                <br />
+
+				<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Class" name="class" [(ngModel)]="pluginItem.class" disabled/>
+				</md-input-container>
+				<div md-card-actions class="buttonContainer">
+					<button md-raised-button color="primary" (click)="ApplyAction(pluginItem)" [disabled]="!myForm.form.valid" class="inputElements">
+						{{action}} </button>
+					<button md-raised-button color="primary" class="inputElements" md-dialog-close>
+						Cancel </button>
+				</div>
+			</form>
+		</md-card-content>
+	</md-card>
 </div>

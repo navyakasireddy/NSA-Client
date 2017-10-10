@@ -1,0 +1,13 @@
+{
+"restBaseURL":"http://pc07vpnw:8080/nsac-packaging-1.0-SNAPSHOT/api"  ,
+"ecmBaseURL":"http://pc07vpnw:8080/ecms-authentication-tomcat-8.1.0-0-SNAPSHOT" ,
+"ecmsUrl":"/ecms",
+"authUrl":"http://pc07vpnw:8080/ecms-authentication-tomcat-8.1.0-0-SNAPSHOT",
+"IPBaseURL":"/connect"  ,
+"treeView":"/documents/list",
+"plugin":"/documents/plugin",
+"media":"/documents/media",
+"serverPool":"/documents/serverpool",
+"globalPool":"/documents/globalpool",
+"cloudMedia":"/cloud/media"
+}

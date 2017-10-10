@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from "@angular/router";
 
 import { LoginPage } from './login/login';
-import {AppService} from '../services/app.service'
 import {AppModule,ModuleConfiguration} from "../app.module";
 
 import {LoginService} from "../services/login.service";
@@ -16,7 +15,7 @@ isloggedin:any;
     rootPage:any = LoginPage;
     //availableApps = AppModule.availableApps;
 
-  constructor(private router: Router, private appService: AppService,private loginService:LoginService) {
+  constructor(private router: Router, private loginService:LoginService) {
     this.isloggedin= this.loginService.isLoggedIn();
   let routerConfig = router.config;
   console.log('Routes: ', JSON.stringify(routerConfig, undefined, 2));

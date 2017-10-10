@@ -1,22 +1,26 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, RequestOptions, Headers } from '@angular/http';
+import { Logger } from "angular2-logger/core";
 import 'rxjs/Rx';
-import * as json from '../../config/restconfig.json';
+import { StorageService } from "./storage.service";
+import * as json from '../../assets/config/restconfig.json';
 @Injectable()
 
 export class PluginDataService {
 
     _serverURL: any;
-    constructor(private _http: Http, private _requestOptions: RequestOptions) {
-
+    constructor(private _http: Http, private _requestOptions: RequestOptions, private _logger: Logger, private storageService: StorageService) {
+        this._logger.info('Service : Plugin Data');
         this._serverURL = json.restBaseURL + json.plugin;
     }
     getList() {
-        let _url = this._serverURL; //+ "/Menu/GetMenuDetails?roleName=" + roleName;  
+        this._logger.info('PluginService : getList');
+        let _url = this._serverURL; 
+        let headers = this.storageService.getHeaders();
 
         return new Promise((resolve, reject) => {
-            this._http.get(_url)
+            this._http.get(_url, { headers: headers })
                 .map(res => res.json())
                 .catch((error: any) => {
                     console.error(error);
@@ -29,10 +33,8 @@ export class PluginDataService {
         });
     }
     Delete(id: string) {
-
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
+        this._logger.info('PluginService : delete');
+        let headers = this.storageService.getHeaders();
         let _url = this._serverURL + "/" + id;
         // let _options= new RequestOptions({headers:headers});
         return new Promise((resolve, reject) => {
@@ -50,10 +52,8 @@ export class PluginDataService {
     }
 
     update(actionItem: any) {
-
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
+        this._logger.info('PluginService : update');
+        let headers = this.storageService.getHeaders();
         let body = {
             "plugin": {
                 "pluginId": actionItem.pluginId,
@@ -79,10 +79,9 @@ export class PluginDataService {
         });
     }
 
-    create(actionItem: any) {        
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
+    create(actionItem: any) {  
+        this._logger.info('PluginService : create');      
+        let headers = this.storageService.getHeaders();
 
         let body = {
             "plugin": {

@@ -1,0 +1,33 @@
+<div class="container" style="width:500px;">
+	<md-card>
+		<md-card-title align="center">{{action}} Cloud medium</md-card-title>
+		<md-card-content>
+			<form #myForm="ngForm">
+				<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="mediaItem.mediaName" required/>
+				</md-input-container>
+				<br />
+				<md-select placeholder="Storage Kind" required [(ngModel)]="mediaItem.mediaStorageKind" name="mediaStorageKind">
+					<md-option *ngFor="let item of mediaStorageKinds" [value]="item.value">
+						{{ item.value }}
+					</md-option>
+				</md-select>
+				<br />
+				<md-input-container class="inputElements">
+					<input mdInput type="url" placeholder="URL" name="url" [(ngModel)]="mediaItem.url" required/>
+				</md-input-container>
+				<br />
+				<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Token" name="token" [(ngModel)]="mediaItem.token" required/>
+				</md-input-container>
+				<br />
+				<div md-card-actions class="buttonContainer">
+					<button md-raised-button color="primary" (click)="ApplyAction(mediaItem)" [disabled]="!myForm.form.valid" class="inputElements">
+						{{action}} </button>
+					<button md-raised-button color="primary" class="inputElements" md-dialog-close>
+						Cancel </button>
+				</div>
+			</form>
+		</md-card-content>
+	</md-card>
+</div>

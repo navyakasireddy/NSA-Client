@@ -1,0 +1,48 @@
+<div class="container">
+	<md-card>
+		<md-card-title align="center">{{action}} Global Pool</md-card-title>
+		<md-card-content>
+			<form #myForm="ngForm">
+				<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="GlobalPoolItem.name" required/>
+				</md-input-container>
+				<br />
+				<md-select class="pools" placeholder="Server Pools " required [(ngModel)]="GlobalPoolItem.serverPool" name="serverPools">
+					<md-option *ngFor="let item of serverPools" [value]="item">
+						{{ item.name }}
+					</md-option>
+				</md-select>
+				<br />
+				<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="SRS Profile" name="module" [(ngModel)]="GlobalPoolItem.srsprofile" required/>
+				</md-input-container>
+				<br />
+				<md-input-container class="inputElements">
+					<textarea mdInput type="text" placeholder="Condition" name="condition" [(ngModel)]="GlobalPoolItem.condition" required></textarea>
+				</md-input-container>
+				<br />
+				<fieldset class="fieldset">
+					<legend>Encryption</legend>
+					<md-select placeholder="Client" required [(ngModel)]="GlobalPoolItem.client" name="client" (ngModelChange)="AddProfiles()">
+						<md-option *ngFor="let item of clients" [value]="item.name">
+							{{ item.name }}
+						</md-option>
+					</md-select>
+					<md-select placeholder="Profile" required [(ngModel)]="GlobalPoolItem.profile" name="profile">
+						<md-option *ngFor="let item of profiles" [value]="item.name">
+							{{ item.name }}
+						</md-option>
+					</md-select>
+				</fieldset>
+				<br />
+				<br />
+				<div md-card-actions class="buttonContainer">
+					<button md-raised-button color="primary" (click)="ApplyAction(GlobalPoolItem)" [disabled]="!myForm.form.valid" class="inputElements">
+						{{action}} </button>
+					<button md-raised-button color="primary" class="inputElements" md-dialog-close>
+						Cancel </button>
+				</div>
+			</form>
+		</md-card-content>
+	</md-card>
+</div>

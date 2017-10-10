@@ -1,0 +1,61 @@
+<div class="content">
+	<div id="divid">
+		<button id="create" (click)="onApplyAction('create','')" md-raised-button color="primary" mdTooltip="Create new Cloud medium">
+			<md-icon class="material-icons">add</md-icon>
+		</button>
+	</div>
+
+    <md-table #table [dataSource]="dataSource" mdSort *ngIf="showList">
+			<ng-container cdkColumnDef="actions">
+				<md-header-cell *cdkHeaderCellDef> </md-header-cell>
+				<md-cell *cdkCellDef="let row">
+					<button md-icon-button [mdMenuTriggerFor]="menu">
+						<md-icon>more_vert</md-icon>
+					</button>
+
+					<md-menu #menu="mdMenu">
+						<button md-menu-item (click)="onApplyAction('update',row)">
+							<md-icon>create</md-icon>
+							<span>Edit</span>
+						</button>
+						<button md-menu-item (click)="onApplyAction('delete',row)">
+							<md-icon>delete</md-icon>
+							<span>Delete</span>
+						</button>						
+					</md-menu>
+				</md-cell>
+			</ng-container>
+			
+			
+				
+				<!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+				<ng-container cdkColumnDef="mediaId">
+					<md-header-cell *cdkHeaderCellDef md-sort-header> Id </md-header-cell>
+					<md-cell *cdkCellDef="let row">
+						{{row.mediaId}}
+					</md-cell>
+				</ng-container>
+            <ng-container cdkColumnDef="mediaName">
+					<md-header-cell *cdkHeaderCellDef md-sort-header> Name </md-header-cell>
+					<md-cell *cdkCellDef="let row"> {{row.mediaName}} </md-cell>
+				</ng-container>
+            <ng-container cdkColumnDef="mediaStorageKind">
+					<md-header-cell *cdkHeaderCellDef md-sort-header> Media Storage Kind </md-header-cell>
+					<md-cell *cdkCellDef="let row"> {{row.mediaStorageKind}} </md-cell>
+				</ng-container>
+
+				<ng-container cdkColumnDef="url">
+					<md-header-cell *cdkHeaderCellDef md-sort-header> URL </md-header-cell>
+					<md-cell *cdkCellDef="let row"> {{row.url}} </md-cell>
+				</ng-container>
+
+				
+				
+
+				<md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+				<md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
+
+			</md-table>
+</div>

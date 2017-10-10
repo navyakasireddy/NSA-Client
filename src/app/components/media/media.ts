@@ -1,5 +1,7 @@
 import { Component, ViewChild, ElementRef, ViewContainerRef, OnInit } from '@angular/core';
+import { Logger } from "angular2-logger/core";
 import { MediaDialog } from './MediaDialog';
+import { InfoDialog } from './InfoDialog';
 import { MdDialog, MdDialogRef, MdCard, MdSort, Sort } from '@angular/material';
 import { PluginDataService } from "../../services/pluginData.service";
 import { DocMediaService } from "../../services/documentMedia.service";
@@ -7,7 +9,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DeleteDialog } from '../common/deleteDialog';
-
 
 import { DataSource } from '@angular/cdk/table';
 import { Observable } from 'rxjs/Observable';
@@ -20,57 +21,66 @@ export interface mediaData { };
     templateUrl: 'media.html'
 })
 export class Media implements OnInit {
-
     @ViewChild(MdCard, { read: ViewContainerRef }) card;
     routeSubscription: any;
     dialogRef: MdDialogRef<MediaDialog>;
     dialogRefDel: MdDialogRef<DeleteDialog>;
     @ViewChild(MdSort) sort: MdSort;
     mediaType: string = "";
-    showList: boolean = true;
-    displayedColumns: any[] = ["actions", "Id","Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On",  "Retention Time", "Life"];
+    showList: boolean ;
+    displayedColumns: any[] = ["actions", "Id", "Name", "Type", "Storage Capacity", "Storage Used", "Cache Objects", "Generated On", "Retention Time", "Life"];
     mediaDatabase = new MediaDatabase();
     dataSource: MediaDataSource | null;
+    prevMediaType: string = "";
 
-    constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService,
-        private route: ActivatedRoute, private router: Router) { }
-
-    ngOnInit() {
-        this.GetData();
-        //this.router.events
-        //    .filter((event) => event instanceof NavigationEnd)
-        //    .map(() => this.route)
-        //    .map((route) => {
-        //        while (route.firstChild) route = route.firstChild;
-        //        return route;
-        //    })
-        //    .filter((route) => route.outlet === 'primary')                
-        //    .subscribe((event) => this.GetData());
+    constructor(public dialog: MdDialog, public snackBar: MdSnackBar, private _mediadataService: DocMediaService, private _logger: Logger,
+        private route: ActivatedRoute, private router: Router) {
+        this._logger.info('form : Media.ts');
+        this.GetData("");
     }
 
-    GetData() {
+    ngOnInit() {
+        this.router.events
+            .filter((event) => event instanceof NavigationEnd)
+            .map(() => this.route)
+            .map((route) => {
+                while (route.firstChild) route = route.firstChild;
+                return route;
+            })
+            .filter((route) => route.outlet === 'primary')
+            .subscribe((event) => this.GetData(""));
+    }
+
+    GetData(loadpath) {
         this.showList = true;
         this.routeSubscription = this.route.params.subscribe(params => {
             this.mediaType = params['type'];
+            
+            if ((this.prevMediaType === "" || this.mediaType != this.prevMediaType) || loadpath.length>0) {
+                this.prevMediaType = this.mediaType;
+                console.log(this.mediaType);
+                this._mediadataService.getList(this.mediaType).then((res: any) => {
+                    console.log(res.mediaList.length);
+                    //this.displayedColumns = res.columnList;
+                    if (res.mediaList.length > 0) {
+                      
+                        tempmediaData = res.mediaList;
+                        this.mediaDatabase = new MediaDatabase();
+                        this.dataSource = new MediaDataSource(this.mediaDatabase, this.sort);
+                    }
+                    else {
 
-
-
-            this._mediadataService.getList(this.mediaType).then((res: any) => {
-                //this.displayedColumns = res.columnList;
-                if (res.mediaList.length > 0) {
-                    tempmediaData = res.mediaList;
-                    this.mediaDatabase = new MediaDatabase();
-                    this.dataSource = new MediaDataSource(this.mediaDatabase, this.sort);
-                }
-                else {
-
-                    this.showList = false;
-                }
-            }, (error) => {
-            });
-
+                        this.showList = false;
+                    }
+                }, (error) => {
+                    this._logger.error('Error : ' + error);
+                });
+            }
         });
+
     }
+
+
 
     onApplyAction(action: string, item) {
         if (action == 'update') {
@@ -82,7 +92,7 @@ export class Media implements OnInit {
             this.dialogRef.afterClosed().subscribe(result => {
                 console.log('result: ' + result);
                 this.dialogRef = null;
-                this.GetData();
+                this.GetData("U");
                 this.openSnackBar(result, "");
             });
         }
@@ -91,39 +101,50 @@ export class Media implements OnInit {
                 disableClose: true
             });
 
-
             this.dialogRefDel.afterClosed().subscribe(result => {
                 if (result) {
-                    //this._dataService.Delete(item.pluginId).then((res: any) => {
-                    //    console.log(res)
-                    //    this.openSnackBar(res.responseMsg, "");
-                    //    this.GetData();
-                    //    this.dialogRef = null;
-                    //}, (error) => {
-
-                    //});
+                    this._mediadataService.Delete(item.id).then((res: any) => {
+                        this.openSnackBar(res.responseMsg, "");
+                        this.GetData("U");
+                        this.dialogRef = null;
+                    }, (error) => {
+                        this._logger.error('Error : ' + error);
+                    });
                 }
-
-
             });
-
         }
-        else {
+        else if (action == 'info') {
+            //this.dialogRef =
+            this.dialog.open(InfoDialog, {
+                disableClose: true,
+                data: item
+            });
+        }
+        else if (action == 'create') {
             this.dialogRef = this.dialog.open(MediaDialog, {
                 disableClose: true,
                 data: this.mediaType
             });
 
             this.dialogRef.afterClosed().subscribe(result => {
-                debugger;
                 console.log('result: ' + result);
                 this.dialogRef = null;
                 this.openSnackBar(result, "");
-                this.GetData();
+                this.GetData("U");
+            });
+        }
+        else if (action == 'lock') {
+            item.documentMediaType = "CLOSED_MEDIA";
+            this._mediadataService.update(item).then((res: any) => {
+                console.log(res)
+                this.openSnackBar(res.responseMsg, "");
+                this.GetData("U");
+                this.dialogRef = null;
+            }, (error) => {
+                this._logger.error('Error : ' + error);
             });
         }
     }
-
 
     openSnackBar(message: string, action: string) {
         if (message != "") {
@@ -135,9 +156,6 @@ export class Media implements OnInit {
     }
 }
 
-
-
-
 export class MediaDatabase {
     /** Stream that emits whenever the data has been modified. */
     dataChange: BehaviorSubject<mediaData[]> = new BehaviorSubject<mediaData[]>([]);
@@ -145,25 +163,21 @@ export class MediaDatabase {
 
     constructor() {
         var self = this;
-        if (tempmediaData != undefined) {
+        if (tempmediaData != undefined && tempmediaData.length > 0) {
             const copiedData = self.data.slice();
             var item;
-
 
             tempmediaData.forEach(function (childitem) {
                 copiedData.push(childitem);
                 self.dataChange.next(copiedData);
             });
         }
+        else {
+            self.dataChange = new BehaviorSubject<mediaData[]>([]);
 
+        }
     }
-
-
-
-
-
 }
-
 
 /**
  * Data source to provide what data should be rendered in the table. The observable provided
@@ -178,14 +192,16 @@ export class MediaDataSource extends DataSource<any> {
 
     /** Connect function called by the table to retrieve one stream containing the data to render. */
     connect(): Observable<mediaData[]> {
-        const displayDataChanges = [
-            this._mediaDatabase.dataChange,
-            this._sort.mdSortChange,
-        ];
+        if (this._mediaDatabase != undefined && this._sort != undefined) {
+            const displayDataChanges = [
+                this._mediaDatabase.dataChange,
+                this._sort.mdSortChange,
+            ];
 
-        return Observable.merge(...displayDataChanges).map(() => {
-            return this.getSortedData();
-        });
+            return Observable.merge(...displayDataChanges).map(() => {
+                return this.getSortedData();
+            });
+        }
     }
 
     disconnect() { }
