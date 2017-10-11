@@ -40,7 +40,21 @@
 				</fieldset>
   </md-tab>
   <md-tab label="Media">
-   
+   <tree-root
+      #tree
+      [nodes]="nodes"
+      >
+
+      <ng-template #treeNodeTemplate let-node="node" let-index="index" >
+        <input
+          (change)="check(node, !node.data.checked)"
+          type="checkbox"
+          [indeterminate]="node.data.indeterminate"
+          [checked]="node.data.checked">
+
+          {{ node.data.name }}
+      </ng-template>
+    </tree-root>
   </md-tab>
 </md-tab-group>
 				<div md-card-actions class="buttonContainer">

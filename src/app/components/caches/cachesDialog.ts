@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Logger } from "angular2-logger/core";
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
-import { MediaPoolsService } from "../../services/mediapools.service";
+import { DocMediaService } from "../../services/documentMedia.service";
 
 @Component({
     selector: 'dialog-caches',
@@ -26,7 +26,7 @@ export class CachesDialog {
     ];
 
     constructor( @Inject(MD_DIALOG_DATA) public data: any, private _logger: Logger, private dialogRef: MdDialogRef<CachesDialog>,
-        private _dataService: MediaPoolsService
+        private _dataService: DocMediaService
     ) {
         this._logger.info('form : globalpool Dialog.ts');
     }
