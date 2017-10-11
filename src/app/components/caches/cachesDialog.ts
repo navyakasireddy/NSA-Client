@@ -34,7 +34,7 @@ export class CachesDialog {
     ngOnInit() {
         this.action = this.data == null ? "Create" : "Update";
 
-        this._dataService.getList("SP").then((res: any) => {
+        this._dataService.getList("ALL_MEDIA").then((res: any) => {
             if (res.serverPoolList.length > 0) {
                 this.serverPools = res.serverPoolList;
             }
@@ -57,14 +57,14 @@ export class CachesDialog {
 
     ApplyAction(actionItem) {
         if (this.action == "Create") {
-            this._dataService.create(actionItem,"GP").then((res: any) => {
+            this._dataService.create(actionItem).then((res: any) => {
                 this.dialogRef.close(res.responseMsg);
             }, (error) => {
                 this._logger.error('Error : ' + error);
             });
         }
         else if (this.action == "Update") {
-            this._dataService.update(actionItem,"GP").then((res: any) => {
+            this._dataService.update(actionItem).then((res: any) => {
                 console.log(res)
                 this.dialogRef.close(res.responseMsg);
             }, (error) => {
