@@ -18,29 +18,48 @@
 				</md-input-container>
 					
 				</fieldset>
+      <br /><br />
       <md-select placeholder="Mode" required [(ngModel)]="cachesItem.Mode" name="Mode">
-						<md-option [value]="Read" selected>
-							Read
-						</md-option>
-          <md-option [value]="Compatability">
-							Compatability
-						</md-option>
-					</md-select>
+					<md-option *ngFor="let item of modes" [value]="item.value">
+						{{ item.value }}
+					</md-option>
+				</md-select>
+
+      <br /><br />
       <fieldset class="fieldset">
 					<legend>Size</legend>
 					<md-input-container class="inputElements">
-					<input mdInput type="number" placeholder="Max Size" name="maxSize" [(ngModel)]="cachesItem.maxSize" required/>
+					<input mdInput type="number" placeholder="Max Size" name="maxSize" [(ngModel)]="cachesItem.maxSize" required step="100" min="24"/>
                         <md-hint align="end"><strong>MB</strong></md-hint>
 				</md-input-container>
                           <md-input-container class="inputElements">
-					<input mdInput type="number" placeholder="Min Free" name="minFree" [(ngModel)]="cachesItem.minFree" required/>
+					<input mdInput type="number" placeholder="Min Free" name="minFree" [(ngModel)]="cachesItem.minFree" required step="100" min="5"/>
                               <md-hint align="end"><strong>MB</strong></md-hint>
 				</md-input-container>
 					
 				</fieldset>
   </md-tab>
   <md-tab label="Media">
+
+     
+
+  <div style="min-height:350px;margin-left:30px">
+       <br />
    
+            <md-checkbox name="allchecked" [(ngModel)]="cachesItem.all">All</md-checkbox>
+
+ <br />
+<div *ngFor="let item of allMedia" style="margin-left:25px">
+    
+    <md-checkbox [checked]="cachesItem.all" > {{item.name}}</md-checkbox><br />
+     
+    </div>
+
+
+
+
+    
+   </div>
   </md-tab>
 </md-tab-group>
 				<div md-card-actions class="buttonContainer">

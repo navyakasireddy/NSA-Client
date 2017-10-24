@@ -9,5 +9,7 @@
 "media":"/documents/media",
 "serverPool":"/documents/serverpool",
 "globalPool":"/documents/globalpool",
-"cloudMedia":"/cloud/media"
+"cloudMedia":"/cloud/media",
+"caches":"/documents/caches",
+"writebuffers":"/documents/writebuffers"
 }

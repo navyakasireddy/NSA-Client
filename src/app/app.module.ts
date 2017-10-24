@@ -24,6 +24,8 @@ import { GlobalPools } from './components/globalPools/globalPools';
 import { ServerPools } from "./components/serverPools/serverPools";
 import { ExternalMedia } from "./components/externalMedia/extMedia";
 import { Caches } from "./components/caches/caches";
+import { WriteBuffers } from "./components/writeBuffers/writeBuffers";
+
 
 //Dialogs
 import { MediaDialog } from "./components/media/MediaDialog";
@@ -34,6 +36,7 @@ import { GlobalPoolDialog } from './components/globalPools/gpDialog';
 import { ServerPoolDialog } from "./components/serverPools/spDialog";
 import { ExtMediaDialog } from "./components/externalMedia/extMediaDialog";
 import { CachesDialog } from "./components/caches/cachesDialog";
+import { WriteBuffersDialog } from "./components/writeBuffers/writeBuffersDialog";
 
 //Services
 import { LoginService } from "./services/login.service";
@@ -43,6 +46,7 @@ import { AdminDataService } from "./services/adminData.service";
 import { PluginDataService } from "./services/pluginData.service";
 import { DocMediaService } from "./services/documentMedia.service";
 import { MediaPoolsService } from "./services/mediapools.service";
+import { CachesDataService } from "./services/caches.service";
 
 import { AuthGuard } from './auth.guard';
 
@@ -74,6 +78,7 @@ const routes: Routes = [
             { path: 'Server pools', component: ServerPools, pathMatch: 'full' },
             { path: 'Global pools', component: GlobalPools, pathMatch: 'full' },
             { path: 'caches', component: Caches, pathMatch: 'full' },
+            { path: 'Write Buffers', component: WriteBuffers, pathMatch: 'full' },
             { path: '**', component: AboutPage, pathMatch: 'full' }
 
         ],
@@ -94,7 +99,7 @@ const routes: Routes = [
         Message
         , GlobalPools
         , ServerPools,
-        UserInfoPage,
+        UserInfoPage, WriteBuffers,
         Media,
         Plugins,
         Caches,
@@ -106,6 +111,8 @@ const routes: Routes = [
         , ServerPoolDialog
         , ExtMediaDialog
         , CachesDialog
+        , WriteBuffersDialog
+
     ],
     imports: [
         HttpModule,
@@ -136,7 +143,8 @@ const routes: Routes = [
         GlobalPoolDialog,
         ServerPoolDialog,
         ExtMediaDialog,
-        CachesDialog
+        CachesDialog,
+        WriteBuffersDialog
     ],
     providers: [
         LoginService,
@@ -145,7 +153,7 @@ const routes: Routes = [
         AdminDataService, MediaPoolsService,
         PluginDataService, DocMediaService,
         { provide: Options, useValue: { store: true } },
-        Logger,
+        Logger, CachesDataService,
         AuthGuard]
 })
 export class AppModule {

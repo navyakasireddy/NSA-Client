@@ -2,46 +2,46 @@ import { Component, ViewEncapsulation, ViewChild, OnInit, NgModule, ElementRef }
 import { Logger } from "angular2-logger/core";
 import { DeleteDialog } from '../common/deleteDialog';
 import { MdDialog, MdDialogRef, MdCard, MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
-import { CachesDialog } from './cachesDialog';
-import { CachesDataService } from "../../services/caches.service";
+import { WriteBuffersDialog } from './writeBuffersDialog';
+import { MediaPoolsService } from "../../services/mediapools.service";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { DataSource } from '@angular/cdk/table';
 
 
-var tempcachesData: any[] = [];
+var tempglobalpoolData: any[] = [];
 
 @Component({
-    selector: 'page-caches',
-    templateUrl: 'caches.html',
+    selector: 'page-writeBuffers',
+    templateUrl: 'writeBuffers.html',
 
 })
-export class Caches {
-    dialogRef: MdDialogRef<CachesDialog>;
+export class WriteBuffers {
+    dialogRef: MdDialogRef<WriteBuffersDialog>;
     dialogRefDel: MdDialogRef<DeleteDialog>;
     showList: boolean;
     @ViewChild(MdSort) sort: MdSort;
     displayedColumns: any[] = ["actions", "id", "name", "serverPool", "condition"];
-    cachesDatabase = new cachesDatabase();
-    dataSource: cachesDataSource | null;
+    globalpoolDatabase = new globalpoolDatabase();
+    dataSource: globalpoolDataSource | null;
 
 
     constructor(private _logger: Logger
-        , public dialog: MdDialog, public snackBar: MdSnackBar, private _dataService: CachesDataService
+        , public dialog: MdDialog, public snackBar: MdSnackBar, private _dataService: MediaPoolsService
     ) {
-        this._logger.info('form : caches.ts');
+        this._logger.info('form : globalpool.ts');
         this.GetData();
     }
 
 
     GetData() {
         this.showList = true;
-        this._dataService.getList().then((res: any) => {
-            if (res.cachesList.length > 0) {
-                tempcachesData = res.cachesList;
-                this.cachesDatabase = new cachesDatabase();
-                this.dataSource = new cachesDataSource(this.cachesDatabase, this.sort);
+        this._dataService.getList("GP").then((res: any) => {
+            if (res.globalPoolList.length > 0) {
+                tempglobalpoolData = res.globalPoolList;
+                this.globalpoolDatabase = new globalpoolDatabase();
+                this.dataSource = new globalpoolDataSource(this.globalpoolDatabase, this.sort);
             }
             else {
                 this.showList = false;
@@ -53,7 +53,7 @@ export class Caches {
 
     onApplyAction(action: string, item) {
         if (action == 'update') {
-            this.dialogRef = this.dialog.open(CachesDialog, {
+            this.dialogRef = this.dialog.open(WriteBuffersDialog, {
                 disableClose: true,
                 data: item
             });
@@ -74,7 +74,7 @@ export class Caches {
 
             this.dialogRefDel.afterClosed().subscribe(result => {
                 if (result) {
-                    this._dataService.Delete(item.cachesId).then((res: any) => {
+                    this._dataService.Delete(item.globalPoolId,"GP").then((res: any) => {
                         console.log(res);
                         if (result != "")
                             this.openSnackBar(res.responseMsg, "");
@@ -90,7 +90,7 @@ export class Caches {
 
         }
         else {
-            this.dialogRef = this.dialog.open(CachesDialog, {
+            this.dialogRef = this.dialog.open(WriteBuffersDialog, {
                 disableClose: true
             });
 
@@ -115,27 +115,27 @@ export class Caches {
 }
 
 
-export interface cachesData { };
+export interface globalpoolData { };
 
 
-export class cachesDatabase {
+export class globalpoolDatabase {
     /** Stream that emits whenever the data has been modified. */
-    dataChange: BehaviorSubject<cachesData[]> = new BehaviorSubject<cachesData[]>([]);
-    get data(): cachesData[] { return this.dataChange.value; }
+    dataChange: BehaviorSubject<globalpoolData[]> = new BehaviorSubject<globalpoolData[]>([]);
+    get data(): globalpoolData[] { return this.dataChange.value; }
 
     constructor() {
         var self = this;
-        if (tempcachesData != undefined && tempcachesData.length > 0) {
+        if (tempglobalpoolData != undefined && tempglobalpoolData.length > 0) {
             const copiedData = self.data.slice();
             var item;
 
-            tempcachesData.forEach(function (childitem) {
+            tempglobalpoolData.forEach(function (childitem) {
                 copiedData.push(childitem);
                 self.dataChange.next(copiedData);
             });
         }
         else {
-            self.dataChange = new BehaviorSubject<cachesData[]>([]);
+            self.dataChange = new BehaviorSubject<globalpoolData[]>([]);
 
         }
     }
@@ -147,16 +147,16 @@ export class cachesDatabase {
  * altered, the observable should emit that new set of data on the stream. In our case here,
  * we return a stream that contains only one set of data that doesn't change.
  */
-export class cachesDataSource extends DataSource<any> {
-    constructor(private _cachesDatabase: cachesDatabase, private _sort: MdSort) {
+export class globalpoolDataSource extends DataSource<any> {
+    constructor(private _globalpoolDatabase: globalpoolDatabase, private _sort: MdSort) {
         super();
     }
 
     /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<cachesData[]> {
-        if (this._cachesDatabase != undefined && this._sort != undefined) {
+    connect(): Observable<globalpoolData[]> {
+        if (this._globalpoolDatabase != undefined && this._sort != undefined) {
             const displayDataChanges = [
-                this._cachesDatabase.dataChange,
+                this._globalpoolDatabase.dataChange,
                 this._sort.mdSortChange,
             ];
 
@@ -169,8 +169,8 @@ export class cachesDataSource extends DataSource<any> {
     disconnect() { }
 
     /** Returns a sorted copy of the database data. */
-    getSortedData(): cachesData[] {
-        const data = this._cachesDatabase.data.slice();
+    getSortedData(): globalpoolData[] {
+        const data = this._globalpoolDatabase.data.slice();
         if (!this._sort.active || this._sort.direction == '') { return data; }
 
         return data.sort((a, b) => {

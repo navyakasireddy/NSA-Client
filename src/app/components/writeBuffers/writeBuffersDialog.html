@@ -1,0 +1,78 @@
+<div class="container">
+    <md-card>
+		<md-card-title align="center">{{action}} Write Buffers</md-card-title>
+		<md-card-content>
+			<form #myForm="ngForm">
+				<md-tab-group>
+  <md-tab label="General">
+    <md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Name" name="name" [(ngModel)]="writeBufferItem.name" required/>
+				</md-input-container>
+      				<fieldset class="fieldset">
+					<legend>Directories</legend>
+					<md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Data" name="data" [(ngModel)]="writeBufferItem.data" required/>
+				</md-input-container>
+                          <md-input-container class="inputElements">
+					<input mdInput type="text" placeholder="Table" name="table" [(ngModel)]="writeBufferItem.table" required/>
+				</md-input-container>
+					
+				</fieldset><br />
+      <md-select placeholder="Mode" required [(ngModel)]="writeBufferItem.mode" name="Mode">
+						<md-option *ngFor="let item of mode" [value]="item.value">
+						{{ item.value }}
+					</md-option>
+					</md-select><br />
+         <md-select placeholder="Write" required [(ngModel)]="writeBufferItem.write" name="Write">
+						<md-option *ngFor="let item of write" [value]="item.value">
+						{{ item.value }}
+					</md-option>
+					</md-select><br />
+         <md-select placeholder="Verify" required [(ngModel)]="writeBufferItem.verify" name="Verify">
+						<md-option *ngFor="let item of verify" [value]="item.value">
+						{{ item.value }}
+					</md-option>
+					</md-select><br /><br />
+      <fieldset class="fieldset">
+					<legend>Size</legend>
+					<md-input-container class="inputElements">
+					<input mdInput type="number" placeholder="Max Size" name="maxSize" [(ngModel)]="writeBufferItem.maxSize" required step="100" min="24"/>
+                        <md-hint align="end"><strong>MB</strong></md-hint>
+				</md-input-container>
+                          <md-input-container class="inputElements">
+					<input mdInput type="number" placeholder="Min Free" name="minFree" [(ngModel)]="writeBufferItem.minFree" required step="100" min="5"/>
+                              <md-hint align="end"><strong>MB</strong></md-hint>
+				</md-input-container>
+					
+				</fieldset>
+  </md-tab>
+  <md-tab label="Media">
+   <div style="min-height:350px;margin-left:30px">
+       <br />
+   
+            <md-checkbox name="allchecked" [(ngModel)]="writeBufferItem.all">All</md-checkbox>
+
+ <br />
+<div *ngFor="let item of allMedia" style="margin-left:25px">
+    
+    <md-checkbox [checked]="writeBufferItem.all" > {{item.name}}</md-checkbox><br />
+     
+    </div>
+
+
+
+
+    
+   </div>
+  </md-tab>
+</md-tab-group>
+				<div md-card-actions class="buttonContainer">
+					<button md-raised-button color="primary" (click)="ApplyAction(writeBufferItem)" [disabled]="!myForm.form.valid" class="inputElements">
+						{{action}} </button>
+					<button md-raised-button color="primary" class="inputElements" md-dialog-close>
+						Cancel </button>
+				</div>
+			</form>
+		</md-card-content>
+	</md-card>
+</div>
