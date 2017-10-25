@@ -28,14 +28,7 @@ export class MediaDialog {
 
     ngOnInit() {
         this.action = typeof (this.data) == "string" ? "Create" : "Update";
-        
-        this._pluginService.getList().then((res: any) => {
-            if (res.pluginList.length > 0) {
-                this.plugins = res.pluginList;
-            }
-        })
-            
-            
+
         this.mediaItem = typeof (this.data) != "string" ? this.data : {
             "documentMediaType": this.data,
             "id": "",
@@ -70,12 +63,22 @@ export class MediaDialog {
             "dataHashActive": "",
             "namedPool": ""
         }
+
+        this._pluginService.getList().then((res: any) => {
+            if (res.pluginList.length > 0) {
+                this.plugins = res.pluginList;
+                for (let item of this.plugins) {
+                    if (this.mediaItem.plugin.name === item.name)
+                    this.mediaItem.plugin =   item;
+                }
+            }
+        })
         
     
     }
 
     ngAfterViewInit() {
-        // ...
+       
     }
 
     ApplyAction(actionItem) {
