@@ -54,9 +54,9 @@ export class PluginDataService {
     update(actionItem: any) {
         this._logger.info('PluginService : update');
         let headers = this.storageService.getHeaders();
-        let body = {
+        let body ={
             "plugin": {
-                "pluginId": actionItem.pluginId,
+                "pluginId": actionItem.name,
                 "name": actionItem.name,
                 "type": actionItem.type,
                 "module": actionItem.module
@@ -79,13 +79,14 @@ export class PluginDataService {
         });
     }
 
-    create(actionItem: any) {  
+    create(actionItem: any) {
+        debugger;
         this._logger.info('PluginService : create');      
         let headers = this.storageService.getHeaders();
 
         let body = {
             "plugin": {
-                "pluginId": "",
+                "pluginId": actionItem.name,
                 "name": actionItem.name,
                 "type": actionItem.type,
                 "module": actionItem.module

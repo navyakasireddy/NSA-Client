@@ -25,6 +25,7 @@ import { ServerPools } from "./components/serverPools/serverPools";
 import { ExternalMedia } from "./components/externalMedia/extMedia";
 import { Caches } from "./components/caches/caches";
 import { WriteBuffers } from "./components/writeBuffers/writeBuffers";
+import { Connections } from "./components/Users/connections/connections";
 
 
 //Dialogs
@@ -47,6 +48,7 @@ import { PluginDataService } from "./services/pluginData.service";
 import { DocMediaService } from "./services/documentMedia.service";
 import { MediaPoolsService } from "./services/mediapools.service";
 import { CachesDataService } from "./services/caches.service";
+import { UsersDataService } from "./services/users.service";
 
 import { AuthGuard } from './auth.guard';
 
@@ -99,7 +101,7 @@ const routes: Routes = [
         Message
         , GlobalPools
         , ServerPools,
-        UserInfoPage, WriteBuffers,
+        UserInfoPage, WriteBuffers, Connections,
         Media,
         Plugins,
         Caches,

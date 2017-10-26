@@ -16,10 +16,10 @@ var tempconnectionsData: any[] = [];
     templateUrl: 'connections.html',
 
 })
-export class connections {
+export class Connections {
     showList: boolean;
     @ViewChild(MdSort) sort: MdSort;
-    displayedColumns: any[] = [ "Station", "Log", "Requests", "LastActive"];
+    displayedColumns: any[] = ["actions", "Station", "Log", "Requests", "LastActive", "KBRead", "KBWritten","ErrorCode","Mode","ClientVersion"];
     connectionsDatabase = new connectionsDatabase();
     dataSource: connectionsDataSource | null;
 

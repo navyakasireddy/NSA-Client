@@ -95,7 +95,7 @@ export class LoginService {
 
 
     // we need it as a promise
-    public login(userName?: string, password?: string, tenant?: string, licenceType?: string) { 
+    public login(userName?: string, password?: string, tenant?: string, licenceType?: string) {         
         let self = this;
         let basic = this.getbase64encode(userName, password);
         let token = self.storageService.getItem(LOGIN_TOKEN);

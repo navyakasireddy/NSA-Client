@@ -11,12 +11,31 @@ export class UsersDataService {
 
     _serverURL: any;
     constructor(private _http: Http, private _requestOptions: RequestOptions, private _logger: Logger, private storageService: StorageService) {
-        this._logger.info('Service : Cache Data');
+        this._logger.info('Service : User Data');
         this._serverURL = json.restBaseURL + json.users;
     }
 
     getConnectionList() {
         this._logger.info('usersService : getConnectionList');
+        let _url = this._serverURL;
+        let headers = this.storageService.getHeaders();
+
+        return new Promise((resolve, reject) => {
+            this._http.get(_url, { headers: headers })
+                .map(res => res.json())
+                .catch((error: any) => {
+                    console.error(error);
+                    reject(error);
+                    return Observable.throw(error.json().error || 'Server error');
+                })
+                .subscribe((data) => {
+                    resolve(data);
+                });
+        });
+    }
+
+    getUserList() {
+        this._logger.info('usersService : getUserList');
         let _url = this._serverURL;
         let headers = this.storageService.getHeaders();
 
