@@ -3,14 +3,14 @@ import { Logger } from "angular2-logger/core";
 import { DeleteDialog } from '../common/deleteDialog';
 import { MdDialog, MdDialogRef, MdCard, MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 import { WriteBuffersDialog } from './writeBuffersDialog';
-import { MediaPoolsService } from "../../services/mediapools.service";
+import { WriteBufferDataService } from "../../services/writeBuffers.service";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { DataSource } from '@angular/cdk/table';
 
 
-var tempglobalpoolData: any[] = [];
+var tempwritebufferData: any[] = [];
 
 @Component({
     selector: 'page-writeBuffers',
@@ -22,26 +22,28 @@ export class WriteBuffers {
     dialogRefDel: MdDialogRef<DeleteDialog>;
     showList: boolean;
     @ViewChild(MdSort) sort: MdSort;
-    displayedColumns: any[] = ["actions", "id", "name", "serverPool", "condition"];
-    globalpoolDatabase = new globalpoolDatabase();
-    dataSource: globalpoolDataSource | null;
+    displayedColumns: any[] = ["actions", "name", "data", "used", "objects", "write", "read", "verify", "error", "errorDelete", "writeRemote", "delete",
+        "deleteRemote", "generatedRemote", "errorDR", "errorWR", "minFree",
+        "maxSize", "table", "DBOperations", "DBOpsExecuted","DBOpsOptimized"];
+    writebufferDatabase = new writebufferDatabase();
+    dataSource: writebufferDataSource | null;
 
 
     constructor(private _logger: Logger
-        , public dialog: MdDialog, public snackBar: MdSnackBar, private _dataService: MediaPoolsService
+        , public dialog: MdDialog, public snackBar: MdSnackBar, private _dataService: WriteBufferDataService
     ) {
-        this._logger.info('form : globalpool.ts');
+        this._logger.info('form : writebuffer.ts');
         this.GetData();
     }
 
 
     GetData() {
         this.showList = true;
-        this._dataService.getList("GP").then((res: any) => {
+        this._dataService.getList().then((res: any) => {
             if (res.globalPoolList.length > 0) {
-                tempglobalpoolData = res.globalPoolList;
-                this.globalpoolDatabase = new globalpoolDatabase();
-                this.dataSource = new globalpoolDataSource(this.globalpoolDatabase, this.sort);
+                tempwritebufferData = res.globalPoolList;
+                this.writebufferDatabase = new writebufferDatabase();
+                this.dataSource = new writebufferDataSource(this.writebufferDatabase, this.sort);
             }
             else {
                 this.showList = false;
@@ -74,7 +76,7 @@ export class WriteBuffers {
 
             this.dialogRefDel.afterClosed().subscribe(result => {
                 if (result) {
-                    this._dataService.Delete(item.globalPoolId,"GP").then((res: any) => {
+                    this._dataService.Delete(item.globalPoolId).then((res: any) => {
                         console.log(res);
                         if (result != "")
                             this.openSnackBar(res.responseMsg, "");
@@ -115,27 +117,27 @@ export class WriteBuffers {
 }
 
 
-export interface globalpoolData { };
+export interface writebufferData { };
 
 
-export class globalpoolDatabase {
+export class writebufferDatabase {
     /** Stream that emits whenever the data has been modified. */
-    dataChange: BehaviorSubject<globalpoolData[]> = new BehaviorSubject<globalpoolData[]>([]);
-    get data(): globalpoolData[] { return this.dataChange.value; }
+    dataChange: BehaviorSubject<writebufferData[]> = new BehaviorSubject<writebufferData[]>([]);
+    get data(): writebufferData[] { return this.dataChange.value; }
 
     constructor() {
         var self = this;
-        if (tempglobalpoolData != undefined && tempglobalpoolData.length > 0) {
+        if (tempwritebufferData != undefined && tempwritebufferData.length > 0) {
             const copiedData = self.data.slice();
             var item;
 
-            tempglobalpoolData.forEach(function (childitem) {
+            tempwritebufferData.forEach(function (childitem) {
                 copiedData.push(childitem);
                 self.dataChange.next(copiedData);
             });
         }
         else {
-            self.dataChange = new BehaviorSubject<globalpoolData[]>([]);
+            self.dataChange = new BehaviorSubject<writebufferData[]>([]);
 
         }
     }
@@ -147,16 +149,16 @@ export class globalpoolDatabase {
  * altered, the observable should emit that new set of data on the stream. In our case here,
  * we return a stream that contains only one set of data that doesn't change.
  */
-export class globalpoolDataSource extends DataSource<any> {
-    constructor(private _globalpoolDatabase: globalpoolDatabase, private _sort: MdSort) {
+export class writebufferDataSource extends DataSource<any> {
+    constructor(private _writebufferDatabase: writebufferDatabase, private _sort: MdSort) {
         super();
     }
 
     /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<globalpoolData[]> {
-        if (this._globalpoolDatabase != undefined && this._sort != undefined) {
+    connect(): Observable<writebufferData[]> {
+        if (this._writebufferDatabase != undefined && this._sort != undefined) {
             const displayDataChanges = [
-                this._globalpoolDatabase.dataChange,
+                this._writebufferDatabase.dataChange,
                 this._sort.mdSortChange,
             ];
 
@@ -169,8 +171,8 @@ export class globalpoolDataSource extends DataSource<any> {
     disconnect() { }
 
     /** Returns a sorted copy of the database data. */
-    getSortedData(): globalpoolData[] {
-        const data = this._globalpoolDatabase.data.slice();
+    getSortedData(): writebufferData[] {
+        const data = this._writebufferDatabase.data.slice();
         if (!this._sort.active || this._sort.direction == '') { return data; }
 
         return data.sort((a, b) => {

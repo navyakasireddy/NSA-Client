@@ -1,0 +1,42 @@
+<div class="content">
+	<div id="divid">
+		<button id="create" (click)="onApplyAction('create','')" md-raised-button color="primary" mdTooltip="Create new cache">
+			<md-icon class="material-icons">add</md-icon>
+		</button>
+	</div>
+
+	<md-table #table [dataSource]="dataSource" mdSort *ngIf="showList">	
+
+
+
+		<!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+		<ng-container cdkColumnDef="id">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Id </md-header-cell>
+			<md-cell *cdkCellDef="let row">
+				{{row.globalPoolId}}
+			</md-cell>
+		</ng-container>
+		<ng-container cdkColumnDef="name">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Name </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.name}} </md-cell>
+		</ng-container>
+		<ng-container cdkColumnDef="serverPool">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Server Pool </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.serverPool.name}} </md-cell>
+		</ng-container>
+
+		<ng-container cdkColumnDef="condition">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Condition </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.condition}} </md-cell>
+		</ng-container>
+
+
+
+
+		<md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+		<md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
+
+	</md-table>
+</div>

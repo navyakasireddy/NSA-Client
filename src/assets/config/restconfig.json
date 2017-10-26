@@ -11,5 +11,7 @@
 "globalPool":"/documents/globalpool",
 "cloudMedia":"/cloud/media",
 "caches":"/documents/caches",
-"writebuffers":"/documents/writebuffers"
+"writebuffers":"/documents/writebuffers",
+"users":"/users"
+
 }

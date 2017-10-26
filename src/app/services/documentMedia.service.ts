@@ -64,7 +64,11 @@ export class DocMediaService {
         let body = {
             "media": {
                 "documentMediaType": actionItem.documentMediaType,
-                "id": actionItem.id,
+                "id": {
+                    "systemId": actionItem.id.systemId,
+                    "serverId": actionItem.id.serverId,
+                    "volumeId": actionItem.id.volumeId
+                },
                 "name": actionItem.name,
                 "type": actionItem.type,
                 "location": actionItem.location,

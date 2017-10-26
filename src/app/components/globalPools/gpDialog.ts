@@ -34,22 +34,9 @@ export class GlobalPoolDialog {
     ngOnInit() {
         this.action = this.data == null ? "Create" : "Update";
 
-        this._dataService.getList("SP").then((res: any) => {
-            if (res.serverPoolList.length > 0) {
-                this.serverPools = res.serverPoolList;
-            }
-        });
-
-        this._dataService.getClients().then((res: any) => {
-            if (res.clientList.length > 0) {
-                this.clients = res.clientList;
-            }
-        });
-
-        debugger;
         if (this.data != null) {
             this.GlobalPoolItem = this.data;
-            this.AddProfiles() 
+            this.AddProfiles()
         }
         else {
             this.GlobalPoolItem = {
@@ -61,6 +48,27 @@ export class GlobalPoolDialog {
                 profile: "Standard profile"
             };
         }
+
+
+        this._dataService.getList("SP").then((res: any) => {
+            if (res.serverPoolList.length > 0) {
+                this.serverPools = res.serverPoolList;
+                for (let item of this.serverPools) {
+                    if (this.GlobalPoolItem.serverPool.name === item.name)
+                        this.GlobalPoolItem.serverPool = item;
+                }
+            }
+        });
+
+        this._dataService.getClients().then((res: any) => {
+            if (res.clientList.length > 0) {
+                this.clients = res.clientList;
+                //for (let item of this.clients) {
+                //    if (this.GlobalPoolItem.client === item.name)
+                //        this.GlobalPoolItem.client = item;
+                //}
+            }
+        });
     }
 
     AddProfiles() {

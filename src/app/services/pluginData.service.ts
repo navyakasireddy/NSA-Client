@@ -32,10 +32,10 @@ export class PluginDataService {
                 });
         });
     }
-    Delete(id: string) {
+    Delete(name: string) {
         this._logger.info('PluginService : delete');
         let headers = this.storageService.getHeaders();
-        let _url = this._serverURL + "/" + id;
+        let _url = this._serverURL + "/" + name;
         // let _options= new RequestOptions({headers:headers});
         return new Promise((resolve, reject) => {
             this._http.delete(_url, { headers: headers })

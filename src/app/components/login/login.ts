@@ -70,17 +70,19 @@ export class LoginPage implements OnInit {
     IPConnectButtonPressed() {
         let self = this;
         self.showProgress = true;
-        this.loginService.connectToIP(this.IPvalue).then((res: any) => {
-            console.log('IP connect' + this.IPvalue);
-            self.showIPHolder = res.connectionActive ? false : true;
-            self._logger.log("Logged in IP : " + this.IPvalue);
-            self.openSnackBar("Server active", "");
-        }, function (error) {
-            self.showIPHolder = true;
-            self.showProgress = false;
-            self._logger.error('Error : '+error);
-            self.openSnackBar("Server not started", "");
-        });
+        self.showIPHolder = false;
+        // uncomment  in case of proper rest endpoint integration
+        //this.loginService.connectToIP(this.IPvalue).then((res: any) => {
+        //    console.log('IP connect' + this.IPvalue);
+        //    self.showIPHolder = res.connectionActive ? false : true;
+        //    self._logger.log("Logged in IP : " + this.IPvalue);
+        //    self.openSnackBar("Server active", "");
+        //}, function (error) {
+        //    self.showIPHolder = true;
+        //    self.showProgress = false;
+        //    self._logger.error('Error : '+error);
+        //    self.openSnackBar("Server not started", "");
+        //});
     }
 
 

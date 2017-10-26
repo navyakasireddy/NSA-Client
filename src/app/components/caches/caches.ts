@@ -22,7 +22,7 @@ export class Caches {
     dialogRefDel: MdDialogRef<DeleteDialog>;
     showList: boolean;
     @ViewChild(MdSort) sort: MdSort;
-    displayedColumns: any[] = ["actions", "id", "name", "serverPool", "condition"];
+    displayedColumns: any[] = ["actions", "name", "data", "objects", "write","read","verify","error","errorDelete","writeRemote"];
     cachesDatabase = new cachesDatabase();
     dataSource: cachesDataSource | null;
 

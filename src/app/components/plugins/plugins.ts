@@ -88,7 +88,7 @@ export class Plugins {
 
             this.dialogRefDel.afterClosed().subscribe(result => {                
                 if (result) {
-                    this._dataService.Delete(item.pluginId).then((res: any) => {
+                    this._dataService.Delete(item.name).then((res: any) => {
                         console.log(res);
                         if (result != "")
                         this.openSnackBar(res.responseMsg, "");

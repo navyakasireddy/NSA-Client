@@ -193,8 +193,6 @@ export class LoginService {
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
 
-
-
         let _url = LoginService.NSAUrl + '/' + IPvalue;
         return new Promise((resolve, reject) => {
             this._http.get(_url, { headers: headers })

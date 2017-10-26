@@ -29,20 +29,25 @@ export class ServerPoolDialog {
 
     ngOnInit() {
         this.action = this.data == null ? "Create" : "Update";
-
-        this._mediaService.getList("").then((res: any) => {
-            if (res.mediaList.length > 0) {
-                this.mediaTypes = res.mediaList;
-            }
-        });
-
         this.ServerPoolItem = this.data != null ? this.data : {
             name: "",
             media: [],
             maxUsage: "100",
-            maxUsageType:"PERCENTILE",
-            client: false            
+            maxUsageType: "PERCENTILE",
+            client: false
         };
+
+        this._mediaService.getList("").then((res: any) => {
+            if (res.mediaList.length > 0) {
+                this.mediaTypes = res.mediaList;
+                for (let item of this.mediaTypes) {
+                    if (this.ServerPoolItem.media.name === item.name)
+                        this.ServerPoolItem.media = item;
+                }
+            }
+        });
+
+        
     }
 
     ApplyAction(actionItem) {

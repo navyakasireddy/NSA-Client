@@ -31,29 +31,50 @@
 		<!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
 
-		<ng-container cdkColumnDef="id">
-			<md-header-cell *cdkHeaderCellDef md-sort-header> Id </md-header-cell>
-			<md-cell *cdkCellDef="let row">
-				{{row.globalPoolId}}
-			</md-cell>
-		</ng-container>
 		<ng-container cdkColumnDef="name">
 			<md-header-cell *cdkHeaderCellDef md-sort-header> Name </md-header-cell>
-			<md-cell *cdkCellDef="let row"> {{row.name}} </md-cell>
+			<md-cell *cdkCellDef="let row">
+				{{row.name}}
+			</md-cell>
 		</ng-container>
-		<ng-container cdkColumnDef="serverPool">
-			<md-header-cell *cdkHeaderCellDef md-sort-header> Server Pool </md-header-cell>
-			<md-cell *cdkCellDef="let row"> {{row.serverPool.name}} </md-cell>
+		<ng-container cdkColumnDef="data">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Data </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.data}} </md-cell>
+		</ng-container>
+		<ng-container cdkColumnDef="used">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Used </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.used}} </md-cell>
 		</ng-container>
 
-		<ng-container cdkColumnDef="condition">
-			<md-header-cell *cdkHeaderCellDef md-sort-header> Condition </md-header-cell>
-			<md-cell *cdkCellDef="let row"> {{row.condition}} </md-cell>
+		<ng-container cdkColumnDef="objects">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Objects </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.objects}} </md-cell>
+		</ng-container>
+        <ng-container cdkColumnDef="write">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Write </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.write}} </md-cell>
 		</ng-container>
 
-
-
-
+        <ng-container cdkColumnDef="read">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Read </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.read}} </md-cell>
+		</ng-container>
+        <ng-container cdkColumnDef="verify">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Verify </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.verify}} </md-cell>
+		</ng-container>
+        <ng-container cdkColumnDef="error">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Error </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.error}} </md-cell>
+		</ng-container>
+        <ng-container cdkColumnDef="errorDelete">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Error (Delete)</md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.errorDelete}} </md-cell>
+		</ng-container>
+         <ng-container cdkColumnDef="writeRemote">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Write (Remote)</md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.writeRemote}} </md-cell>
+		</ng-container>
 		<md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
 		<md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
 
