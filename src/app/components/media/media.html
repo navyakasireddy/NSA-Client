@@ -33,8 +33,16 @@
 					</md-menu>
 				</md-cell>
 			</ng-container>
+            <ng-container cdkColumnDef="Id">
+					<md-header-cell *cdkHeaderCellDef > Id </md-header-cell>
+					<md-cell *cdkCellDef="let row"  [style.flex]="'0 0 75px'">
+						[sys={{row.id.systemId}},
+                         s= {{row.id.serverId}}, 
+                        v={{row.id.volumeId}}]
+					</md-cell>
+				</ng-container>
 			<div *ngFor="let col of displayedColumns; let i=index">
-				<ng-container *ngIf="i != 0" cdkColumnDef={{col}}>
+				<ng-container *ngIf="i != 0 && i != 1" cdkColumnDef={{col}}>
 
 					<md-header-cell md-sort-header *cdkHeaderCellDef> {{ col }} </md-header-cell>
 					<md-cell *cdkCellDef="let row"> {{row[(col.charAt(0).toLowerCase() + col.slice(1).replace(" ",""))]}}</md-cell>

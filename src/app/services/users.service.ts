@@ -15,6 +15,25 @@ export class UsersDataService {
         this._serverURL = json.restBaseURL + json.users;
     }
 
+    getServerList() {
+        this._logger.info('usersService : getServerList');
+        let _url = this._serverURL;
+        let headers = this.storageService.getHeaders();
+
+        return new Promise((resolve, reject) => {
+            this._http.get(_url, { headers: headers })
+                .map(res => res.json())
+                .catch((error: any) => {
+                    console.error(error);
+                    reject(error);
+                    return Observable.throw(error.json().error || 'Server error');
+                })
+                .subscribe((data) => {
+                    resolve(data);
+                });
+        });
+    }
+
     getConnectionList() {
         this._logger.info('usersService : getConnectionList');
         let _url = this._serverURL;
@@ -33,7 +52,7 @@ export class UsersDataService {
                 });
         });
     }
-
+    
     getUserList() {
         this._logger.info('usersService : getUserList');
         let _url = this._serverURL;

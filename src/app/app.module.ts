@@ -26,7 +26,9 @@ import { ExternalMedia } from "./components/externalMedia/extMedia";
 import { Caches } from "./components/caches/caches";
 import { WriteBuffers } from "./components/writeBuffers/writeBuffers";
 import { Connections } from "./components/Users/connections/connections";
-
+import { ServerConfig } from "./components/Users/server/server";
+import { Offline } from "./components/Users/offline/offline";
+import { User } from "./components/Users/user/user";
 
 //Dialogs
 import { MediaDialog } from "./components/media/MediaDialog";
@@ -86,6 +88,23 @@ const routes: Routes = [
         ],
     }
     , {
+        path: 'User',
+        component: HomePage,
+        children: [
+            { path: 'Connections', component: Connections, pathMatch: 'full' }]
+    }
+    ,{
+        path: 'Accounts',
+        component: HomePage,
+        canActivate: [AuthGuard],
+        children: [
+            { path: 'User', component: User, pathMatch: 'full' },
+            { path: 'Server', component: ServerConfig, pathMatch: 'full' },
+            { path: 'Offline', component: Offline, pathMatch: 'full' }           
+
+        ],
+    }
+    , {
         path: '**',
         redirectTo: 'Documents'
     }
@@ -101,7 +120,7 @@ const routes: Routes = [
         Message
         , GlobalPools
         , ServerPools,
-        UserInfoPage, WriteBuffers, Connections,
+        UserInfoPage, WriteBuffers, Connections, ServerConfig, User, Offline,
         Media,
         Plugins,
         Caches,
@@ -152,7 +171,7 @@ const routes: Routes = [
         LoginService,
         StorageService,
         FeatureService,
-        AdminDataService, MediaPoolsService,
+        AdminDataService, MediaPoolsService, UsersDataService,
         PluginDataService, DocMediaService,
         { provide: Options, useValue: { store: true } },
         Logger, CachesDataService,

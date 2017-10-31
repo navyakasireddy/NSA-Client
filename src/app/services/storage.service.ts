@@ -34,7 +34,7 @@ export class StorageService {
   public getHeaders() {
       let token = this.getItem('token');
       let tenant = this.getItem('tenant');
-      let LicenseType = this.getItem('LicenseType');
+      let LicenseType = this.getItem('licenceType');
       let Basic = this.getItem('Basic');
       let headers = new Headers();
       headers.append('Accept', 'application/json');

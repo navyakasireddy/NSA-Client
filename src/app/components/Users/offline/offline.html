@@ -7,69 +7,37 @@
 
 	<md-table #table [dataSource]="dataSource" mdSort *ngIf="showList">	
 
-        <ng-container cdkColumnDef="actions">
-			<md-header-cell *cdkHeaderCellDef> </md-header-cell>
+        <ng-container cdkColumnDef="User">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> User </md-header-cell>
 			<md-cell *cdkCellDef="let row">
-				<button md-icon-button [mdMenuTriggerFor]="menu">
-					<md-icon>more_vert</md-icon>
-				</button>
-
-				<md-menu #menu="mdMenu">
-                    <button md-menu-item (click)="onApplyAction('reset',row)">
-						<md-icon>create</md-icon>
-						<span>Reset statistics</span>
-					</button>
-					<button md-menu-item (click)="onApplyAction('refresh',row)">
-						<md-icon>create</md-icon>
-						<span>Refresh</span>
-					</button>
-					
-				</md-menu>
+				{{row.user}}
 			</md-cell>
 		</ng-container>
-
-		<!--- Note that these columns can be defined in any order.
-                The actual rendered columns are set as a property on the row definition" -->
-
+		<ng-container cdkColumnDef="Role">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Role </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.Role}} </md-cell>
+		</ng-container>
 		<ng-container cdkColumnDef="Station">
 			<md-header-cell *cdkHeaderCellDef md-sort-header> Station </md-header-cell>
-			<md-cell *cdkCellDef="let row">
-				{{row.Station}}
-			</md-cell>
-		</ng-container>
-		<ng-container cdkColumnDef="Log">
-			<md-header-cell *cdkHeaderCellDef md-sort-header> Log </md-header-cell>
-			<md-cell *cdkCellDef="let row"> {{row.Log}} </md-cell>
-		</ng-container>
-		<ng-container cdkColumnDef="Requests">
-			<md-header-cell *cdkHeaderCellDef md-sort-header> Requests </md-header-cell>
-			<md-cell *cdkCellDef="let row"> {{row.Requests}} </md-cell>
+			<md-cell *cdkCellDef="let row"> {{row.Station}} </md-cell>
 		</ng-container>
 
-		<ng-container cdkColumnDef="LastActive">
+		<ng-container cdkColumnDef="Objects">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Objects </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.Objects}} </md-cell>
+		</ng-container>
+        <ng-container cdkColumnDef="LastActive">
 			<md-header-cell *cdkHeaderCellDef md-sort-header> Last Active </md-header-cell>
 			<md-cell *cdkCellDef="let row"> {{row.LastActive}} </md-cell>
 		</ng-container>
-        <ng-container cdkColumnDef="KBRead">
-			<md-header-cell *cdkHeaderCellDef md-sort-header> KB Read </md-header-cell>
-			<md-cell *cdkCellDef="let row"> {{row.KBRead}} </md-cell>
+        <ng-container cdkColumnDef="ActiveSince">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Active Since </md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.ActiveSince}} </md-cell>
 		</ng-container>
-        <ng-container cdkColumnDef="KBWritten">
-			<md-header-cell *cdkHeaderCellDef md-sort-header> KB Written </md-header-cell>
-			<md-cell *cdkCellDef="let row"> {{row.KBWritten}} </md-cell>
-		</ng-container>
-        <ng-container cdkColumnDef="ErrorCode">
-			<md-header-cell *cdkHeaderCellDef md-sort-header> Error Code</md-header-cell>
-			<md-cell *cdkCellDef="let row"> {{row.ErrorCode}} </md-cell>
-		</ng-container>
-         <ng-container cdkColumnDef="Mode">
-			<md-header-cell *cdkHeaderCellDef md-sort-header> Mode</md-header-cell>
-			<md-cell *cdkCellDef="let row"> {{Mode}} </md-cell>
-		</ng-container>
-        <ng-container cdkColumnDef="ClientVersion">
-			<md-header-cell *cdkHeaderCellDef md-sort-header> Client Version</md-header-cell>
-			<md-cell *cdkCellDef="let row"> {{ClientVersion}} </md-cell>
-		</ng-container>
+        <ng-container cdkColumnDef="Client">
+			<md-header-cell *cdkHeaderCellDef md-sort-header> Client</md-header-cell>
+			<md-cell *cdkCellDef="let row"> {{row.Client}} </md-cell>
+		</ng-container>       
 		<md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
 		<md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
 

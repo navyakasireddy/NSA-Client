@@ -19,7 +19,7 @@ var tempuserData: any[] = [];
 export class User {
     showList: boolean;
     @ViewChild(MdSort) sort: MdSort;
-    displayedColumns: any[] = ["actions", "User", "Station", "Objects", "LastActive", "ActiveSince", "Client"];
+    displayedColumns: any[] = ["actions", "User","Role", "Station", "Objects", "LastActive", "ActiveSince", "Client"];
     userDatabase = new userDatabase();
     dataSource: userDataSource | null;
 

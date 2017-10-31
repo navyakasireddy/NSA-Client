@@ -2,43 +2,43 @@ import { Component, ViewEncapsulation, ViewChild, OnInit, NgModule, ElementRef }
 import { Logger } from "angular2-logger/core";
 import { MdDialog, MdDialogRef, MdCard, MdSort, MdSnackBar, MdSnackBarConfig } from '@angular/material';
 
-import { UsersDataService } from "../../services/users.service";
+import { UsersDataService } from "../../../services/users.service";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { DataSource } from '@angular/cdk/table';
 
 
-var tempconnectionsData: any[] = [];
+var tempserverData: any[] = [];
 
 @Component({
-    selector: 'page-connections',
-    templateUrl: 'connections.html',
+    selector: 'page-server',
+    templateUrl: 'server.html',
 
 })
-export class Connections {
+export class ServerConfig {
     showList: boolean;
     @ViewChild(MdSort) sort: MdSort;
-    displayedColumns: any[] = ["actions", "Station", "Log", "Requests", "LastActive", "KBRead", "KBWritten","ErrorCode","Mode","ClientVersion"];
-    connectionsDatabase = new connectionsDatabase();
-    dataSource: connectionsDataSource | null;
+    displayedColumns: any[] = [ "User", "Role", "Station","Objects", "LastActive", "ActiveSince", "Client"];
+    serverDatabase = new serverDatabase();
+    dataSource: serverDataSource | null;
 
 
     constructor(private _logger: Logger
         , public dialog: MdDialog, public snackBar: MdSnackBar, private _dataService: UsersDataService
     ) {
-        this._logger.info('form : connections.ts');
+        this._logger.info('form : server.ts');
         this.GetData();
     }
 
 
     GetData() {
         this.showList = true;
-        this._dataService.getConnectionList().then((res: any) => {
-            if (res.connectionsList.length > 0) {
-                tempconnectionsData = res.connectionsList;
-                this.connectionsDatabase = new connectionsDatabase();
-                this.dataSource = new connectionsDataSource(this.connectionsDatabase, this.sort);
+        this._dataService.getServerList().then((res: any) => {
+            if (res.serverList.length > 0) {
+                tempserverData = res.serverList;
+                this.serverDatabase = new serverDatabase();
+                this.dataSource = new serverDataSource(this.serverDatabase, this.sort);
             }
             else {
                 this.showList = false;
@@ -51,27 +51,27 @@ export class Connections {
 }
 
 
-export interface connectionsData { };
+export interface serverData { };
 
 
-export class connectionsDatabase {
+export class serverDatabase {
     /** Stream that emits whenever the data has been modified. */
-    dataChange: BehaviorSubject<connectionsData[]> = new BehaviorSubject<connectionsData[]>([]);
-    get data(): connectionsData[] { return this.dataChange.value; }
+    dataChange: BehaviorSubject<serverData[]> = new BehaviorSubject<serverData[]>([]);
+    get data(): serverData[] { return this.dataChange.value; }
 
     constructor() {
         var self = this;
-        if (tempconnectionsData != undefined && tempconnectionsData.length > 0) {
+        if (tempserverData != undefined && tempserverData.length > 0) {
             const copiedData = self.data.slice();
             var item;
 
-            tempconnectionsData.forEach(function (childitem) {
+            tempserverData.forEach(function (childitem) {
                 copiedData.push(childitem);
                 self.dataChange.next(copiedData);
             });
         }
         else {
-            self.dataChange = new BehaviorSubject<connectionsData[]>([]);
+            self.dataChange = new BehaviorSubject<serverData[]>([]);
 
         }
     }
@@ -83,16 +83,16 @@ export class connectionsDatabase {
  * altered, the observable should emit that new set of data on the stream. In our case here,
  * we return a stream that contains only one set of data that doesn't change.
  */
-export class connectionsDataSource extends DataSource<any> {
-    constructor(private _connectionsDatabase: connectionsDatabase, private _sort: MdSort) {
+export class serverDataSource extends DataSource<any> {
+    constructor(private _serverDatabase: serverDatabase, private _sort: MdSort) {
         super();
     }
 
     /** Connect function called by the table to retrieve one stream containing the data to render. */
-    connect(): Observable<connectionsData[]> {
-        if (this._connectionsDatabase != undefined && this._sort != undefined) {
+    connect(): Observable<serverData[]> {
+        if (this._serverDatabase != undefined && this._sort != undefined) {
             const displayDataChanges = [
-                this._connectionsDatabase.dataChange,
+                this._serverDatabase.dataChange,
                 this._sort.mdSortChange,
             ];
 
@@ -105,8 +105,8 @@ export class connectionsDataSource extends DataSource<any> {
     disconnect() { }
 
     /** Returns a sorted copy of the database data. */
-    getSortedData(): connectionsData[] {
-        const data = this._connectionsDatabase.data.slice();
+    getSortedData(): serverData[] {
+        const data = this._serverDatabase.data.slice();
         if (!this._sort.active || this._sort.direction == '') { return data; }
 
         return data.sort((a, b) => {

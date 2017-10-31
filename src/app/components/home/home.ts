@@ -70,6 +70,7 @@ export class HomePage {
 
     ngOnInit() {
         this._router.events.subscribe(() => {
+           
             if (this.isScreenSmall()) {
                 this.sidenav.close();
             }
@@ -89,10 +90,13 @@ export class HomePage {
 
     }
 
-    onEvent($event) {       
+    onEvent($event) {        
         var n, p;
         if ($event.eventName == "initialized") {
-            $event.treeModel.getNodeBy((node) => node.data.id === '4.9')
+            
+            var urlArr = this._router.url.split('/');
+
+            $event.treeModel.getNodeBy((node) => node.data.name == urlArr[2] && node.parent.data.name == urlArr[1] )
                 .setActiveAndVisible();
         }
         if ($event.treeModel != undefined && $event.treeModel.activeNodes[0] != undefined) { //&& $event.treeModel.activeNodes[0].children.length == 0) {

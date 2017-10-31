@@ -103,7 +103,7 @@ export class Media implements OnInit {
 
             this.dialogRefDel.afterClosed().subscribe(result => {
                 if (result) {
-                    this._mediadataService.Delete(item.id).then((res: any) => {
+                    this._mediadataService.Delete(item).then((res: any) => {
                         this.openSnackBar(res.responseMsg, "");
                         this.GetData("U");
                         this.dialogRef = null;

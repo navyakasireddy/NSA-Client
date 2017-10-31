@@ -38,13 +38,54 @@ export class DocMediaService {
                 });
         });
     }
-    Delete(id: string) {
+    Delete(actionItem: any) {
+        debugger;
         this._logger.info('MediaService : Delete');
         let headers = this.storageService.getHeaders();
-        let _url = this._serverURL + "/" + id;
+        let body = {
+            "media": {
+                "documentMediaType": actionItem.documentMediaType,
+                "id": {
+                    "systemId": actionItem.id.systemId,
+                    "serverId": actionItem.id.serverId,
+                    "volumeId": actionItem.id.volumeId
+                },
+                "name": actionItem.name,
+                "type": actionItem.type,
+                "location": actionItem.location,
+                "generatedOn": actionItem.generatedOn,
+                "storageUsed": actionItem.storageUsed,
+                "freeStorage": actionItem.freeStorage,
+                "storageCapacity": actionItem.storageCapacity,
+                "objectCount": actionItem.objectCount,
+                "unitSize": actionItem.unitSize,
+                "cacheObjects": actionItem.cacheObjects,
+                "mediumObjects": actionItem.mediumObjects,
+                "usage": actionItem.usage,
+                "retentionTime": actionItem.retentionTime,
+                "life": actionItem.life,
+                "retentionPlace": actionItem.retentionPlace,
+                "plugin": {
+                    "pluginId": actionItem.plugin.pluginId,
+                    "name": actionItem.plugin.name,
+                    "type": actionItem.plugin.type,
+                    "module": actionItem.plugin.module,
+                    "status": actionItem.plugin.status
+                },
+                "maxNoOfObjects": actionItem.maxNoOfObjects,
+                "maximumSize": actionItem.maximumSize,
+                "timeOut": actionItem.timeOut,
+                "openTransactions": actionItem.openTransactions,
+                "transactionData": actionItem.transactionData,
+                "container": actionItem.container,
+                "dataHashActive": actionItem.dataHashActive,
+                "namedPool": actionItem.namedPool
+            }
+        }
+        let _url = this._serverURL + "/delete";
 
         return new Promise((resolve, reject) => {
-            this._http.delete(_url, { headers: headers })
+            this._http.delete(_url, { headers: headers, body: body})
                 .map(res => res.json())
                 .catch((error: any) => {
                     console.error(error);
